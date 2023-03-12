@@ -1,0 +1,35 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    min-height: 100vh;
+  }
+
+
+.space {
+    width: 4rem;
+    height: 4rem;
+    background-color: rgb(255, 255, 255);
+    border: 2px rgb(217, 213, 213) solid;
+    display: flex;
+    font-size: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.3rem;
+    
+}
+
+.block {
+    width: 100%;
+    height: 5px;
+    background-color: black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

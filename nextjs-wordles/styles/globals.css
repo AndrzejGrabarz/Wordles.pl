@@ -12,8 +12,16 @@
     min-height: 100vh;
   }
 
+.linia {
+    width: 100%;
+    height: 5px;
+    background-color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
-.space {
+
+.board_block {
     width: 4rem;
     height: 4rem;
     background-color: rgb(255, 255, 255);
@@ -25,16 +33,10 @@
     border-radius: 0.3rem;
 }
 
-.block {
-    width: 100%;
-    height: 5px;
-    background-color: black;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
 
 
-.keyBoardBlock {
+
+.keyboard_block {
     width: 3.5rem;
     height: 3.5rem;
     background-color: rgb(224, 223, 223);

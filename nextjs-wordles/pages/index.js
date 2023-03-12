@@ -7,7 +7,7 @@ export default function Home() {
     <>
     <div className="main">
       <Board/>
-        <div className="block"></div>
+        <div className="linia"></div>
       <Board_2/>
       <Keyboard/>
     </div>

@@ -6,52 +6,52 @@ function Board_2() {
     //Podział na osobny komponent
     <div className='flex flex-col'> 
         
-      <div className=" flex gap-3 my-2">
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
+      <div className="flex gap-3 my-2">
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
       </div>
         
-      <div className=" flex gap-3 my-2">
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
+      <div className="flex gap-3 my-2">
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
       </div>
         
-      <div className=" flex gap-3 my-2">
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
+      <div className="flex gap-3 my-2">
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+      </div>
+
+      <div className="flex gap-3 my-2">
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
       </div>
 
       <div className=" flex gap-3 my-2">
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
       </div>
 
-      <div className=" flex gap-3 my-2">
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-      </div>
-
-      <div className=" flex gap-3 my-2">
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
-          <div className="space"></div>
+      <div className="flex gap-3 my-2">
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
+          <div className="board_block"></div>
       </div>
     </div>
   )

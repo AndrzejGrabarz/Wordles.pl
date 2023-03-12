@@ -4,41 +4,41 @@ function Board() {
   return (
     <div className='grid grid-cols-5 gap-4'> 
         
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
         
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
         
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
 
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
 
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
 
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
-        <div className='space'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
+        <div className='board_block'></div>
     </div>
   )
 }

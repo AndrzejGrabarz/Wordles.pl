@@ -1,14 +1,11 @@
-import Board from "@/components/Board";
-import Board_2 from "@/components/Board_2";
-import Keyboard from "@/components/Keyboard";
+import Board from "@/components/board/Board";
+import Keyboard from "@/components/keyboard/Keyboard";
 
 export default function Home() {
   return (
     <>
     <div className="main">
       <Board/>
-        <div className="linia"></div>
-      <Board_2/>
       <Keyboard/>
     </div>
      

@@ -3,22 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
 .main {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    padding: 4rem;
+    padding: 5rem;
     min-height: 100vh;
   }
 
-.linia {
-    width: 100%;
-    height: 5px;
-    background-color: black;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
+
 
 
 .board_block {

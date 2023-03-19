@@ -1,3 +1,5 @@
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from 'react'
 
 function Keyboard() {
@@ -38,7 +40,7 @@ function Keyboard() {
           <div className="keyboard_block">B</div>
           <div className="keyboard_block">N</div>
           <div className="keyboard_block">M</div>
-          <div className="keyboard_block grow">[x]</div>
+          <div className="keyboard_block grow">[ x ]</div>
       </div>
 
       <div className=" flex gap-2 my-1">

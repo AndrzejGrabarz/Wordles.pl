@@ -10,7 +10,6 @@ function Board() {
         {BOARD_SIZE.map((row) =>{
           return <Row></Row>
         })}
-      
     </div>
   )
 }

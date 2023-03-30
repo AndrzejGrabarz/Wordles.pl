@@ -4,7 +4,7 @@ import React from 'react'
 import KeyBoardRow from "./KeyBoardRow";
 
 
-function Keyboard() {
+function Keyboard({KeyboardKey, setKeyboardKey}) {
   
   const KEYBOARD_SIZE = [0,1,2,3]
 
@@ -12,7 +12,11 @@ function Keyboard() {
     <div className='flex flex-col my-10'> 
         
       {KEYBOARD_SIZE.map((row)=>{
-        return <KeyBoardRow id={KEYBOARD_SIZE[row]}></KeyBoardRow>
+        return <KeyBoardRow 
+        id={KEYBOARD_SIZE[row]}
+        KeyboardKey = {KeyboardKey}
+        setKeyboardKey = {setKeyboardKey}
+        />
       })}
 
     </div>

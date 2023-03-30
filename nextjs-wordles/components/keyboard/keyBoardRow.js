@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from 'classnames';
 import Key from "./Key";
 
-function KeyBoardRow({id}) {
+function KeyBoardRow({id, KeyboardKey, setKeyboardKey}) {
   
   let litery_0 = new Array(9);
  
@@ -76,7 +76,12 @@ function KeyBoardRow({id}) {
        <div className=" flex gap-2 my-1">
 
           {RowId.map((litera)=>{
-            return <Key keyId={litera} RowId = {id}></Key>
+            return <Key 
+            keyId={litera} 
+            RowId = {id}
+            KeyboardKey = {KeyboardKey}
+            setKeyboardKey = {setKeyboardKey}
+            />
           })}
           
       </div>

@@ -1,13 +1,18 @@
 import React from 'react'
+import BoardBlock from './BoardBlock'
 
-function Row() {
+function Row({RowId, KeyboardKey, setKeyboardKey}) {
+  
+  const BOARD_SIZE = [0,1,2,3,4]
+  
   return (
     <div className="flex gap-3 my-2">
-          <div className="board_block"></div>
-          <div className="board_block"></div>
-          <div className="board_block"></div>
-          <div className="board_block"></div>
-          <div className="board_block"></div>
+          {BOARD_SIZE.map((block) =>{
+            return <BoardBlock id={BOARD_SIZE[block]}
+              KeyboardKey = {KeyboardKey}
+              setKeyboardKey = {setKeyboardKey}
+            />
+          })}
       </div>
   )
 }

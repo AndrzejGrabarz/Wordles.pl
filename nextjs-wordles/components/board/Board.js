@@ -2,7 +2,7 @@ import React from 'react'
 import Row from './Row'
 
 const BOARD_SIZE = [0,1,2,3,4,5]
-function Board({KeyboardKey, setKeyboardKey}) {
+function Board({KeyboardKey, setKeyboardKey,setClick, Click}) {
   return (
 
     //Podział na osobny komponent
@@ -11,6 +11,8 @@ function Board({KeyboardKey, setKeyboardKey}) {
           return <Row RowId ={BOARD_SIZE[row]}
             KeyboardKey = {KeyboardKey}
             setKeyboardKey = {setKeyboardKey}
+            setClick = {setClick}
+            Click = {Click}
           />
         })}
     </div>

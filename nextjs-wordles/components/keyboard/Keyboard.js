@@ -4,7 +4,7 @@ import React from 'react'
 import KeyBoardRow from "./KeyBoardRow";
 
 
-function Keyboard({KeyboardKey, setKeyboardKey}) {
+function Keyboard({KeyboardKey, setKeyboardKey, setClick, Click}) {
   
   const KEYBOARD_SIZE = [0,1,2,3]
 
@@ -16,6 +16,8 @@ function Keyboard({KeyboardKey, setKeyboardKey}) {
         id={KEYBOARD_SIZE[row]}
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
+        setClick = {setClick}
+        Click = {Click}
         />
       })}
 

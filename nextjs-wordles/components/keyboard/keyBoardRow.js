@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from 'classnames';
 import Key from "./Key";
 
-function KeyBoardRow({id, KeyboardKey, setKeyboardKey}) {
+function KeyBoardRow({id, KeyboardKey, setKeyboardKey, setClick, Click}) {
   
   let litery_0 = new Array(9);
  
@@ -81,6 +81,8 @@ function KeyBoardRow({id, KeyboardKey, setKeyboardKey}) {
             RowId = {id}
             KeyboardKey = {KeyboardKey}
             setKeyboardKey = {setKeyboardKey}
+            setClick = {setClick}
+            Click = {Click}
             />
           })}
           

@@ -4,10 +4,7 @@
 @tailwind utilities;
 
 
-input {
-    all:unset;
-    text-align:center;
-}
+
 
 .main {
     display: flex;

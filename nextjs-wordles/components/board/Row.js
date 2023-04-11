@@ -1,7 +1,7 @@
 import React from 'react'
 import BoardBlock from './BoardBlock'
 
-function Row({RowId, KeyboardKey, setKeyboardKey,array}) {
+function Row({RowId, KeyboardKey, setKeyboardKey,setClick, Click}) {
   
   const BOARD_SIZE = [0,1,2,3,4]
 
@@ -10,11 +10,12 @@ function Row({RowId, KeyboardKey, setKeyboardKey,array}) {
     <div className="flex gap-3 my-2">
           {BOARD_SIZE.map((block) =>{
             return <BoardBlock 
-              id={block}
+              id={BOARD_SIZE[block]}
               RowId = {RowId}
               KeyboardKey = {KeyboardKey}
               setKeyboardKey = {setKeyboardKey}
-              array = {array}
+              setClick = {setClick}
+              Click = {Click}
             />
           })}
       </div>

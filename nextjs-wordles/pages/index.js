@@ -1,13 +1,11 @@
 import Board from "@/components/board/Board";
 import Keyboard from "@/components/keyboard/Keyboard";
-import { useState } from "react";
+import { useState} from "react";
 
 export default function Home() {
   
-  const [KeyboardKey, setKeyboardKey] =useState(()=>{
-      console.log("state")
-      return ""
-  })
+  const [KeyboardKey, setKeyboardKey] = useState("")
+  const [Click, setClick] = useState(-1)
   
   return (
     <>
@@ -15,10 +13,14 @@ export default function Home() {
       <Board
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
+        Click = {Click}
+        setClick = {setClick}
       />
       <Keyboard
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
+        Click = {Click}
+        setClick = {setClick}
       />
     </div>
      

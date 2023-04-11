@@ -4,23 +4,20 @@ import React from 'react'
 import KeyBoardRow from "./KeyBoardRow";
 
 
-function Keyboard({KeyboardKey, setKeyboardKey}) {
+function Keyboard({KeyboardKey, setKeyboardKey, setClick, Click}) {
   
-  let KEYBOARD = [["Q", 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O','P'],
-                    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-                    ["Enter", 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Delete'],
-                    ['Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż']
-                  ]
+  const KEYBOARD_SIZE = [0,1,2,3]
 
   return (
     <div className='flex flex-col my-10'> 
         
-      {KEYBOARD.map((row)=>{
+      {KEYBOARD_SIZE.map((row)=>{
         return <KeyBoardRow 
-        key = {row}
-        rowLine ={row}
+        id={KEYBOARD_SIZE[row]}
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
+        setClick = {setClick}
+        Click = {Click}
         />
       })}
 

@@ -40,7 +40,7 @@ function Board({KeyboardKey, setKeyboardKey}) {
           />
         })}
     </div>
-    <div>{array}</div>
+    <div> {array} </div>
     </>
   )
 }

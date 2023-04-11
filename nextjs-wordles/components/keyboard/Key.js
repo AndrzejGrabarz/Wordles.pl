@@ -2,15 +2,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from 'react'
 
-function Key({keyId, KeyboardKey, setKeyboardKey,setClick, Click}) { 
+function Key({letter , KeyboardKey, setKeyboardKey}) { 
   
   const stateHandler = () => {
-    setKeyboardKey(keyId)
-    setClick(Click+1)
+    setKeyboardKey(letter)
   }
   return (
     <>
-          <div onClick={stateHandler} id={keyId} className={"keyboard_block"}>{keyId}</div>
+          <div onClick={stateHandler} id={letter} className={"keyboard_block"}>{letter}</div>
     </>
   )
 }

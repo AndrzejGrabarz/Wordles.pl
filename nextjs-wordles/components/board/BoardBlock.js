@@ -1,15 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-function BoardBlock({KeyboardKey, setKeyboardKey,id,RowId,setClick, Click}) {
-  
-// if(id === 0) {
-//   document.getElementById(0).innerHTML = "Please"
-// }
+function BoardBlock({ KeyboardKey, setKeyboardKey, id, array, RowId }) {
 
 
-return (
-    <div className="board_block" id={id}></div>
-  )
+  return (
+    <div className="board_block">{array[RowId][id]}</div>
+  );
 }
 
-export default BoardBlock
+export default BoardBlock;

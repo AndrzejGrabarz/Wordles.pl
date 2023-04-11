@@ -4,8 +4,10 @@ import { useState } from "react";
 
 export default function Home() {
   
-  const [KeyboardKey, setKeyboardKey] = useState("")
-  const [Click, setClick] = useState(0)
+  const [KeyboardKey, setKeyboardKey] =useState(()=>{
+      console.log("state")
+      return ""
+  })
   
   return (
     <>
@@ -13,14 +15,10 @@ export default function Home() {
       <Board
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
-        Click = {Click}
-        setClick = {setClick}
       />
       <Keyboard
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
-        Click = {Click}
-        setClick = {setClick}
       />
     </div>
      

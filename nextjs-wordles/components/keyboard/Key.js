@@ -7,7 +7,10 @@ function Key({keyId, KeyboardKey, setKeyboardKey,setClick, Click}) {
   const stateHandler = () => {
     setKeyboardKey(keyId)
     setClick(Click+1)
+<<<<<<< HEAD
     
+=======
+>>>>>>> parent of 8e2b352 (Wprowadzanie liter z wirtualnej klawiatury)
   }
   return (
     <>

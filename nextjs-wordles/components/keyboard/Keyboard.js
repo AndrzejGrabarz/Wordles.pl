@@ -1,10 +1,10 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from 'react'
-import KeyBoardRow from "./KeyBoardRow";
+import KeyBoardRow from "./keyBoardRow";
 
 
-function Keyboard({KeyboardKey, setKeyboardKey}) {
+function Keyboard({KeyboardKey, setKeyboardKey, SpecialKeyboardKey, setSpecialKeyboardKey}) {
   
   let KEYBOARD = [["Q", 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O','P'],
                     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
@@ -21,6 +21,8 @@ function Keyboard({KeyboardKey, setKeyboardKey}) {
         rowLine ={row}
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
+        SpecialKeyboardKey = {SpecialKeyboardKey}
+        setSpecialKeyboardKey = {setSpecialKeyboardKey}
         />
       })}
 

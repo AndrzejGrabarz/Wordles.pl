@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from 'classnames';
 import Key from "./Key";
 
-function KeyBoardRow({rowLine, KeyboardKey, setKeyboardKey}) {
+function KeyBoardRow({rowLine, KeyboardKey, setKeyboardKey, SpecialKeyboardKey, setSpecialKeyboardKey}) {
   
   return (
     <>
@@ -16,6 +16,8 @@ function KeyBoardRow({rowLine, KeyboardKey, setKeyboardKey}) {
             letter ={letter}
             KeyboardKey = {KeyboardKey}
             setKeyboardKey = {setKeyboardKey}
+            SpecialKeyboardKey = {SpecialKeyboardKey}
+            setSpecialKeyboardKey = {setSpecialKeyboardKey}
             />
           })}
           

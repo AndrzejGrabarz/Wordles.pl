@@ -9,16 +9,23 @@ export default function Home() {
       return ""
   })
   
+  const [SpecialKeyboardKey, setSpecialKeyboardKey] = useState("") //Enter i Delete
+
+
   return (
     <>
     <div className="main">
       <Board
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
+        SpecialKeyboardKey = {SpecialKeyboardKey}
+        setSpecialKeyboardKey = {setSpecialKeyboardKey}
       />
       <Keyboard
         KeyboardKey = {KeyboardKey}
         setKeyboardKey = {setKeyboardKey}
+        SpecialKeyboardKey = {SpecialKeyboardKey}
+        setSpecialKeyboardKey = {setSpecialKeyboardKey}
       />
     </div>
      

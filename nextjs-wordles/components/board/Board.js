@@ -116,6 +116,7 @@ useEffect(() => {
       alert("Wygrałeś")
     }
     setWord('')
+    setSpecialKeyboardKey('')
   }
 
 

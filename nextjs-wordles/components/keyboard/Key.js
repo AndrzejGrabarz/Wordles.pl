@@ -10,13 +10,16 @@ function Key({letter , KeyboardKey, setKeyboardKey, SpecialKeyboardKey, setSpeci
   }
 
   const SpecialstateHandler = () => {
+    if(letter === "Delete"){
+      return
+    }
     setSpecialKeyboardKey(letter)
   }
 
  
   return (
     <>
-          <div onClick={letter !== "Enter" && letter !== "Delete" ? stateHandler : SpecialstateHandler} id={letter} className={"keyboard_block"}>{letter}</div>
+          <div onClick={letter !== "Enter" && letter !== "Delete" ? stateHandler :  SpecialstateHandler} id={letter} className={"keyboard_block"}>{letter}</div>
     </>
   )
 }

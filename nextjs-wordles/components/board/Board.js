@@ -20,7 +20,7 @@ function Board({KeyboardKey, setKeyboardKey, SpecialKeyboardKey, setSpecialKeybo
 useEffect(() => {
     const handleKeyPress = (event) => {
       console.log("Naciśnięto klawisz: " + event.key);
-      setKeyboardKey(event.key)
+      setKeyboardKey(event.key.toUpperCase());
     }
     document.addEventListener("keypress", handleKeyPress);
     
@@ -32,11 +32,6 @@ useEffect(() => {
 //======================================================
   useEffect(() => {
     
-    if (isInitialRender) {
-      setIsInitialRender(false);
-      return;
-    }
-
     if(word.length >= 5 && SpecialKeyboardKey !== "Enter"){ // warunek nie pozwala przejść do następnej tablicy jeśli slowo nie będzie miało 5 liter  i nie będzie stan "Enter "
       return
     }
@@ -74,10 +69,7 @@ useEffect(() => {
  //* Funkcja letterUpdate dodaje do word litery 
   
   useEffect(() => {
-    if (isInitialRender) {
-      setIsInitialRender(false);
-      return;
-    }
+
 
     if(word.length >= 5){ // Oprócz warunku w funkcji save na długość słowa, musiałem też ograniczyć ilość dodawanych liter, po uzupełnieniu 5 pól, litery nie pojawiały sie na Bordzie ale ciągle były dodwane do "word" w pamieci i w momencie zatwierdzenia słowa dochodziło do słego porównania poniewaz litery na pordzie nie odpowiadały literom "word" w pamieci
       return
@@ -98,20 +90,19 @@ useEffect(() => {
    */
 
   useEffect(() => {
-    if (isInitialRender) {
-      setIsInitialRender(false);
+    
+    if (SpecialKeyboardKey === '') {
       return;
-    }
-    checkWord();
+     }
+     checkWord()
   }, [SpecialKeyboardKey]);
 
 
   function checkWord() {
     let TypedWord = word 
-    console.log(TypedWord)
     if(TypedWord !== CORRECT_WORD){ // Czemu nie równe 
       alert("Nie wygrałeś")
-
+      
     }else {
       alert("Wygrałeś")
     }

@@ -9,7 +9,7 @@ export default function Home() {
       return ""
   })
   
-  const [SpecialKeyboardKey, setSpecialKeyboardKey] = useState("yś") //Enter i Delete
+  const [SpecialKeyboardKey, setSpecialKeyboardKey] = useState("") //Enter i Delete
 
 
   return (

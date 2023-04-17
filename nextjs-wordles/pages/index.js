@@ -1,34 +1,30 @@
-import Board from "@/components/board/Board";
-import Keyboard from "@/components/keyboard/Keyboard";
-import { useState } from "react";
+import Board from '@/components/board/Board';
+import Keyboard from '@/components/keyboard/Keyboard';
+import { useState } from 'react';
 
 export default function Home() {
-  
-  const [KeyboardKey, setKeyboardKey] =useState(()=>{
-      console.log("state")
-      return ""
-  })
-  
-  const [SpecialKeyboardKey, setSpecialKeyboardKey] = useState("") //Enter i Delete
+  const [keyboardKey, setKeyboardKey] = useState(() => {
+    return '';
+  });
 
+  const [specialKeyboardKey, setSpecialKeyboardKey] = useState(''); //Enter i Delete
 
   return (
     <>
-    <div className="main">
-      <Board
-        KeyboardKey = {KeyboardKey}
-        setKeyboardKey = {setKeyboardKey}
-        SpecialKeyboardKey = {SpecialKeyboardKey}
-        setSpecialKeyboardKey = {setSpecialKeyboardKey}
-      />
-      <Keyboard
-        KeyboardKey = {KeyboardKey}
-        setKeyboardKey = {setKeyboardKey}
-        SpecialKeyboardKey = {SpecialKeyboardKey}
-        setSpecialKeyboardKey = {setSpecialKeyboardKey}
-      />
-    </div>
-     
+      <div className="main">
+        <Board
+          keyboardKey={keyboardKey}
+          setKeyboardKey={setKeyboardKey}
+          specialKeyboardKey={specialKeyboardKey}
+          setSpecialKeyboardKey={setSpecialKeyboardKey}
+        />
+        <Keyboard
+          keyboardKey={keyboardKey}
+          setKeyboardKey={setKeyboardKey}
+          specialKeyboardKey={specialKeyboardKey}
+          setSpecialKeyboardKey={setSpecialKeyboardKey}
+        />
+      </div>
     </>
-  )
+  );
 }

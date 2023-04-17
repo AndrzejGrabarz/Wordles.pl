@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from 'react'
 
-function Key({letter , KeyboardKey, setKeyboardKey, SpecialKeyboardKey, setSpecialKeyboardKey}) { 
+function Key({letter , KeyboardKey, setKeyboardKey, specialKeyboardKey, setSpecialKeyboardKey}) { 
   
 
   const stateHandler = () => {

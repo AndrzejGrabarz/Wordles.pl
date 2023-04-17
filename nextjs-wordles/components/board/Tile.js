@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Tile({ letter }) {
-  return <div className="board_block">{letter}</div>;
+  return <div className={`tile-colour-${letter.state}`}>{letter}</div>;
 }
 
 export default Tile;

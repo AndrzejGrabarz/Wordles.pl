@@ -1,33 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
-function Key({
-  letter,
-  setKeyboardKey,
-  setSpecialKeyboardKey,
-}) {
-  const stateHandler = () => {
-    setKeyboardKey(letter);
-  };
-
-  const specialStateHandler = () => {
-    if (letter === 'Delete') {
-      return;
-    }
-    setSpecialKeyboardKey(letter);
+function Key({ letter, setKeyboardKey }) {
+  const updateKeyboardKey = (e) => {
+    console.log('Ustawiamy nowa litere', e.target.innerHTML);
+    setKeyboardKey(e.target.innerHTML); // Moze to byc Enter albo Delete
   };
 
   return (
     <>
-      <div
-        onClick={
-          letter !== 'Enter' && letter !== 'Delete'
-            ? stateHandler
-            : specialStateHandler
-        }
-        id={letter}
-        className={'keyboard_block'}
-      >
+      <div onClick={updateKeyboardKey} id={letter} className={'keyboard_block'}>
         {letter}
       </div>
     </>

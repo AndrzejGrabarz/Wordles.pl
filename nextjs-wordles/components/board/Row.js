@@ -1,24 +1,21 @@
-import React from 'react'
-import BoardBlock from './BoardBlock'
+import React from 'react';
+import Tile from './Tile';
 
-function Row({RowId, KeyboardKey, setKeyboardKey,array}) {
-  
-  const BOARD_SIZE = [0,1,2,3,4]
+const DEFAULT_ROW = ['', '', '', '', '']; // letters
 
+function Row({ row }) {
+
+  row = row.split('');
+  row = [...row, ...DEFAULT_ROW].slice(0, 5);
 
   return (
     <div className="flex gap-3 my-2">
-          {BOARD_SIZE.map((block) =>{
-            return <BoardBlock 
-              id={block}
-              RowId = {RowId}
-              KeyboardKey = {KeyboardKey}
-              setKeyboardKey = {setKeyboardKey}
-              array = {array}
-            />
-          })}
-      </div>
-  )
+      {row &&
+        row.map((letter, index) => {
+          return <Tile key={index} letter={letter} />;
+        })}
+    </div>
+  );
 }
 
-export default Row
+export default Row;

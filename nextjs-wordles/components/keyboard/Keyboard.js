@@ -1,13 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import KeyBoardRow from './keyBoardRow';
+import KeyboardRow from './KeyboardRow';
 
-function Keyboard({
-  KeyboardKey,
-  setKeyboardKey,
-  specialKeyboardKey,
-  setSpecialKeyboardKey,
-}) {
+function Keyboard({ setKeyboardKey }) {
   let KEYBOARD = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
@@ -17,17 +11,8 @@ function Keyboard({
 
   return (
     <div className="flex flex-col my-10">
-      {KEYBOARD.map((row) => {
-        return (
-          <KeyBoardRow
-            key={row}
-            rowLine={row}
-            KeyboardKey={KeyboardKey}
-            setKeyboardKey={setKeyboardKey}
-            specialKeyboardKey={specialKeyboardKey}
-            setSpecialKeyboardKey={setSpecialKeyboardKey}
-          />
-        );
+      {KEYBOARD.map((row, index) => {
+        return <KeyboardRow key={index} rowLine={row} setKeyboardKey={setKeyboardKey} />;
       })}
     </div>
   );

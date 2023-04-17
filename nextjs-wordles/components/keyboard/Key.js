@@ -1,27 +1,37 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from 'react'
-
-function Key({letter , KeyboardKey, setKeyboardKey, specialKeyboardKey, setSpecialKeyboardKey}) { 
-  
-
+function Key({
+  letter,
+  setKeyboardKey,
+  setSpecialKeyboardKey,
+}) {
   const stateHandler = () => {
-    setKeyboardKey(letter)
-  }
+    setKeyboardKey(letter);
+  };
 
-  const SpecialstateHandler = () => {
-    if(letter === "Delete"){
-      return
+  const specialStateHandler = () => {
+    if (letter === 'Delete') {
+      return;
     }
-    setSpecialKeyboardKey(letter)
-  }
+    setSpecialKeyboardKey(letter);
+  };
 
- 
   return (
     <>
-          <div onClick={letter !== "Enter" && letter !== "Delete" ? stateHandler :  SpecialstateHandler} id={letter} className={"keyboard_block"}>{letter}</div>
+      <div
+        onClick={
+          letter !== 'Enter' && letter !== 'Delete'
+            ? stateHandler
+            : specialStateHandler
+        }
+        id={letter}
+        className={'keyboard_block'}
+      >
+        {letter}
+      </div>
     </>
-  )
+  );
 }
 
-export default Key
+export default Key;

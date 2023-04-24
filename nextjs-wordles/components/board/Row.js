@@ -1,21 +1,17 @@
 import React from 'react'
-import BoardBlock from './BoardBlock'
+import Tile from './Tile'
 
-function Row({RowId, KeyboardKey, setKeyboardKey,array}) {
+const DEFAULT_ROW = ['', '', '', '', '']
+
+function Row({ board, row}) {
   
-  const BOARD_SIZE = [0,1,2,3,4]
-
+  row = row.split('');
+  row =[...row, ...DEFAULT_ROW].slice(0, 5)
 
   return (
     <div className="flex gap-3 my-2">
-          {BOARD_SIZE.map((block) =>{
-            return <BoardBlock 
-              id={block}
-              RowId = {RowId}
-              KeyboardKey = {KeyboardKey}
-              setKeyboardKey = {setKeyboardKey}
-              array = {array}
-            />
+          {row.map((letter) => {
+            return <Tile key={letter.id} letter={letter}/>
           })}
       </div>
   )

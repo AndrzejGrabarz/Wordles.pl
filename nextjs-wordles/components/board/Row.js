@@ -1,31 +1,26 @@
 import React from 'react';
 import Tile from './Tile';
 
+import { COL_COUNT } from '@/utils/words';
+
 // Stany
 // 1. correct - Na poprawnym miejscu
 // 2. wrong - Nie na poprawnym miejscu ale w slowie niebieska
 // 3. missing - Nie w slowie to szara
 
 function Row({ row }) {
-
-  // Jesli nie ma 5 liter, to wyswietl puste kafelki
-
-  if(obj.lettersWithState.length === 0 ){
-    // Wy∫wietl puste kafelki + wyswletl userTypedWord
+  let letters = row.lettersWithState;
+  let typedWord = row.userTypedWord;
+  if (typedWord.length < COL_COUNT) {
+    letters = typedWord.split('').map((letter) => {
+      return { letter: letter, state: 'gray' };
+    });
   }
-  if(obj.lettersWithState.length > 0 ){
-    // Wy∫wietl puste kafelki
-    
-  }
-
-  
   return (
     <div className="flex gap-3 my-2">
-      {letters &&
-        letters.map((obj, index) => {
-
-
-          return <Tile key={index} letter={obj.letter} state={obj.state} />;
+      {row &&
+        letters.map((el, index) => {
+          return <Tile key={index} letter={el.letter} state={el.state} />;
         })}
     </div>
   );

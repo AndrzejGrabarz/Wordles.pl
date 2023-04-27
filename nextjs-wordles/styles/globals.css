@@ -1,69 +1,77 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 input {
-    all:unset;
-    text-align:center;
+  all: unset;
+  text-align: center;
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5rem;
-    min-height: 100vh;
-  }
-
-
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem;
+  min-height: 100vh;
+}
 
 .board_block {
-    width: 4rem;
-    height: 4rem;
-    background-color: rgb(255, 255, 255);
-    border: 2px rgb(217, 213, 213) solid;
-    display: flex;
-    font-size: 1.5rem;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.3rem;
+  width: 4rem;
+  height: 4rem;
+  background-color: rgb(255, 255, 255);
+  border: 2px rgb(217, 213, 213) solid;
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3rem;
 }
-
-
-
 
 .keyboard_block {
-    width: 4.5rem;
-    height: 4.5rem;
-    background-color: rgb(224, 223, 223);
-    border: 1px rgb(217, 213, 213) solid;
-    display: flex;
-    font-size: 1.5rem;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.3rem;
-    cursor: pointer;
+  width: 4.5rem;
+  height: 4.5rem;
+  background-color: rgb(224, 223, 223);
+  border: 1px rgb(217, 213, 213) solid;
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3rem;
+  cursor: pointer;
 }
 
-#Enter,#Delete,
-#A,#S,#D,#F,#A,#G,#H,#J,#K,#L,
-#Ą,#Ć,#Ę,#Ł,#Ń,#Ó,#Ś,#Ź,#Ż {
-    flex-grow:1;
+#Enter,
+#Delete,
+#A,
+#S,
+#D,
+#F,
+#A,
+#G,
+#H,
+#J,
+#K,
+#L,
+#Ą,
+#Ć,
+#Ę,
+#Ł,
+#Ń,
+#Ó,
+#Ś,
+#Ź,
+#Ż {
+  flex-grow: 1;
 }
 
-
-
-.state-colour-green {
-    background-color:green
+.state-colour-correct {
+  background-color: rgb(14, 168, 81);
 }
 
-.state-colour-yellow {
-    background-color:yellow
+.state-colour-misplaced {
+  background-color: rgb(239, 222, 86);
 }
 
 .state-colour-grey {
-    background-color:grey
+  background-color: grey;
 }

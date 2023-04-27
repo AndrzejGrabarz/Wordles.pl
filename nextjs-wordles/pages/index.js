@@ -1,139 +1,101 @@
-import Board from "@/components/board/Board";
-import Keyboard from "@/components/keyboard/Keyboard";
-import { useEffect, useState } from "react";
-import keycode from 'keycode'; //Może się przyda
+import Board from '@/components/board/Board';
+import Keyboard from '@/components/keyboard/Keyboard';
+import { useEffect, useState } from 'react';
 
-const CORRECT_WORD = "GORYL"
+import {
+  CORRECT_WORD,
+  SPECIAL_KEYS,
+  ROW_COUNT,
+  COL_COUNT,
+} from '@/utils/words';
 
-const SPECIAL_KEYS = ["Enter","ENTER",  "Delete", 'DELETE', 'BACKSPACE']
-
-const ROW_COUNT = 6;
-const COL_COUNT = 5;
-
-const DEFAULT_STATE = ['', '', '', '', '', '',]
+function prepareBoard(rowCount, colCount) {
+  return [...Array(rowCount).keys()].map((_) => {
+    return {
+      userTypedWord: '',
+      lettersWithState: [...Array(colCount).keys()].map((_) => {
+        return { letter: '', state: 'gray' };
+      }),
+    };
+  });
+}
 
 export default function Home() {
-  
-  let [board, setBoardState] = useState(DEFAULT_STATE);
-  let [letterState, setLetterState] = useState(
-    [
-      {value:"", state:""}, 
-      {value:"", state:""}, 
-      {value:"", state:""}, 
-      {value:"", state:""}, 
-      {value:"", state:""}, 
-    ]);
+  let [board, setBoardState] = useState(prepareBoard(ROW_COUNT, COL_COUNT));
 
   const [keyboardKey, setKeboardKey] = useState('');
   const [currentRow, setCurrentRow] = useState(0);
 
-  const isSpecialKey = key => SPECIAL_KEYS.includes(key);
-
-//======================================================
-// Funkcja handleKeyPress - pozwala keyboardKey odbierać wartości z klawiatury fizycznej
-//======================================================
-
-useEffect(() => {
-  const handleKeyPress = (event) => {
-    console.log("Naciśnięto klawisz: " + event.key);
-    setKeboardKey(event.key.toUpperCase())
-  }
-  document.addEventListener("keydown", handleKeyPress)
-  setKeboardKey("")
-})
-
-//======================================================
-// Aktualizowanie stanu tablicy
-//======================================================
+  const isSpecialKey = (key) => SPECIAL_KEYS.includes(key.toLowerCase());
 
   useEffect(() => {
-    if(!isSpecialKey(keyboardKey)) {
-      updateBoard(keyboardKey);
-    }else  if(keyboardKey === "Delete" ||keyboardKey ===  "DELETE" || keyboardKey ===  "BACKSPACE") {
-      deleteLetter()
-    }else if (keyboardKey === 'Enter' ||keyboardKey ===  "ENTER") {
-      verifyState();
+    const handleKeyPress = (event) => {
+      setKeboardKey(event.key.toUpperCase());
+    };
+    document.addEventListener('keydown', handleKeyPress);
+  });
+
+  useEffect(() => {
+    if (!isSpecialKey(keyboardKey)) updateBoard(keyboardKey);
+    if (keyboardKey.toLowerCase() === 'backspace') deleteLetter();
+    if (keyboardKey.toLowerCase() === 'enter') {
+      if (ROW_COUNT === board.length) communicateState();
+      if (ROW_COUNT !== board.length) setCurrentRow(currentRow + 1);
     }
-  },[keyboardKey])
+    setKeboardKey('');
+  }, [keyboardKey]);
 
   const updateBoard = (key) => {
-    let updatedBoard = [...board];
-    if (board[currentRow].length < 5) {
-      updatedBoard[currentRow] = board[currentRow] + key;
+    console.log(board);
+    let updatedBoard = [...board]; // albo JSON.parse(JSON.stringify(board));
+    let typedWord = updatedBoard[currentRow].userTypedWord;
+    if (typedWord.length < COL_COUNT + 1) {
+      updatedBoard[currentRow].userTypedWord += key;
+      updatedBoard[currentRow].lettersWithState = colorRow(typedWord);
     }
+    console.log(updatedBoard);
     setBoardState(updatedBoard);
+  };
+
+  function colorRow(typedWord) {
+    return typedWord
+      .split('')
+      .map((letter, index) => checkState(typedWord, letter, index));
   }
 
-  function verifyState() {
-    if(isWordCorrect()) {
-      communicateState('win')
-    }
-
-    if(!isWordCorrect()) {
-      communicateState('lose')
-      compare()
-    }
-
-    setCurrentRow(currentRow + 1)
-  }
-//======================================================
-// Sprawdzenie checkWord
-//======================================================
-  const deleteLetter = () =>{
+  const deleteLetter = () => {
     let updatedBoard = [...board];
-    console.log(updatedBoard)
-    updatedBoard[currentRow]= updatedBoard[currentRow].slice(0, -1)
+    updatedBoard[currentRow] = updatedBoard[currentRow].slice(0, -1);
     setBoardState(updatedBoard);
-    setKeboardKey("")
+  };
+
+  function communicateState() {
+    alert(isWordCorrect() ? 'Wygrana' : 'Niestety przegrales');
   }
-//======================================================
-// Sprawdzenie checkWord
-//======================================================
-function isWordCorrect() {
-  return board[currentRow] === CORRECT_WORD
-}
-//======================================================
-// Porównanie słowa
-//======================================================
 
-function compare(){
-  let WORD_DRAFTED = CORRECT_WORD.split('')
-  let USER_WORD = board[currentRow].split('')
-
-  setLetterState( prevState => {
-    return prevState.map((letterState, index) =>{
-
-      if(WORD_DRAFTED[index] === USER_WORD[index]){
-        console.log(USER_WORD[index],"green")
-        return {value:USER_WORD[index],state:"green"}
-  
-      }else if(WORD_DRAFTED.includes(USER_WORD[index])){ // czemu nie działa na odwrót
-        console.log(USER_WORD[index],"yellow")
-        return {value:USER_WORD[index],state:"yellow"}
-    
-      }else if (!WORD_DRAFTED.includes(USER_WORD[index])) {
-        console.log(USER_WORD[index],"grey")
-        return {value:USER_WORD[index],state:"grey"}
-      }
-    })
-  })
-}
-
-function communicateState(stateName) {
-  if (stateName === 'win') {
-    alert('Wygrałeś')
+  function isWordCorrect() {
+    return board[currentRow].lettersWithState === CORRECT_WORD;
   }
-  if (stateName === 'lose') {
-    alert('Nie wygrałeś')
+
+  function checkState(typedWord, letter, index) {
+    let state = 'gray';
+    if (typedWord[index] === CORRECT_WORD[index]) {
+      state = 'correct';
+      return { letter, state };
+    }
+    if (typedWord.includes(letter)) {
+      state = 'misplaced';
+      return { letter, state };
+    }
+    return { letter, state };
   }
-} 
 
   return (
     <>
       <div className="main">
-        <Board board={board} letterState={letterState}/>
+        <Board board={board} />
         <Keyboard setKeyboardKey={setKeboardKey} />
       </div>
     </>
-  )
+  );
 }

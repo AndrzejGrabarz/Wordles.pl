@@ -53,3 +53,17 @@ input {
 #Ą,#Ć,#Ę,#Ł,#Ń,#Ó,#Ś,#Ź,#Ż {
     flex-grow:1;
 }
+
+
+
+.state-colour-green {
+    background-color:green
+}
+
+.state-colour-yellow {
+    background-color:yellow
+}
+
+.state-colour-grey {
+    background-color:grey
+}

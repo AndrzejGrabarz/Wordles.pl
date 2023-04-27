@@ -16,6 +16,14 @@ const DEFAULT_STATE = ['', '', '', '', '', '',]
 export default function Home() {
   
   let [board, setBoardState] = useState(DEFAULT_STATE);
+  let [letterState, setLetterState] = useState(
+    [
+      {value:"", state:""}, 
+      {value:"", state:""}, 
+      {value:"", state:""}, 
+      {value:"", state:""}, 
+      {value:"", state:""}, 
+    ]);
 
   const [keyboardKey, setKeboardKey] = useState('');
   const [currentRow, setCurrentRow] = useState(0);
@@ -68,7 +76,9 @@ useEffect(() => {
 
     if(!isWordCorrect()) {
       communicateState('lose')
+      compare()
     }
+
     setCurrentRow(currentRow + 1)
   }
 //======================================================
@@ -89,6 +99,38 @@ function isWordCorrect() {
   return board[currentRow] === CORRECT_WORD
 }
 
+//======================================================
+// Porównanie słowa
+//======================================================
+
+function compare(){
+  let WORD_DRAFTED = CORRECT_WORD.split('')
+  let USER_WORD = board[currentRow].split('')
+
+  setLetterState( prevState => {
+    return prevState.map((letterState, index) =>{
+
+      if(WORD_DRAFTED[index] === USER_WORD[index]){
+        console.log(USER_WORD[index],"green")
+        return {value:USER_WORD[index],state:"green"}
+  
+      }else if(WORD_DRAFTED.includes(USER_WORD[index])){ // czemu nie działa na odwrót
+        console.log(USER_WORD[index],"yellow")
+        return {value:USER_WORD[index],state:"yellow"}
+    
+  
+      }else if (!WORD_DRAFTED.includes(USER_WORD[index])) {
+        console.log(USER_WORD[index],"grey")
+        return {value:USER_WORD[index],state:"grey"}
+      }
+
+      
+    })
+    
+  })
+  console.log(letterState)
+}
+
 function communicateState(stateName) {
   if (stateName === 'win') {
     alert('Wygrałeś')
@@ -101,8 +143,8 @@ function communicateState(stateName) {
   return (
     <>
       <div className="main">
-        <Board board={board}/>
-        <Keyboard setKeyboardKey={setKeboardKey}/>
+        <Board board={board} letterState={letterState} setLetterState={setLetterState}/>
+        <Keyboard setKeyboardKey={setKeboardKey} />
       </div>
     </>
   )

@@ -1,33 +1,34 @@
-import React from 'react'
-import Tile from './Tile'
-
-let DEFAULT_ROW = [
-  {value:"", state:""}, 
-  {value:"", state:""}, 
-  {value:"", state:""}, 
-  {value:"", state:""}, 
-  {value:"", state:""}, 
-]
+import React from 'react';
+import Tile from './Tile';
 
 // Stany
-// 1. correct - Na poprawnym miejscu 
+// 1. correct - Na poprawnym miejscu
 // 2. wrong - Nie na poprawnym miejscu ale w slowie niebieska
 // 3. missing - Nie w slowie to szara
 
-function Row({ board, row, letterState}) {
-  
-  for(let i = 0; i < DEFAULT_ROW.length; i++) {
-    DEFAULT_ROW[i].value = row[i]
-    DEFAULT_ROW[i].state = letterState[i].state
+function Row({ row }) {
+
+  // Jesli nie ma 5 liter, to wyswietl puste kafelki
+
+  if(obj.lettersWithState.length === 0 ){
+    // Wy∫wietl puste kafelki + wyswletl userTypedWord
   }
+  if(obj.lettersWithState.length > 0 ){
+    // Wy∫wietl puste kafelki
+    
+  }
+
   
   return (
     <div className="flex gap-3 my-2">
-          {DEFAULT_ROW.map((letter,index) => {
-            return <Tile key={index} letter={letter.value} state={letter.state}/>
-          })}
-      </div>
-  )
+      {letters &&
+        letters.map((obj, index) => {
+
+
+          return <Tile key={index} letter={obj.letter} state={obj.state} />;
+        })}
+    </div>
+  );
 }
 
-export default Row
+export default Row;

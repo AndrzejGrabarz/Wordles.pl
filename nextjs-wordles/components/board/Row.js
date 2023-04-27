@@ -1,16 +1,13 @@
 import React from 'react'
 import Tile from './Tile'
 
-const DEFAULT_ROW = ['', '', '', '', ''] // leters
-
-const DEFAULT_ROW_2 = [
+let DEFAULT_ROW = [
   {value:"", state:""}, 
   {value:"", state:""}, 
   {value:"", state:""}, 
   {value:"", state:""}, 
   {value:"", state:""}, 
 ]
-
 
 // Stany
 // 1. correct - Na poprawnym miejscu 
@@ -20,15 +17,14 @@ const DEFAULT_ROW_2 = [
 function Row({ board, row, letterState}) {
   
   for(let i = 0; i < DEFAULT_ROW.length; i++) {
-    DEFAULT_ROW_2[i].value = row[i]
-    DEFAULT_ROW_2[i].state = letterState[i].state
+    DEFAULT_ROW[i].value = row[i]
+    DEFAULT_ROW[i].state = letterState[i].state
   }
   
-  console.log("Obecny stan",DEFAULT_ROW_2)
   return (
     <div className="flex gap-3 my-2">
-          {DEFAULT_ROW_2.map((letter) => {
-            return <Tile key={letter.id} letter={letter.value} state = {letter.state}/>
+          {DEFAULT_ROW.map((letter,index) => {
+            return <Tile key={index} letter={letter.value} state={letter.state}/>
           })}
       </div>
   )

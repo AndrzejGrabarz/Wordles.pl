@@ -1,14 +1,13 @@
 import Board from "@/components/board/Board";
 import Keyboard from "@/components/keyboard/Keyboard";
 import { useEffect, useState } from "react";
-import keycode from 'keycode';
-
+import keycode from 'keycode'; //Może się przyda
 
 const CORRECT_WORD = "GORYL"
 
 const SPECIAL_KEYS = ["Enter","ENTER",  "Delete", 'DELETE', 'BACKSPACE']
 
-const ROW_COUNT = 5;
+const ROW_COUNT = 6;
 const COL_COUNT = 5;
 
 const DEFAULT_STATE = ['', '', '', '', '', '',]
@@ -48,10 +47,6 @@ useEffect(() => {
 //======================================================
 
   useEffect(() => {
-
-    
-      console.log(board)
-
     if(!isSpecialKey(keyboardKey)) {
       updateBoard(keyboardKey);
     }else  if(keyboardKey === "Delete" ||keyboardKey ===  "DELETE" || keyboardKey ===  "BACKSPACE") {
@@ -91,14 +86,12 @@ useEffect(() => {
     setBoardState(updatedBoard);
     setKeboardKey("")
   }
-
 //======================================================
 // Sprawdzenie checkWord
 //======================================================
 function isWordCorrect() {
   return board[currentRow] === CORRECT_WORD
 }
-
 //======================================================
 // Porównanie słowa
 //======================================================
@@ -118,17 +111,12 @@ function compare(){
         console.log(USER_WORD[index],"yellow")
         return {value:USER_WORD[index],state:"yellow"}
     
-  
       }else if (!WORD_DRAFTED.includes(USER_WORD[index])) {
         console.log(USER_WORD[index],"grey")
         return {value:USER_WORD[index],state:"grey"}
       }
-
-      
     })
-    
   })
-  console.log(letterState)
 }
 
 function communicateState(stateName) {
@@ -143,7 +131,7 @@ function communicateState(stateName) {
   return (
     <>
       <div className="main">
-        <Board board={board} letterState={letterState} setLetterState={setLetterState}/>
+        <Board board={board} letterState={letterState}/>
         <Keyboard setKeyboardKey={setKeboardKey} />
       </div>
     </>

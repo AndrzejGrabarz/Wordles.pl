@@ -10,7 +10,7 @@ function Row({ board, row}) {
 
   return (
     <div className="flex gap-3 my-2">
-          {row.map((letter) => {
+          {row && row.map((letter) => {
             return <Tile key={letter.id} letter={letter}/>
           })}
       </div>

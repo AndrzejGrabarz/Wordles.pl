@@ -6,30 +6,16 @@ import {
   CORRECT_WORD,
   ROW_COUNT,
   COL_COUNT,
-  LETTERS_ALLOWED,
+  GAME_MSGS,
+  isLetter,
+  prepareBoard,
 } from '@/utils/words';
 
-const GAME_MSGS = {
-  win: 'Wygrałeś! Gratulacje.',
-  loss: 'Niestety, fiasko. Zagraj jeszcze raz.',
-};
-
-function prepareBoard(rowCount, colCount) {
-  return [...Array(rowCount).keys()].map((_) => {
-    return {
-      checked: false,
-      letters: [],
-    };
-  });
-}
-
 export default function Home() {
-  let [board, setBoardState] = useState(prepareBoard(ROW_COUNT, COL_COUNT));
+  let [board, setBoardState] = useState(prepareBoard());
 
   const [keyboardKey, setKeboardKey] = useState('');
   const [currentRow, setCurrentRow] = useState(0);
-
-  const isLetter = (key) => LETTERS_ALLOWED.includes(key.toUpperCase());
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -44,9 +30,10 @@ export default function Home() {
       board[currentRow].checked = true;
       setBoardState([...board]);
       // Sprawdzamy możliwość wygranej po przejściu do kolejnego rzędu.
-      if (board[currentRow].letters.join('') === CORRECT_WORD) return communicateState(GAME_MSGS.win);
-      // Na koniec informujemy i przegranej.
-      if (ROW_COUNT === currentRow + 1) return communicateState(GAME_MSGS.loss);
+      if (board[currentRow].letters.join('') === CORRECT_WORD)
+        return alert(GAME_MSGS.win);
+      // Na koniec informujemy o przegranej.
+      if (ROW_COUNT === currentRow + 1) return alert(GAME_MSGS.loss);
       // Wiersz przesuwa się tylko jeśli gracz nie przegrał/wygrał
       setCurrentRow(currentRow + 1);
     }
@@ -61,14 +48,6 @@ export default function Home() {
     // Umożliwia Reactowi porównanie dwóch wersji board
     setBoardState([...board]);
   };
-
-  function communicateState(msg) {
-    return alert(msg);
-  }
-
-  function isWordCorrect() {
-    return board[currentRow].letters === CORRECT_WORD;
-  }
 
   return (
     <>

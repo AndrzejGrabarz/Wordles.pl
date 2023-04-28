@@ -8,20 +8,15 @@ import { COL_COUNT } from '@/utils/words';
 // 2. wrong - Nie na poprawnym miejscu ale w slowie niebieska
 // 3. missing - Nie w slowie to szara
 
+let emptyRow = [...Array(COL_COUNT).keys()].map((_) => '');
+
 function Row({ row }) {
-  let letters = row.lettersWithState;
-  let typedWord = row.userTypedWord;
-  if (typedWord.length < COL_COUNT) {
-    letters = typedWord.split('').map((letter) => {
-      return { letter: letter, state: 'gray' };
-    });
-  }
+  let letters = [...row.letters, ...emptyRow].slice(0, COL_COUNT);
   return (
     <div className="flex gap-3 my-2">
-      {row &&
-        letters.map((el, index) => {
-          return <Tile key={index} letter={el.letter} state={el.state} />;
-        })}
+      {letters.map((letter, index) => {
+        return <Tile key={index} index={index} letter={letter} checked={row.checked} />;
+      })}
     </div>
   );
 }

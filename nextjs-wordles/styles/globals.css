@@ -75,3 +75,8 @@ input {
 .state-colour-grey {
   background-color: grey;
 }
+
+.state-colour-default {
+  background-color: white;
+}
+

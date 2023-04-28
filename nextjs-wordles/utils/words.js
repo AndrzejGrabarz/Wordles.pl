@@ -7,44 +7,52 @@ export const GAME_MSGS = {
 };
 export const SPECIAL_KEYS = ['enter', 'delete', 'meta', 'tab', ''];
 export const LETTERS_ALLOWED = [
-  'Q',
-  'W',
-  'E',
-  'R',
-  'T',
-  'Y',
-  'U',
-  'I',
-  'O',
-  'P',
-  'A',
-  'S',
-  'D',
-  'F',
-  'G',
-  'H',
-  'J',
-  'K',
-  'L',
-  'Z',
-  'X',
-  'C',
-  'V',
-  'B',
-  'N',
-  'M',
-  'Ą',
-  'Ć',
-  'Ę',
-  'Ł',
-  'Ń',
-  'Ó',
-  'Ś',
-  'Ź',
-  'Ż',
+  'q',
+  'w',
+  'e',
+  'r',
+  't',
+  'y',
+  'u',
+  'i',
+  'o',
+  'p',
+  'a',
+  's',
+  'd',
+  'f',
+  'g',
+  'h',
+  'j',
+  'k',
+  'l',
+  'z',
+  'x',
+  'c',
+  'v',
+  'b',
+  'n',
+  'm',
+  'ą',
+  'ć',
+  'ę',
+  'ł',
+  'ń',
+  'ó',
+  'ś',
+  'ź',
+  'ż',
 ];
 
-export const isLetter = (key) => LETTERS_ALLOWED.includes(key.toUpperCase());
+export const KEYBOARD = [
+  [...LETTERS_ALLOWED.slice(0, 10)],
+  [...LETTERS_ALLOWED.slice(10, 19)],
+  ['Enter', ...LETTERS_ALLOWED.slice(19, 26), 'Delete'],
+  [...LETTERS_ALLOWED.slice(26, 35)],
+];
+
+export const isLetter = (key) => LETTERS_ALLOWED.includes(key);
+
 export const prepareBoard = () => {
   return [...Array(ROW_COUNT).keys()].map((_) => {
     return {
@@ -52,4 +60,8 @@ export const prepareBoard = () => {
       letters: [],
     };
   });
+};
+
+export const getTimestampInSeconds = () => {
+  return Math.floor(Date.now() / 1000);
 };

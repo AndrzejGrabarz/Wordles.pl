@@ -1,13 +1,9 @@
 import React from 'react';
 
-function Key({ letter, setKeyboardKey }) {
-  const updateKeyboardKey = (event) => {
-    setKeyboardKey(event.target.innerHTML);
-  };
-
+function Key({ letter, handleKeyPress }) {
   return (
     <>
-      <div onClick={updateKeyboardKey} id={letter} className={'keyboard_block'}>
+      <div onClick={handleKeyPress} id={letter} className={'keyboard_block'}>
         {letter}
       </div>
     </>

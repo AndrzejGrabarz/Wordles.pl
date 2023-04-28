@@ -1,7 +1,6 @@
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import { useEffect, useState } from 'react';
-
 import {
   CORRECT_WORD,
   ROW_COUNT,
@@ -13,20 +12,36 @@ import {
 
 export default function Home() {
   let [board, setBoardState] = useState(prepareBoard());
-
-  const [keyboardKey, setKeboardKey] = useState('');
-  const [currentRow, setCurrentRow] = useState(0);
-
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      setKeboardKey(event.key.toUpperCase());
-    };
-    document.addEventListener('keydown', handleKeyPress);
+  let [keyboardPress, setKeyboardPress] = useState({
+    letter: '',
+    // Musimy przekazać obiekt, żeby móc klikać tą samą literę
+    timestamp: null,
   });
+  let [currentRow, setCurrentRow] = useState(0);
+
+  const handleKeyPress = (event) => {
+    // Wyczyść stan, żeby umożliwić retrigger na tej samej literze.
+    const letter = event.key ? event.key : event.target.innerHTML;
+
+    setKeyboardPress({
+      letter: letter.toLowerCase(),
+      // Musimy przekazać obiekt, żeby móc klikać tą samą literę
+      timestamp: event,
+    });
+  };
 
   useEffect(() => {
-    if (isLetter(keyboardKey)) updateBoard(keyboardKey);
-    if (keyboardKey.toLowerCase() === 'enter') {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      // Removing event on every click
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [keyboardPress]);
+
+  useEffect(() => {
+    if (isLetter(keyboardPress.letter)) addLetter(keyboardPress);
+
+    if (keyboardPress.letter === 'enter') {
       board[currentRow].checked = true;
       setBoardState([...board]);
       // Sprawdzamy możliwość wygranej po przejściu do kolejnego rzędu.
@@ -37,11 +52,15 @@ export default function Home() {
       // Wiersz przesuwa się tylko jeśli gracz nie przegrał/wygrał
       setCurrentRow(currentRow + 1);
     }
-  }, [keyboardKey]);
 
-  const updateBoard = () => {
+    if (keyboardPress.letter === 'backspace') {
+      deleteLetter();
+    }
+  }, [keyboardPress]);
+
+  const addLetter = () => {
     // Dodajemy nowe litery do pustej listy
-    board[currentRow].letters.push(keyboardKey);
+    board[currentRow].letters.push(keyboardPress.letter);
     // Upewniamy się, że nie możemy dodać więcej niż mamy kolumn
     board[currentRow].letters.slice(0, COL_COUNT);
     // Rozpakowując kopiujemy poprzez stworzenie nowego obiektu.
@@ -49,11 +68,16 @@ export default function Home() {
     setBoardState([...board]);
   };
 
+  const deleteLetter = () => {
+    board[currentRow].letters.splice(-1);
+    setBoardState([...board]);
+  };
+
   return (
     <>
       <div className="main">
         <Board board={board} />
-        <Keyboard setKeyboardKey={setKeboardKey} />
+        <Keyboard handleKeyPress={handleKeyPress} />
       </div>
     </>
   );

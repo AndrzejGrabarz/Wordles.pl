@@ -27,6 +27,10 @@ input {
   border-radius: 0.3rem;
 }
 
+#Delete, #Enter {
+  min-width: 10rem;
+}
+
 .keyboard_block {
   width: 4.5rem;
   height: 4.5rem;
@@ -38,29 +42,7 @@ input {
   justify-content: center;
   border-radius: 0.3rem;
   cursor: pointer;
-}
-
-#Enter,
-#Delete,
-#A,
-#S,
-#D,
-#F,
-#A,
-#G,
-#H,
-#J,
-#K,
-#L,
-#Ą,
-#Ć,
-#Ę,
-#Ł,
-#Ń,
-#Ó,
-#Ś,
-#Ź,
-#Ż {
+  text-transform: capitalize;
   flex-grow: 1;
 }
 

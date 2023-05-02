@@ -1,5 +1,5 @@
 import React from 'react'
-import keyboardRow from './keyBoardRow';
+import KeyboardRow from "./keyBoardRow";
 
 function Keyboard({ setKeyboardKey }) {
   
@@ -13,7 +13,7 @@ function Keyboard({ setKeyboardKey }) {
   return (
     <div className='flex flex-col my-10'> 
       {KEYBOARD.map((row)=>{
-        return <keyboardRow key={row.id} rowLine={row} setKeyboardKey={setKeyboardKey}/>
+        return <KeyboardRow key={row.id} rowLine={row} setKeyboardKey={setKeyboardKey}/>
       })}
     </div>
   )

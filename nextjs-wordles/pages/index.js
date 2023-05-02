@@ -19,7 +19,7 @@ export default function Home() {
   
   let [board, setBoardState] = useState(DEFAULT_STATE );
 
-  const [keyboardKey, setKeboardKey] = useState('');
+  const [keyboardKey, setKeyboardKey] = useState('');
   const [currentRow, setCurrentRow] = useState(0);
   const [currentObject, setCurrentObject] = useState(0);
   
@@ -41,13 +41,13 @@ useEffect(() => {
     const letter = event.key
     if(isAllowedLetter(letter)) {
       console.log("Naciśnięto klawisz: " + letter);
-     setKeboardKey(letter.toUpperCase())
+     setKeyboardKey(letter.toUpperCase())
     }else {
       console.log("Nie ma")
     } 
   }
   document.addEventListener("keydown", handleKeyPress)
-  setKeboardKey("")
+  setKeyboardKey("")
 })
 
 //======================================================
@@ -112,7 +112,7 @@ useEffect(() => {
 
     setBoardState(updatedBoard);
     setCurrentObject(objcetToDelete)
-    setKeboardKey("")
+    setKeyboardKey("")
   }
 //======================================================
 // Sprawdzenie checkWord
@@ -158,7 +158,7 @@ function endgame () {
     <>
       <div className="main">
         <Board board={board} />
-        <Keyboard setKeyboardKey={setKeboardKey} />
+        <Keyboard setKeyboardKey={setKeyboardKey} />
       </div>
     </>
   )

@@ -1,12 +1,16 @@
 import Board from "@/components/board/Board";
 import Keyboard from "@/components/keyboard/Keyboard";
 import { useEffect, useState } from "react";
-import { ALLOWED_LETTERS,  WORD_TO_GUESS} from "@/utils/variables";
+import { 
+  ALLOWED_LETTERS, 
+  WORD_TO_GUESS,
+  ROW_COUNT,
+  COL_COUNT
+} from "@/utils/variables";
 
 const SPECIAL_KEYS = ["Enter","ENTER",  "Delete", 'DELETE', 'BACKSPACE', "ALTGRAPH", "CONTROL"]
 
-const ROW_COUNT = 6;
-const COL_COUNT = 5;
+
 
 let DEFAULT_STATE = Array.from({length: ROW_COUNT}, () => Array.from({length: COL_COUNT}, () => ({value:"", state:""})))
 //let DEFAULT_STATE = Array.from((Array(ROW_COUNT)), () => Array.from((Array(COL_COUNT), () => FINAL_VALUE_1))

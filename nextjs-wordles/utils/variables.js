@@ -60,3 +60,6 @@ export const WORD_DRAFTED= [
 ]
 
 export let WORD_TO_GUESS = WORD_DRAFTED[Math.floor(Math.random()*WORD_DRAFTED.length)]
+
+export const ROW_COUNT = 6;
+export const COL_COUNT = 5; 

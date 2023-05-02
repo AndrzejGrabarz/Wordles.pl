@@ -1,7 +1,7 @@
 import React from 'react'
 import Key from "./Key";
 
-function KeyboardRow({ rowLine, setKeyboardKey }) {
+function keyboardRow({ rowLine, setKeyboardKey }) {
   
   return (
     <>
@@ -17,4 +17,4 @@ function KeyboardRow({ rowLine, setKeyboardKey }) {
   )
 }
 
-export default KeyboardRow
+export default keyboardRow

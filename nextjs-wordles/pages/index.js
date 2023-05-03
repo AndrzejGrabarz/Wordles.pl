@@ -2,12 +2,17 @@ import Board from "@/components/board/Board";
 import Keyboard from "@/components/keyboard/Keyboard";
 import { useEffect, useState } from "react";
 import { 
+  //variables
   ALLOWED_LETTERS, 
   WORD_TO_GUESS,
   ROW_COUNT,
-  COL_COUNT
+  COL_COUNT,
+  //funcitons
+  endgame,
+  nextGameLose,
+  nextGameWin
 } from "@/utils/variables";
-
+console.log(WORD_TO_GUESS)
 const SPECIAL_KEYS = ["Enter","ENTER",  "Delete", 'DELETE', 'BACKSPACE', "ALTGRAPH", "CONTROL"]
 
 
@@ -32,12 +37,6 @@ export default function Home() {
 //======================================================
 useEffect(() => {
   const handleKeyPress = (event) => {
-    // if( event.altKey) {
-    //   document.removeEventListener("keydown", handleKeyPress)
-    // }else {
-    //   console.log("Naciśnięto klawisz: " + event.key);
-    //   setKeboardKey(event.key.toUpperCase())
-    // }
     const letter = event.key
     if(isAllowedLetter(letter)) {
       console.log("Naciśnięto klawisz: " + letter);
@@ -83,23 +82,17 @@ useEffect(() => {
   function verifyState() {
     if(isWordCorrect()) {
        compare()
-       setTimeout(()=>{
-        if(confirm("You win!!!!!!!! Dou you want one more game?")){
-          endgame()
-        }else{
-          alert("You sure?")
-        }
-       },500)
+       nextGameWin()
     }
-
-    if(!isWordCorrect()) {
-      communicateState('lose')
+    if(!isWordCorrect() && currentRow === 5){
       compare()
-    }
+      nextGameLose()
+    }else{
+      compare()
+        }
+
     setCurrentRow(currentRow + 1)
     setCurrentObject(0)
-    console.log(board)
-    console.log(board[currentRow].value)
   }
 //======================================================
 // Sprawdzenie checkWord
@@ -142,14 +135,7 @@ function compare(){
   })
 }
 
-function communicateState(stateName) {
-  if (stateName === 'win') {
-    alert('Wygrałeś')
-  }
-  if (stateName === 'lose') {
-    alert('Nie wygrałeś')
-  }
-} 
+
 function endgame () {
   window.location.reload();
 }

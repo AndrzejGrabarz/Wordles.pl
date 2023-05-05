@@ -49,10 +49,19 @@ input {
 }
 
 #Enter,#Delete,
-#A,#S,#D,#F,#A,#G,#H,#J,#K,#L,
-#Ą,#Ć,#Ę,#Ł,#Ń,#Ó,#Ś,#Ź,#Ż {
+#a,#s,#d,#f,#g,#h,#j,#k,#l,
+#ą,#ć,#ę,#ł,#ń,#ó,#ś,#ź,#ż {
     flex-grow:1;
 }
+
+
+#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,
+#a, #s, #d, #f, #g, #h, #j, #k, #l,
+ #z, #x, #c, #v, #b, #n, #m,
+#ą, #ć, #ę, #ł, #ń, #ó, #ś, #ź, #ż {
+    text-transform: uppercase;
+}
+
 
 
 
@@ -66,4 +75,8 @@ input {
 
 .state-colour-grey {
     background-color:grey
+}
+
+.big-letter {
+    text-transform: uppercase;
 }

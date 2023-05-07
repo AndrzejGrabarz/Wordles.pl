@@ -10,9 +10,36 @@ import {
   // funcitons
 } from '@/utils/variables';
 
+// let isSaving = false;
+// let isDrawing = false;
+// const isFetching = false;
+
+// const Dicionary = fetch('/słownik.txt')
+//   .then((response) => response.text())
+//   .then((text) => text);
+
+// const saveDicionary = async () => {
+//   if (isSaving) return;
+//   isSaving = true;
+//   const data = await Dicionary;
+//   const first = data.split('\n');
+//   const second = first.filter((word) => word.length === COL_COUNT);
+//   return second;
+// };
+
+// const drawFromTheDictionary = async () => {
+//   if (isDrawing) return;
+//   isDrawing = true;
+//   const data = await saveDicionary();
+//   const gameWord = data[Math.floor(Math.random() * data.length)];
+//   console.log(gameWord);
+//   return gameWord;
+// };
+
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
 const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' })));
 const LAST_ROW = ROW_COUNT - 1;
+
 const WORD_TO_GUESS = () => WORD_DRAFT[Math.floor(Math.random() * WORD_DRAFT.length)];
 
 export default function Home() {
@@ -20,7 +47,7 @@ export default function Home() {
   const [keyboardKey, setKeyboardKey] = useState('');
   const [currentRow, setCurrentRow] = useState(0);
   const [currentObject, setCurrentObject] = useState(0);
-  const [słow, setSłow] = useState(WORD_TO_GUESS());
+  const [word, setWord] = useState(WORD_TO_GUESS());
   const isSpecialKey = (key) => SPECIAL_KEYS.includes(key);
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
@@ -55,13 +82,14 @@ export default function Home() {
 
   function isWordCorrect() {
     const USER_WORD = board[currentRow].map((letter) => letter.value).join('');
-    return USER_WORD === słow;
+    return USER_WORD === word;
   }
 
   function compare() {
-    const WORD_DRAFTED = słow.split('');
+    const WORD_DRAFTED = word.split('');
     const USER_WORD = board[currentRow].map((letter) => letter.value);
     const currentRowState = board[currentRow];
+
     currentRowState.map((object, index) => {
       switch (true) {
         case WORD_DRAFTED[index] === USER_WORD[index]:
@@ -81,13 +109,22 @@ export default function Home() {
   function endGame() {
     setBoardState(Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))));
     // DEFAULT_STATE z jakiegoś powdu nie podmmienia tablicy na nową
-    setSłow(WORD_TO_GUESS());
+    setWord(WORD_TO_GUESS());
     setCurrentObject(0);
     setCurrentRow(0);
     setKeyboardKey('');
   }
 
+  function giveAllLetters() {
+    const USER_WORD = board[currentRow].map((letter) => letter.value);
+    return USER_WORD.includes('');
+  }
+
   function verifyState() {
+    if (giveAllLetters()) {
+      alert('You must give all five letters');
+      return;
+    }
     if (isWordCorrect()) {
       compare();
       setTimeout(() => {
@@ -132,6 +169,15 @@ export default function Home() {
       verifyState();
     }
   }, [keyboardKey]);
+
+  // fetch('C:\Users\Ja\OneDrive\Pulpit\Wordles\Wordles.pl\nowapliku.txt')
+  // .then(response => response.text())
+  // .then(data => {
+  //   const words = data.split('\n'); // dzielimy zawartość pliku na słowa (każde słowo w nowej linii)
+  //   const fiveLetterWords = words.filter(word => word.length === 5);
+  //   console.log(fiveLetterWords); // wyświetlamy słowa w konsoli
+  // });
+
   return (
     <div className="main">
       <Board board={board} />

@@ -6,7 +6,7 @@ function Key({ letter, setKeyboardKey }) {
   };
 
   return (
-      <div onClick={updateKeyboardKey} id={letter} className={"keyboard_block"}>{letter}</div>
+      <div onClick={updateKeyboardKey} id={letter} className={ "keyboard_block" }>{letter}</div>
   );
 }
 

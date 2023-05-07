@@ -66,17 +66,48 @@ input {
 
 
 .state-colour-green {
-    background-color:green
+    animation: rotateAndColor_green 2s forwards;
 }
 
 .state-colour-yellow {
-    background-color:yellow
+    animation: rotateAndColor_yellow 2s forwards;
 }
 
 .state-colour-grey {
-    background-color:grey
+    animation: rotateAndColor_grey 2s forwards;
 }
 
 .big-letter {
     text-transform: uppercase;
+}
+
+
+@keyframes rotateAndColor_green {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: green;
+    }
+}
+
+@keyframes rotateAndColor_yellow {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: yellow;
+    }
+}
+
+@keyframes rotateAndColor_grey {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: grey;
+    }
 }

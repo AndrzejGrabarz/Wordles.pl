@@ -1,57 +1,56 @@
 import { useEffect, useState } from 'react';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
+import Nightmode from '@/components/window/Nightmode';
+import { drawFromTheDictionary, saveDicionary } from '@/public/słownik';
 import {
   // variables
   ALLOWED_LETTERS,
-  WORD_DRAFT,
   ROW_COUNT,
   COL_COUNT,
   // funcitons
 } from '@/utils/variables';
 
-// let isSaving = false;
-// let isDrawing = false;
-// const isFetching = false;
-
-// const Dicionary = fetch('/słownik.txt')
-//   .then((response) => response.text())
-//   .then((text) => text);
-
-// const saveDicionary = async () => {
-//   if (isSaving) return;
-//   isSaving = true;
-//   const data = await Dicionary;
-//   const first = data.split('\n');
-//   const second = first.filter((word) => word.length === COL_COUNT);
-//   return second;
-// };
-
-// const drawFromTheDictionary = async () => {
-//   if (isDrawing) return;
-//   isDrawing = true;
-//   const data = await saveDicionary();
-//   const gameWord = data[Math.floor(Math.random() * data.length)];
-//   console.log(gameWord);
-//   return gameWord;
-// };
-
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
 const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' })));
 const LAST_ROW = ROW_COUNT - 1;
 
-const WORD_TO_GUESS = () => WORD_DRAFT[Math.floor(Math.random() * WORD_DRAFT.length)];
+// const WORD_TO_GUESS = () => WORD_DRAFT[Math.floor(Math.random() * WORD_DRAFT.length)];
 
 export default function Home() {
   const [board, setBoardState] = useState(DEFAULT_STATE);
   const [keyboardKey, setKeyboardKey] = useState('');
   const [currentRow, setCurrentRow] = useState(0);
   const [currentObject, setCurrentObject] = useState(0);
-  const [word, setWord] = useState(WORD_TO_GUESS());
+  const [word, setWord] = useState('');
+  const [dicionary, setDicionary] = useState([]);
+  const [error, setError] = useState({ key: '', value: 0 });
   const isSpecialKey = (key) => SPECIAL_KEYS.includes(key);
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
+
+  useEffect(() => {
+    const getWord = async () => {
+      const newWord = await drawFromTheDictionary();
+      setWord(newWord);
+    };
+    getWord();
+  }, []);
+
+  const getWord = async () => {
+    const newWord = await drawFromTheDictionary();
+    setWord(newWord);
+  };
+
+  useEffect(() => {
+    const doesTheWordExist = async () => {
+      const WORD_5_LETTER = await saveDicionary();
+      setDicionary(WORD_5_LETTER);
+    };
+    doesTheWordExist();
+  }, []);
+
   // =====================================================
   // Funkcja handleKeyPress - pozwala keyboardKey odbierać wartości z klawiatury fizycznej
   //= =====================================================
@@ -60,19 +59,23 @@ export default function Home() {
       const letter = event.key;
       if (isAllowedLetter(letter)) {
         setKeyboardKey(letter);
+        setError({ key: letter, value: error.value + 1 });
       }
     };
     document.addEventListener('keydown', handleKeyPress);
     setKeyboardKey('');
-  });
-
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [error.value]);
+  console.log(error)
   // =====================================================
   // Aktualizowanie stanu tablicy
   //= =====================================================
   const updateBoard = (key) => {
     const updatedBoard = [...board];
     let updatedCurrentObject = currentObject;
-    if (updatedCurrentObject >= COL_COUNT) updatedCurrentObject = COL_COUNT;
+    if (updatedCurrentObject >= COL_COUNT - 1) updatedCurrentObject = COL_COUNT - 1;
     if (board[currentRow][COL_COUNT - 1].value === '') {
       updatedBoard[currentRow][updatedCurrentObject] = { value: key, state: '' };
     }
@@ -87,7 +90,7 @@ export default function Home() {
 
   function compare() {
     const WORD_DRAFTED = word.split('');
-    const USER_WORD = board[currentRow].map((letter) => letter.value);
+    const USER_WORD = board[currentRow].map((letter) => letter.value);// Czasami tutaj wyrzuca błąd
     const currentRowState = board[currentRow];
 
     currentRowState.map((object, index) => {
@@ -105,11 +108,10 @@ export default function Home() {
       }
     });
   }
-
   function endGame() {
     setBoardState(Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))));
     // DEFAULT_STATE z jakiegoś powdu nie podmmienia tablicy na nową
-    setWord(WORD_TO_GUESS());
+    getWord();
     setCurrentObject(0);
     setCurrentRow(0);
     setKeyboardKey('');
@@ -125,13 +127,18 @@ export default function Home() {
       alert('You must give all five letters');
       return;
     }
+    const typedWord = board[currentRow].map((letter) => letter.value).join('');
+    if (!dicionary.includes(typedWord)) {
+      alert('Słowo nie wystepuje w słowniku');
+      return;
+    }
     if (isWordCorrect()) {
       compare();
       setTimeout(() => {
         if (confirm('You win!!!!!!!! Dou you want one more game?')) {
           endGame();
         }
-      }, 400);
+      }, 2200);
     }
     if (!isWordCorrect() && currentRow === LAST_ROW) {
       compare();
@@ -139,13 +146,14 @@ export default function Home() {
         if (confirm('You lose!!!!!!!! Dou you want one more game?')) {
           endGame();
         }
-      }, 400);
+      }, 2200);
     } else {
       compare();
     }
     setCurrentRow(currentRow + 1);
     setCurrentObject(0);
   }
+
   // =====================================================
   // Sprawdzenie checkWord
   // =====================================================
@@ -160,28 +168,21 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (keyboardKey === '') return;
-    if (!isSpecialKey(keyboardKey)) {
-      updateBoard(keyboardKey);
-    } else if (keyboardKey === 'Delete' || keyboardKey === 'Backspace') {
+    if (error.key === '') return;
+    if (!isSpecialKey(error.key)) {
+      updateBoard(error.key);
+    } else if (error.key === 'Delete' || error.key === 'Backspace') {
       deleteLetter();
-    } else if (keyboardKey === 'Enter') {
+    } else if (error.key === 'Enter') {
       verifyState();
     }
-  }, [keyboardKey]);
-
-  // fetch('C:\Users\Ja\OneDrive\Pulpit\Wordles\Wordles.pl\nowapliku.txt')
-  // .then(response => response.text())
-  // .then(data => {
-  //   const words = data.split('\n'); // dzielimy zawartość pliku na słowa (każde słowo w nowej linii)
-  //   const fiveLetterWords = words.filter(word => word.length === 5);
-  //   console.log(fiveLetterWords); // wyświetlamy słowa w konsoli
-  // });
+  }, [error.value]);
 
   return (
-    <div className="main">
+    <div id="main" className="main">
+      <Nightmode />
       <Board board={board} />
-      <Keyboard setKeyboardKey={setKeyboardKey} />
+      <Keyboard setKeyboardKey={setKeyboardKey} setError={setError} />
     </div>
   );
 }

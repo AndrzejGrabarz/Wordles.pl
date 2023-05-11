@@ -17,9 +17,6 @@ input {
     min-height: 100vh;
   }
 
-
-
-
 .board_block {
     width: 4rem;
     height: 4rem;
@@ -110,4 +107,12 @@ input {
         transform: rotateX(360deg);
         background-color: grey;
     }
+}
+
+.night {
+    background-color:black;
+}
+
+.white {
+    color:white;
 }

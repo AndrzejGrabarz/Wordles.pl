@@ -3,23 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
+
+input {
+    all:unset;
+    text-align:center;
+}
+
 .main {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    padding: 4rem;
+    padding: 5rem;
     min-height: 100vh;
   }
-
-.linia {
-    width: 100%;
-    height: 5px;
-    background-color: black;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
 
 .board_block {
     width: 4rem;
@@ -37,8 +33,8 @@
 
 
 .keyboard_block {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 4.5rem;
+    height: 4.5rem;
     background-color: rgb(224, 223, 223);
     border: 1px rgb(217, 213, 213) solid;
     display: flex;
@@ -46,4 +42,77 @@
     align-items: center;
     justify-content: center;
     border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+#Enter,#Delete,
+#a,#s,#d,#f,#g,#h,#j,#k,#l,
+#ą,#ć,#ę,#ł,#ń,#ó,#ś,#ź,#ż {
+    flex-grow:1;
+}
+
+
+#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,
+#a, #s, #d, #f, #g, #h, #j, #k, #l,
+ #z, #x, #c, #v, #b, #n, #m,
+#ą, #ć, #ę, #ł, #ń, #ó, #ś, #ź, #ż {
+    text-transform: uppercase;
+}
+
+
+
+
+.state-colour-green {
+    animation: rotateAndColor_green 2s forwards;
+}
+
+.state-colour-yellow {
+    animation: rotateAndColor_yellow 2s forwards;
+}
+
+.state-colour-grey {
+    animation: rotateAndColor_grey 2s forwards;
+}
+
+.big-letter {
+    text-transform: uppercase;
+}
+
+
+@keyframes rotateAndColor_green {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: green;
+    }
+}
+
+@keyframes rotateAndColor_yellow {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: yellow;
+    }
+}
+
+@keyframes rotateAndColor_grey {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: grey;
+    }
+}
+
+.night {
+    background-color:black;
+}
+
+.white {
+    color:white;
 }

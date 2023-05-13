@@ -1,9 +1,8 @@
 import React from 'react';
 
-function Key({ letter, setKeyboardKey, setError }) {
+function Key({ letter, setKey }) {
   const updateKeyboardKey = (event) => {
-    setKeyboardKey(event.target.innerHTML);
-    // setError({ key: event.target.innerHTML, value: 1 });
+    setKey({ letter: event.target.innerHTML });
   };
 
   return (

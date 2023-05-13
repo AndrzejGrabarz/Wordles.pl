@@ -19,13 +19,12 @@ const LAST_ROW = ROW_COUNT - 1;
 
 export default function Home() {
   const [board, setBoardState] = useState(DEFAULT_STATE);
-  const [keyboardKey, setKeyboardKey] = useState('');
   const [currentRow, setCurrentRow] = useState(0);
   const [currentObject, setCurrentObject] = useState(0);
   const [word, setWord] = useState('');
   const [dicionary, setDicionary] = useState([]);
-  const [error, setError] = useState({ key: '', value: 0 });
-  const isSpecialKey = (key) => SPECIAL_KEYS.includes(key);
+  const [key, setKey] = useState({ letter: '' });
+  const isSpecialKey = (letter) => SPECIAL_KEYS.includes(letter);
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
@@ -58,26 +57,25 @@ export default function Home() {
     const handleKeyPress = (event) => {
       const letter = event.key;
       if (isAllowedLetter(letter)) {
-        setKeyboardKey(letter);
-        setError({ key: letter, value: error.value + 1 });
+        setKey({ letter });
       }
     };
     document.addEventListener('keydown', handleKeyPress);
-    setKeyboardKey('');
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
-  }, [error.value]);
-  console.log(error)
+  }, [key]);
+
+  console.log(key);
   // =====================================================
   // Aktualizowanie stanu tablicy
   //= =====================================================
-  const updateBoard = (key) => {
+  const updateBoard = (letter) => {
     const updatedBoard = [...board];
     let updatedCurrentObject = currentObject;
     if (updatedCurrentObject >= COL_COUNT - 1) updatedCurrentObject = COL_COUNT - 1;
     if (board[currentRow][COL_COUNT - 1].value === '') {
-      updatedBoard[currentRow][updatedCurrentObject] = { value: key, state: '' };
+      updatedBoard[currentRow][updatedCurrentObject] = { value: letter, state: '' };
     }
     setBoardState(updatedBoard);
     setCurrentObject(updatedCurrentObject + 1);
@@ -114,7 +112,6 @@ export default function Home() {
     getWord();
     setCurrentObject(0);
     setCurrentRow(0);
-    setKeyboardKey('');
   }
 
   function giveAllLetters() {
@@ -164,25 +161,24 @@ export default function Home() {
     updatedBoard[currentRow][objcetToDelete].value = '';
     setBoardState(updatedBoard);
     setCurrentObject(objcetToDelete);
-    setKeyboardKey('');
   };
 
   useEffect(() => {
-    if (error.key === '') return;
-    if (!isSpecialKey(error.key)) {
-      updateBoard(error.key);
-    } else if (error.key === 'Delete' || error.key === 'Backspace') {
+    if (key.letter === '') return;
+    if (!isSpecialKey(key.letter)) {
+      updateBoard(key.letter);
+    } else if (key.letter === 'Delete' || key.letter === 'Backspace') {
       deleteLetter();
-    } else if (error.key === 'Enter') {
+    } else if (key.letter === 'Enter') {
       verifyState();
     }
-  }, [error.value]);
+  }, [key]);
 
   return (
     <div id="main" className="main">
       <Nightmode />
       <Board board={board} />
-      <Keyboard setKeyboardKey={setKeyboardKey} setError={setError} />
+      <Keyboard setKey={setKey} />
     </div>
   );
 }

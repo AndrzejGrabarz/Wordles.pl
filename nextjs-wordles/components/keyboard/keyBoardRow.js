@@ -1,16 +1,11 @@
 import React from 'react';
 import Key from './Key';
 
-function KeyboardRow({ rowLine, setKeyboardKey, setError }) {
+function KeyboardRow({ rowLine, setKey }) {
   return (
     <div className=" flex gap-2 my-1">
       {rowLine.map((letter) => (
-        <Key
-          key={letter.id}
-          letter={letter}
-          setKeyboardKey={setKeyboardKey}
-          setError={setError}
-        />
+        <Key key={letter.id} letter={letter} setKey={setKey} />
       ))}
     </div>
   );

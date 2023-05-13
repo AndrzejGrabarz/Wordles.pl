@@ -66,7 +66,6 @@ export default function Home() {
     };
   }, [key]);
 
-  console.log(key);
   // =====================================================
   // Aktualizowanie stanu tablicy
   //= =====================================================

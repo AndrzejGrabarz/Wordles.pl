@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/window/Nightmode';
-import { drawFromTheDictionary, saveGameDicionary } from '@/public/słownik';
+import { drawFromTheDictionary, saveGameDictionary } from '@/public/słownik';
 import {
   // variables
   ALLOWED_LETTERS,
@@ -28,7 +28,7 @@ export default function Home() {
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
-  // Słownik
+
   useEffect(() => {
     const getWord = async () => {
       const newWord = await drawFromTheDictionary();
@@ -44,13 +44,11 @@ export default function Home() {
 
   useEffect(() => {
     const doesTheWordExist = async () => {
-      const WORD_5_LETTER = await saveGameDicionary();
+      const WORD_5_LETTER = await saveGameDictionary();
       setDicionary(WORD_5_LETTER);
     };
     doesTheWordExist();
   }, []);
-
-  // Słownik
 
   // =====================================================
   // Funkcja handleKeyPress - pozwala keyboardKey odbierać wartości z klawiatury fizycznej

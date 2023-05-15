@@ -67,7 +67,6 @@ export default function Home() {
     };
   }, [key]);
 
-  console.log(key);
   // =====================================================
   // Aktualizowanie stanu tablicy
   //= =====================================================
@@ -177,8 +176,10 @@ export default function Home() {
 
   return (
     <div id="main" className="main">
-      <Nightmode />
-      <RestartGame onClick={endGame} />
+      <div className='flex my-4'>
+        <Nightmode />
+        <RestartGame setCurrentRow={setCurrentRow} setCurrentObject={setCurrentObject} getWord={getWord} setBoardState={setBoardState} ROW_COUNT={ROW_COUNT} COL_COUNT={COL_COUNT}/>
+      </div>
       <Board board={board} />
       <Keyboard setKey={setKey} />
     </div>

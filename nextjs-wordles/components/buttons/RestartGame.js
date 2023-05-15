@@ -1,8 +1,20 @@
 import React from 'react';
+import { ArrowPathIcon } from '@heroicons/react/24/solid'
 
-function RestartGame() {
+function RestartGame({
+  setCurrentRow, setCurrentObject, getWord, setBoardState, COL_COUNT, ROW_COUNT
+}) {
+  const resetGame = () => {
+    setBoardState(Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))));
+    getWord();
+    setCurrentObject(0);
+    setCurrentRow(0);
+  };
+
   return (
-    <button id="btn" className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">Restart</button>
+    <button id="btn" onClick={resetGame} className="text-red-400 border border-red-400 hover:text-white hover:bg-gradient-to-br from-red-400 via-red-500 to-red-600  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+      <ArrowPathIcon className="h-6 w-6" />
+    </button>
   );
 }
 

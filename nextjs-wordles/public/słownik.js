@@ -1,4 +1,4 @@
-const Dicionary = fetch('/słownik.txt')
+const Dicionary = fetch('/slowa.txt')
   .then((response) => response.text())
   .then((text) => text);
 

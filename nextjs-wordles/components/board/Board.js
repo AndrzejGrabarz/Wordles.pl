@@ -3,7 +3,7 @@ import Row from './Row';
 
 function Board({ board }) {
   return (
-    <div className="flex flex-col">
+    <div id="Board" className="flex flex-col justify-center items-center ">
       {board && board.map((row, index) => <Row key={index} row={row} />)}
     </div>
   );

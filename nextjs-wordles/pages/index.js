@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/window/Nightmode';
+import Instruction from '@/components/window/Instruction';
+import InstructionCardEnglish from '@/components/board/InstructionCardEnglish';
 import { drawFromTheDictionary, saveDicionary } from '@/public/słownik';
 import {
   // variables
@@ -66,7 +68,6 @@ export default function Home() {
     };
   }, [key]);
 
-  console.log(key);
   // =====================================================
   // Aktualizowanie stanu tablicy
   //= =====================================================
@@ -175,8 +176,10 @@ export default function Home() {
   }, [key]);
 
   return (
-    <div id="main" className="main">
+    <div id="main" className="main w-full">
       <Nightmode />
+      <Instruction />
+      <InstructionCardEnglish />
       <Board board={board} />
       <Keyboard setKey={setKey} />
     </div>

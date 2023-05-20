@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/window/Nightmode';
-import Instruction from '@/components/window/Instruction';
-import InstructionCard from '@/components/board/InstructionCard';
-import { drawFromTheDictionary, saveDicionary } from '@/public/słownik';
+import RestartGame from '@/components/buttons/RestartGame';
+import wordList from '@/public/słownik_lista.json';
 import {
   // variables
   ALLOWED_LETTERS,
@@ -14,7 +13,9 @@ import {
 } from '@/utils/variables';
 
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
-const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' })));
+const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () =>
+  Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))
+);
 const LAST_ROW = ROW_COUNT - 1;
 
 // const WORD_TO_GUESS = () => WORD_DRAFT[Math.floor(Math.random() * WORD_DRAFT.length)];
@@ -32,24 +33,13 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const getWord = async () => {
-      const newWord = await drawFromTheDictionary();
-      setWord(newWord);
-    };
-    getWord();
-  }, []);
-
-  const getWord = async () => {
-    const newWord = await drawFromTheDictionary();
-    setWord(newWord);
-  };
-
-  useEffect(() => {
-    const doesTheWordExist = async () => {
-      const WORD_5_LETTER = await saveDicionary();
-      setDicionary(WORD_5_LETTER);
-    };
-    doesTheWordExist();
+    const ListOfXLetterWords = wordList.strings.filter(
+      (words) => words.length === COL_COUNT
+    );
+    const gameWord =
+      ListOfXLetterWords[Math.floor(Math.random() * dicionary.length)];
+    setDicionary(ListOfXLetterWords);
+    setWord(gameWord);
   }, []);
 
   // =====================================================
@@ -74,9 +64,13 @@ export default function Home() {
   const updateBoard = (letter) => {
     const updatedBoard = [...board];
     let updatedCurrentObject = currentObject;
-    if (updatedCurrentObject >= COL_COUNT - 1) updatedCurrentObject = COL_COUNT - 1;
+    if (updatedCurrentObject >= COL_COUNT - 1)
+      updatedCurrentObject = COL_COUNT - 1;
     if (board[currentRow][COL_COUNT - 1].value === '') {
-      updatedBoard[currentRow][updatedCurrentObject] = { value: letter, state: '' };
+      updatedBoard[currentRow][updatedCurrentObject] = {
+        value: letter,
+        state: '',
+      };
     }
     setBoardState(updatedBoard);
     setCurrentObject(updatedCurrentObject + 1);
@@ -89,7 +83,7 @@ export default function Home() {
 
   function compare() {
     const WORD_DRAFTED = word.split('');
-    const USER_WORD = board[currentRow].map((letter) => letter.value);// Czasami tutaj wyrzuca błąd
+    const USER_WORD = board[currentRow].map((letter) => letter.value); // Czasami tutaj wyrzuca błąd
     const currentRowState = board[currentRow];
 
     currentRowState.map((object, index) => {
@@ -108,9 +102,13 @@ export default function Home() {
     });
   }
   function endGame() {
-    setBoardState(Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))));
+    setBoardState(
+      Array.from({ length: ROW_COUNT }, () =>
+        Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))
+      )
+    );
     // DEFAULT_STATE z jakiegoś powdu nie podmmienia tablicy na nową
-    getWord();
+    setWord(dicionary[Math.floor(Math.random() * dicionary.length)]);
     setCurrentObject(0);
     setCurrentRow(0);
   }
@@ -125,11 +123,13 @@ export default function Home() {
       alert('You must give all five letters');
       return;
     }
+    // Sprawdzenie
     const typedWord = board[currentRow].map((letter) => letter.value).join('');
     if (!dicionary.includes(typedWord)) {
       alert('Słowo nie wystepuje w słowniku');
       return;
     }
+
     if (isWordCorrect()) {
       compare();
       setTimeout(() => {
@@ -176,10 +176,18 @@ export default function Home() {
   }, [key]);
 
   return (
-    <div id="main" className="main w-full">
-      <Nightmode />
-      <Instruction />
-      <InstructionCard />
+    <div id="main" className="main">
+      <div className="flex my-4">
+        <Nightmode />
+        <RestartGame
+          setCurrentRow={setCurrentRow}
+          setCurrentObject={setCurrentObject}
+          getWord={getWord}
+          setBoardState={setBoardState}
+          ROW_COUNT={ROW_COUNT}
+          COL_COUNT={COL_COUNT}
+        />
+      </div>
       <Board board={board} />
       <Keyboard setKey={setKey} />
     </div>

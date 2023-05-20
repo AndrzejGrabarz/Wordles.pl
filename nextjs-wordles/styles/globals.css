@@ -21,7 +21,7 @@ input {
 .board_block {
     width: 4rem;
     height: 4rem;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(250, 250, 250);
     border: 2px rgb(217, 213, 213) solid;
     display: flex;
     font-size: 1.5rem;

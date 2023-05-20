@@ -3,13 +3,14 @@ import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/window/Nightmode';
 import RestartGame from '@/components/buttons/RestartGame';
-import { drawFromTheDictionary, saveDicionary } from '@/public/słownik';
+import wordList from '@/public/słownik_lista.json';
 import {
   // variables
   ALLOWED_LETTERS,
   ROW_COUNT,
   COL_COUNT,
   // funcitons
+
 } from '@/utils/variables';
 
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
@@ -31,24 +32,10 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const getWord = async () => {
-      const newWord = await drawFromTheDictionary();
-      setWord(newWord);
-    };
-    getWord();
-  }, []);
-
-  const getWord = async () => {
-    const newWord = await drawFromTheDictionary();
-    setWord(newWord);
-  };
-
-  useEffect(() => {
-    const doesTheWordExist = async () => {
-      const WORD_5_LETTER = await saveDicionary();
-      setDicionary(WORD_5_LETTER);
-    };
-    doesTheWordExist();
+    const ListOfXLetterWords = wordList.strings.filter((words) => words.length === COL_COUNT);
+    const gameWord = ListOfXLetterWords[Math.floor(Math.random() * dicionary.length)];
+    setDicionary(ListOfXLetterWords);
+    setWord(gameWord);
   }, []);
 
   // =====================================================
@@ -109,7 +96,7 @@ export default function Home() {
   function endGame() {
     setBoardState(Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))));
     // DEFAULT_STATE z jakiegoś powdu nie podmmienia tablicy na nową
-    getWord();
+    setWord(dicionary[Math.floor(Math.random() * dicionary.length)]);
     setCurrentObject(0);
     setCurrentRow(0);
   }
@@ -124,11 +111,13 @@ export default function Home() {
       alert('You must give all five letters');
       return;
     }
+    // Sprawdzenie
     const typedWord = board[currentRow].map((letter) => letter.value).join('');
     if (!dicionary.includes(typedWord)) {
       alert('Słowo nie wystepuje w słowniku');
       return;
     }
+
     if (isWordCorrect()) {
       compare();
       setTimeout(() => {
@@ -176,9 +165,9 @@ export default function Home() {
 
   return (
     <div id="main" className="main">
-      <div className='flex my-4'>
+      <div className="flex my-4">
         <Nightmode />
-        <RestartGame setCurrentRow={setCurrentRow} setCurrentObject={setCurrentObject} getWord={getWord} setBoardState={setBoardState} ROW_COUNT={ROW_COUNT} COL_COUNT={COL_COUNT}/>
+        <RestartGame setCurrentRow={setCurrentRow} setCurrentObject={setCurrentObject} getWord={getWord} setBoardState={setBoardState} ROW_COUNT={ROW_COUNT} COL_COUNT={COL_COUNT} />
       </div>
       <Board board={board} />
       <Keyboard setKey={setKey} />

@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/window/Nightmode';
-import wordList from '@/public/słownik_lista.json'
+import RestartGame from '@/components/buttons/RestartGame';
+import wordList from '@/public/słownik_lista.json';
 import {
   // variables
   ALLOWED_LETTERS,
   ROW_COUNT,
   COL_COUNT,
   // funcitons
-  
+
 } from '@/utils/variables';
 
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
@@ -164,7 +165,10 @@ export default function Home() {
 
   return (
     <div id="main" className="main">
-      <Nightmode />
+      <div className="flex my-4">
+        <Nightmode />
+        <RestartGame setCurrentRow={setCurrentRow} setCurrentObject={setCurrentObject} getWord={getWord} setBoardState={setBoardState} ROW_COUNT={ROW_COUNT} COL_COUNT={COL_COUNT} />
+      </div>
       <Board board={board} />
       <Keyboard setKey={setKey} />
     </div>

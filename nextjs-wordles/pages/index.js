@@ -10,11 +10,12 @@ import {
   ROW_COUNT,
   COL_COUNT,
   // funcitons
-
 } from '@/utils/variables';
 
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
-const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' })));
+const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () =>
+  Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))
+);
 const LAST_ROW = ROW_COUNT - 1;
 
 // const WORD_TO_GUESS = () => WORD_DRAFT[Math.floor(Math.random() * WORD_DRAFT.length)];
@@ -32,8 +33,11 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const ListOfXLetterWords = wordList.strings.filter((words) => words.length === COL_COUNT);
-    const gameWord = ListOfXLetterWords[Math.floor(Math.random() * dicionary.length)];
+    const ListOfXLetterWords = wordList.strings.filter(
+      (words) => words.length === COL_COUNT
+    );
+    const gameWord =
+      ListOfXLetterWords[Math.floor(Math.random() * dicionary.length)];
     setDicionary(ListOfXLetterWords);
     setWord(gameWord);
   }, []);
@@ -60,9 +64,13 @@ export default function Home() {
   const updateBoard = (letter) => {
     const updatedBoard = [...board];
     let updatedCurrentObject = currentObject;
-    if (updatedCurrentObject >= COL_COUNT - 1) updatedCurrentObject = COL_COUNT - 1;
+    if (updatedCurrentObject >= COL_COUNT - 1)
+      updatedCurrentObject = COL_COUNT - 1;
     if (board[currentRow][COL_COUNT - 1].value === '') {
-      updatedBoard[currentRow][updatedCurrentObject] = { value: letter, state: '' };
+      updatedBoard[currentRow][updatedCurrentObject] = {
+        value: letter,
+        state: '',
+      };
     }
     setBoardState(updatedBoard);
     setCurrentObject(updatedCurrentObject + 1);
@@ -75,7 +83,7 @@ export default function Home() {
 
   function compare() {
     const WORD_DRAFTED = word.split('');
-    const USER_WORD = board[currentRow].map((letter) => letter.value);// Czasami tutaj wyrzuca błąd
+    const USER_WORD = board[currentRow].map((letter) => letter.value); // Czasami tutaj wyrzuca błąd
     const currentRowState = board[currentRow];
 
     currentRowState.map((object, index) => {
@@ -94,7 +102,11 @@ export default function Home() {
     });
   }
   function endGame() {
-    setBoardState(Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))));
+    setBoardState(
+      Array.from({ length: ROW_COUNT }, () =>
+        Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))
+      )
+    );
     // DEFAULT_STATE z jakiegoś powdu nie podmmienia tablicy na nową
     setWord(dicionary[Math.floor(Math.random() * dicionary.length)]);
     setCurrentObject(0);
@@ -167,7 +179,14 @@ export default function Home() {
     <div id="main" className="main">
       <div className="flex my-4">
         <Nightmode />
-        <RestartGame setCurrentRow={setCurrentRow} setCurrentObject={setCurrentObject} getWord={getWord} setBoardState={setBoardState} ROW_COUNT={ROW_COUNT} COL_COUNT={COL_COUNT} />
+        <RestartGame
+          setCurrentRow={setCurrentRow}
+          setCurrentObject={setCurrentObject}
+          getWord={getWord}
+          setBoardState={setBoardState}
+          ROW_COUNT={ROW_COUNT}
+          COL_COUNT={COL_COUNT}
+        />
       </div>
       <Board board={board} />
       <Keyboard setKey={setKey} />

@@ -1,5 +1,5 @@
+import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
-import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 
 function Nightmode() {
   const [nightMode, setnightMode] = useState(true);

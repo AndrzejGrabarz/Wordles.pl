@@ -182,7 +182,6 @@ export default function Home() {
         <RestartGame
           setCurrentRow={setCurrentRow}
           setCurrentObject={setCurrentObject}
-          getWord={getWord}
           setBoardState={setBoardState}
           ROW_COUNT={ROW_COUNT}
           COL_COUNT={COL_COUNT}

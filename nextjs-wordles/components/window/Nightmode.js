@@ -6,7 +6,13 @@ function Nightmode() {
 
   function nightmode() {
     const main = document.getElementById('main');
+    const greyBackground1 = document.getElementById('grey-background1');
+    const greyBackground2 = document.getElementById('grey-background2');
+    const instruction = document.getElementById('InstructionCard');
     main.classList.toggle('night');
+    greyBackground1.classList.toggle('grey-background');
+    greyBackground2.classList.toggle('grey-background');
+    instruction.classList.toggle('white');
     setnightMode(!nightMode);
   }
   return (

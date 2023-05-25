@@ -5,17 +5,18 @@ function RestartGame({
   setCurrentRow,
   setCurrentObject,
   setBoardState,
+  setWord,
   COL_COUNT,
   ROW_COUNT,
+  gameWord,
 }) {
   const resetGame = () => {
     setBoardState(
-      Array.from({ length: ROW_COUNT }, () =>
-        Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))
-      )
+      Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))),
     );
     setCurrentObject(0);
     setCurrentRow(0);
+    setWord(gameWord);
   };
 
   return (

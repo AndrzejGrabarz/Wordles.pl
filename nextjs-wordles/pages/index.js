@@ -3,6 +3,8 @@ import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/window/Nightmode';
 import RestartGame from '@/components/buttons/RestartGame';
+import Instruction from '@/components/window/Instruction';
+import InstructionCard from '@/components/board/InstructionCard';
 import wordList from '@/public/słownik_lista.json';
 import {
   // variables
@@ -13,9 +15,7 @@ import {
 } from '@/utils/variables';
 
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
-const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () =>
-  Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))
-);
+const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' })));
 const LAST_ROW = ROW_COUNT - 1;
 
 // const WORD_TO_GUESS = () => WORD_DRAFT[Math.floor(Math.random() * WORD_DRAFT.length)];
@@ -32,12 +32,13 @@ export default function Home() {
     return ALLOWED_LETTERS.includes(letter);
   }
 
+  const ListOfXLetterWords = wordList.strings.filter(
+    (words) => words.length === COL_COUNT,
+  );
+
+  const gameWord = ListOfXLetterWords[Math.floor(Math.random() * dicionary.length)];
+
   useEffect(() => {
-    const ListOfXLetterWords = wordList.strings.filter(
-      (words) => words.length === COL_COUNT
-    );
-    const gameWord =
-      ListOfXLetterWords[Math.floor(Math.random() * dicionary.length)];
     setDicionary(ListOfXLetterWords);
     setWord(gameWord);
   }, []);
@@ -64,8 +65,7 @@ export default function Home() {
   const updateBoard = (letter) => {
     const updatedBoard = [...board];
     let updatedCurrentObject = currentObject;
-    if (updatedCurrentObject >= COL_COUNT - 1)
-      updatedCurrentObject = COL_COUNT - 1;
+    if (updatedCurrentObject >= COL_COUNT - 1) { updatedCurrentObject = COL_COUNT - 1; }
     if (board[currentRow][COL_COUNT - 1].value === '') {
       updatedBoard[currentRow][updatedCurrentObject] = {
         value: letter,
@@ -103,9 +103,7 @@ export default function Home() {
   }
   function endGame() {
     setBoardState(
-      Array.from({ length: ROW_COUNT }, () =>
-        Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))
-      )
+      Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))),
     );
     // DEFAULT_STATE z jakiegoś powdu nie podmmienia tablicy na nową
     setWord(dicionary[Math.floor(Math.random() * dicionary.length)]);
@@ -183,11 +181,15 @@ export default function Home() {
           setCurrentRow={setCurrentRow}
           setCurrentObject={setCurrentObject}
           setBoardState={setBoardState}
+          setWord={setWord}
+          gameWord={gameWord}
           ROW_COUNT={ROW_COUNT}
           COL_COUNT={COL_COUNT}
         />
+        <Instruction />
       </div>
       <Board board={board} />
+      <InstructionCard />
       <Keyboard setKey={setKey} />
     </div>
   );

@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
-import Nightmode from '@/components/window/Nightmode';
+import Nightmode from '@/components/buttons/Nightmode';
+import SettingsButtonCog from '@/components/buttons/SettingButton';
 import RestartGame from '@/components/buttons/RestartGame';
-import Instruction from '@/components/window/Instruction';
+import Instruction from '@/components/buttons/Instruction';
 import InstructionCard from '@/components/board/InstructionCard';
 import wordList from '@/public/słownik_lista.json';
+import { ColNumContext, useAppContext } from '@/utils/SettingsContext';
 import {
   // variables
   ALLOWED_LETTERS,
   ROW_COUNT,
-  COL_COUNT,
   // funcitons
 } from '@/utils/variables';
 
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
-const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' })));
+// const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () => Array.from({ length: state }, () => ({ value: '', state: '' })));
 const LAST_ROW = ROW_COUNT - 1;
 
 // const WORD_TO_GUESS = () => WORD_DRAFT[Math.floor(Math.random() * WORD_DRAFT.length)];
 
 export default function Home() {
-  const [board, setBoardState] = useState(DEFAULT_STATE);
+  const [NumberOfColumn, setNumberOfColumn] = useContext(ColNumContext);
+  const [board, setBoardState] = useState(Array.from({ length: ROW_COUNT }, () => Array.from({ length: NumberOfColumn }, () => ({ value: '', state: '' }))));
   const [currentRow, setCurrentRow] = useState(0);
   const [currentObject, setCurrentObject] = useState(0);
   const [word, setWord] = useState('');
@@ -33,7 +35,7 @@ export default function Home() {
   }
 
   const ListOfXLetterWords = wordList.strings.filter(
-    (words) => words.length === COL_COUNT,
+    (words) => words.length === NumberOfColumn,
   );
 
   const gameWord = ListOfXLetterWords[Math.floor(Math.random() * dicionary.length)];
@@ -65,8 +67,8 @@ export default function Home() {
   const updateBoard = (letter) => {
     const updatedBoard = [...board];
     let updatedCurrentObject = currentObject;
-    if (updatedCurrentObject >= COL_COUNT - 1) { updatedCurrentObject = COL_COUNT - 1; }
-    if (board[currentRow][COL_COUNT - 1].value === '') {
+    if (updatedCurrentObject >= NumberOfColumn - 1) { updatedCurrentObject = NumberOfColumn - 1; }
+    if (board[currentRow][NumberOfColumn - 1].value === '') {
       updatedBoard[currentRow][updatedCurrentObject] = {
         value: letter,
         state: '',
@@ -103,7 +105,7 @@ export default function Home() {
   }
   function endGame() {
     setBoardState(
-      Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))),
+      Array.from({ length: ROW_COUNT }, () => Array.from({ length: NumberOfColumn }, () => ({ value: '', state: '' }))),
     );
     // DEFAULT_STATE z jakiegoś powdu nie podmmienia tablicy na nową
     setWord(dicionary[Math.floor(Math.random() * dicionary.length)]);
@@ -175,18 +177,21 @@ export default function Home() {
 
   return (
     <div id="main" className="main">
-      <div className="flex my-4">
-        <Nightmode />
-        <RestartGame
-          setCurrentRow={setCurrentRow}
-          setCurrentObject={setCurrentObject}
-          setBoardState={setBoardState}
-          setWord={setWord}
-          gameWord={gameWord}
-          ROW_COUNT={ROW_COUNT}
-          COL_COUNT={COL_COUNT}
-        />
-        <Instruction />
+      <div className="flex items-center justify-center w-2/5   my-10 rounded-md" aria-label="Global">
+        <div className="flex my-4">
+          <Nightmode />
+          <RestartGame
+            setCurrentRow={setCurrentRow}
+            setCurrentObject={setCurrentObject}
+            setBoardState={setBoardState}
+            setWord={setWord}
+            gameWord={gameWord}
+            ROW_COUNT={ROW_COUNT}
+            NumberOfColumn={NumberOfColumn}
+          />
+          <Instruction />
+          <SettingsButtonCog />
+        </div>
       </div>
       <Board board={board} />
       <InstructionCard />

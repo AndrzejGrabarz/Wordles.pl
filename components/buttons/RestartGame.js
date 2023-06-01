@@ -6,13 +6,13 @@ function RestartGame({
   setCurrentObject,
   setBoardState,
   setWord,
-  COL_COUNT,
+  NumberOfColumn,
   ROW_COUNT,
   gameWord,
 }) {
   const resetGame = () => {
     setBoardState(
-      Array.from({ length: ROW_COUNT }, () => Array.from({ length: COL_COUNT }, () => ({ value: '', state: '' }))),
+      Array.from({ length: ROW_COUNT }, () => Array.from({ length: NumberOfColumn }, () => ({ value: '', state: '' }))),
     );
     setCurrentObject(0);
     setCurrentRow(0);
@@ -22,6 +22,7 @@ function RestartGame({
   return (
     <button
       id="btn"
+      type="button"
       onClick={resetGame}
       className="text-red-400 border border-red-400 hover:text-white hover:bg-gradient-to-br from-red-400 via-red-500 to-red-600  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
     >

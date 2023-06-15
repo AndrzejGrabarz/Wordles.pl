@@ -7,6 +7,7 @@ import RestartGame from '@/components/buttons/RestartGame';
 import Instruction from '@/components/buttons/Instruction';
 import InstructionCard from '@/components/board/InstructionCard';
 import wordList from '@/public/słownik_lista.json';
+import CustomAlert from '@/components/alerts/CustomAlert';
 import { ColNumContext, useAppContext } from '@/utils/SettingsContext';
 import {
   // variables
@@ -118,15 +119,31 @@ export default function Home() {
     return USER_WORD.includes('');
   }
 
+  const showTime_1 = () => {
+    const Custom = document.getElementById('alert-1');
+    Custom.classList.toggle('show-time');
+  };
+
+  const showTime_2 = () => {
+    const Custom = document.getElementById('alert-2');
+    Custom.classList.toggle('show-time');
+  };
+
   function verifyState() {
     if (giveAllLetters()) {
-      alert('You must give all five letters');
+      showTime_1();
+      setTimeout(() => {
+        showTime_1();
+      }, 2000);
       return;
     }
     // Sprawdzenie
     const typedWord = board[currentRow].map((letter) => letter.value).join('');
     if (!dicionary.includes(typedWord)) {
-      alert('Słowo nie wystepuje w słowniku');
+      showTime_2();
+      setTimeout(() => {
+        showTime_2();
+      }, 2000);
       return;
     }
 
@@ -193,7 +210,15 @@ export default function Home() {
           <SettingsButtonCog />
         </div>
       </div>
-      <Board board={board} />
+      <div className="relative">
+        <Board board={board} />
+        <div id="alert-1" className="bg-red-100 absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 show-time">
+          <CustomAlert text="You must give all five letters" />
+        </div>
+        <div id="alert-2" className="bg-red-100 absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 show-time">
+          <CustomAlert text="The word does not appear in the dictionary" />
+        </div>
+      </div>
       <InstructionCard />
       <Keyboard setKey={setKey} />
     </div>

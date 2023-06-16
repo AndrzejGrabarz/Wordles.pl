@@ -3,7 +3,7 @@ import React from 'react';
 function CustomAlert({ text }) {
   return (
     <div role="alert">
-      <div className="border border-black-400 rounded-md bg-red-100 px-4 py-8 text-red-700 text-xl">
+      <div className=" font-mono border border-black-400 rounded-md bg-black-100 px-4 py-8 text-black-700 text-2xl">
         <p>{text}</p>
       </div>
     </div>

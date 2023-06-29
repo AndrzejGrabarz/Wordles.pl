@@ -118,9 +118,14 @@ input {
     color:white;
 }
 
-.show-time {
+.showObject {
     display:none;
 }
+
+
+
+
+
 
 .InstructionCard {
     display:none;

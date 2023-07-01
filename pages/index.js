@@ -177,7 +177,7 @@ export default function Home() {
 
   return (
     <div id="main" className="main">
-      <div className="flex items-center justify-center w-2/5   my-10 rounded-md" aria-label="Global">
+      <div className="flex items-center justify-center w-2/5   my-10 rounded-md">
         <div className="flex my-4">
           <Nightmode />
           <RestartGame

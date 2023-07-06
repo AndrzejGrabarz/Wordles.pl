@@ -17,6 +17,7 @@ function Nightmode() {
   }
   return (
     <button
+      type="button"
       onClick={nightmode}
       id="btn"
       className={

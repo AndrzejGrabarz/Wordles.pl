@@ -39,26 +39,6 @@ export const ALLOWED_LETTERS = [
   'Backspace',
 ];
 
-// export const WORD_DRAFT = [
-//   'goryl',
-//   'gogle',
-//   'narty',
-//   'koral',
-//   'dymek',
-//   'wózek',
-//   'uroda',
-//   'fotel',
-//   'elekt',
-//   'ciało',
-//   'owies',
-//   'oshee',
-//   'ziaja',
-//   'boleć',
-//   'dusza',
-//   'filmy',
-//   'firmy',
-// ];
-
 export const ROW_COUNT = 6;
 export const COL_COUNT = 5;
 

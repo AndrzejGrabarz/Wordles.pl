@@ -4,7 +4,7 @@ function Instruction() {
   function show() {
     const board = document.getElementById('Board');
     const instruction = document.getElementById('InstructionCard');
-    board.classList.toggle('show-time');
+    board.classList.toggle('showObject');
     instruction.classList.toggle('InstructionCard');
   }
   return (

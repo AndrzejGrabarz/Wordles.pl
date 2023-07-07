@@ -257,13 +257,13 @@ export default function Home() {
         <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomConfirmWin text="You win!!!" />
           <div className="flex justify-center">
-            <button onClick={closeConfirmWinGameWindow} className="mb-8 w-52 py-3  bg-green-400 rounded-md text-xl" type="button">Try again</button>
+            <button onClick={closeConfirmWinGameWindow} className="font-mono my-4  py-3 px-5 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
           </div>
         </div>
-        <div id="confirm-lose" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5  rounded-md font-medium showObject text-center">
+        <div id="confirm-lose" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium  text-center">
           <CustomConfirmLose word={word} text="You lose :(" />
           <div className="flex justify-center">
-            <button onClick={closeConfirmLoseGameWindow} className="font-mono mb-8 w-52 py-3 bg-green-400 rounded-md text-xl" type="button">Try again</button>
+            <button onClick={closeConfirmLoseGameWindow} className="font-mono py-3 px-5 mb-4 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
           </div>
         </div>
       </div>

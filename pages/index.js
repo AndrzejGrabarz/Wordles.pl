@@ -229,7 +229,7 @@ export default function Home() {
   }, [key]);
 
   return (
-    <div id="main" className="flex items-center justify-center flex-col p-2">
+    <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
         <div className="flex my-4">
           <Nightmode />

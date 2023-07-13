@@ -9,6 +9,7 @@ import RestartGame from '@/components/buttons/RestartGame';
 import Instruction from '@/components/buttons/Instruction';
 import InstructionCard from '@/components/board/InstructionCard';
 import wordList from '@/public/słownik_lista.json';
+import wordList2 from '@/public/wynikowy_plik.json';
 import CustomAlert from '@/components/alerts/CustomAlert';
 import CustomConfirmWin from '@/components/alerts/CustomConfirmWin';
 import CustomConfirmLose from '@/components/alerts/CustomConfirmLose';

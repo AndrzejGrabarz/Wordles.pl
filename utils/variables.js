@@ -48,3 +48,9 @@ export const KEYBOARD = [
   ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Delete'],
   ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż'],
 ];
+
+export const ENGLISH_KEYBOARD = [
+  ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+  ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+  ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Delete'],
+];

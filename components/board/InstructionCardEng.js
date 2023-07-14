@@ -1,4 +1,4 @@
-function InstructionCard() {
+function InstructionCardEng() {
   return (
     <div id="InstructionCard" className="InstructionCard flex flex-col  items-center max-w-xl h-[620px] mb-2">
 
@@ -66,4 +66,4 @@ function InstructionCard() {
   );
 }
 
-export default InstructionCard;
+export default InstructionCardEng;

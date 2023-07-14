@@ -7,9 +7,10 @@ import Nightmode from '@/components/buttons/Nightmode';
 import SettingsButtonCog from '@/components/buttons/SettingButton';
 import RestartGame from '@/components/buttons/RestartGame';
 import Instruction from '@/components/buttons/Instruction';
-import InstructionCard from '@/components/board/InstructionCard';
-import wordList from '@/public/słownik_lista.json';
-import wordList2 from '@/public/wynikowy_plik.json';
+import InstructionCardEng from '@/components/board/InstructionCardEng';
+import InstructionCardPol from '@/components/board/InstructionCardPol';
+import wordListPolish from '@/public/słownik_lista.json';
+import wordListEnglish from '@/public/english_dicionary.json';
 import CustomAlert from '@/components/alerts/CustomAlert';
 import CustomConfirmWin from '@/components/alerts/CustomConfirmWin';
 import CustomConfirmLose from '@/components/alerts/CustomConfirmLose';
@@ -37,11 +38,18 @@ export default function Home() {
   const [key, setKey] = useState({ letter: '' });
   const isSpecialKey = (letter) => SPECIAL_KEYS.includes(letter);
   const isGameFinish = useRef(false);
+  const [selectedLanguage, setselectedLanguage] = useState('polish')
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
+    let language;
+  if(selectedLanguage === 'polish'){
+    language = wordListPolish
+  }else {
+    language = wordListEnglish
+  }
 
-  const ListOfXLetterWords = wordList.strings.filter(
+  const ListOfXLetterWords = language.strings.filter(
     (words) => words.length === NumberOfColumn,
   );
 
@@ -229,6 +237,16 @@ export default function Home() {
     }
   }, [key]);
 
+const Polish = () => {
+  setselectedLanguage('polish')
+  endGame()
+  
+}
+const English = () => {
+  setselectedLanguage('english')
+  endGame()
+}
+
   return (
     <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
@@ -245,6 +263,8 @@ export default function Home() {
           />
           <Instruction />
           <SettingsButtonCog />
+          <button onClick={Polish}>Polska Gurom</button>
+          <button onClick={English}>haland</button>
         </div>
       </div>
       <div className="relative">
@@ -268,8 +288,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <InstructionCard />
-      <Keyboard setKey={setKey} />
+      {selectedLanguage === 'polish' ? <InstructionCardPol/> :<InstructionCardEng />}
+      <Keyboard setKey={setKey}  selectedLanguage={selectedLanguage}/>
     </div>
   );
 }

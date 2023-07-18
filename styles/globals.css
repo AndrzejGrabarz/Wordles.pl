@@ -39,11 +39,6 @@ input {
     animation: rotateAndColor_grey 2s forwards;
 }
 
-.big-letter {
-    text-transform: uppercase;
-}
-
-
 @keyframes rotateAndColor_green {
     0% {
         transform: rotateX(0);

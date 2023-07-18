@@ -1,10 +1,14 @@
 import {
   useEffect, useState, useContext, useRef,
 } from 'react';
+import Image from 'next/image';
+import Poland from '@/public/Poland.png';
+import UK from '@/public/UK.png';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/buttons/Nightmode';
-import SettingsButtonCog from '@/components/buttons/SettingButton';
+import SettingsButtonEng from '@/components/buttons/SettingButtonEng';
+import SettingsButtonPol from '@/components/buttons/SettingButtonPol';
 import RestartGame from '@/components/buttons/RestartGame';
 import Instruction from '@/components/buttons/Instruction';
 import InstructionCardEng from '@/components/board/InstructionCardEng';
@@ -16,17 +20,12 @@ import CustomConfirmWin from '@/components/alerts/CustomConfirmWin';
 import CustomConfirmLose from '@/components/alerts/CustomConfirmLose';
 import { ColNumContext } from '@/utils/SettingsContext';
 import {
-  // variables
   ALLOWED_LETTERS,
   ROW_COUNT,
-  // funcitons
 } from '@/utils/variables';
 
 const SPECIAL_KEYS = ['Enter', 'Delete', 'Backspace', 'Altgraph', 'Control'];
-// const DEFAULT_STATE = Array.from({ length: ROW_COUNT }, () => Array.from({ length: state }, () => ({ value: '', state: '' })));
 const LAST_ROW = ROW_COUNT - 1;
-
-// const WORD_TO_GUESS = () => WORD_DRAFT[Math.floor(Math.random() * WORD_DRAFT.length)];
 
 export default function Home() {
   const [NumberOfColumn, setNumberOfColumn] = useContext(ColNumContext);
@@ -38,52 +37,50 @@ export default function Home() {
   const [key, setKey] = useState({ letter: '' });
   const isSpecialKey = (letter) => SPECIAL_KEYS.includes(letter);
   const isGameFinish = useRef(false);
-  const [selectedLanguage, setselectedLanguage] = useState('polish')
+  const [selectedLanguage, setselectedLanguage] = useState('polish');
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
-    let language;
-  if(selectedLanguage === 'polish'){
-    language = wordListPolish
-  }else {
-    language = wordListEnglish
-  }
 
-  const ListOfXLetterWords = language.strings.filter(
+  const ListOfXPolishLetterWords = wordListPolish.strings.filter(
     (words) => words.length === NumberOfColumn,
   );
 
-  const gameWord = ListOfXLetterWords[Math.floor(Math.random() * ListOfXLetterWords.length)];
+  const ListOfXEnglishLetterWords = wordListEnglish.strings.filter(
+    (words) => words.length === NumberOfColumn,
+  );
 
-  const handleKeyPress = (event) => {
-    if (isGameFinish.current) {
-      document.removeEventListener('keydown', handleKeyPress);
-      return;
-    }
-    const letter = event.key;
-    if (isAllowedLetter(letter)) {
-      setKey({ letter });
-    }
-  };
+  const gameWord = ListOfXPolishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)];
+
+  const losFromDictionary = dicionary[Math.floor(Math.random() * dicionary.length)];
 
   useEffect(() => {
-    setDicionary(ListOfXLetterWords);
+    setDicionary(ListOfXPolishLetterWords);
     setWord(gameWord);
-    document.addEventListener('keydown', handleKeyPress);
   }, []);
 
-  // =====================================================
-  // Funkcja handleKeyPress - pozwala keyboardKey odbierać wartości z klawiatury fizycznej
-  //= =====================================================
-  // useEffect(() => {
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeyPress);
-  //   };
-  // }, [key]);
+  useEffect(() => {
+    function handleKeyPress(event) {
+      console.log('Wciśnięto klawisz:', event.key);
+      if (isGameFinish.current) {
+        document.removeEventListener('keydown', handleKeyPress);
+        return;
+      }
+      const letter = event.key;
+      if (isAllowedLetter(letter)) {
+        setKey({ letter });
+      }
+    }
 
-  // =====================================================
-  // Aktualizowanie stanu tablicy
-  //= =====================================================
+    // Dodaj nasłuchiwanie na zdarzenie wciśnięcia klawisza
+    document.addEventListener('keydown', handleKeyPress);
+
+    // Opcjonalnie: usuń nasłuchiwanie po odmontowaniu komponentu
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [key]);
+
   const updateBoard = (letter) => {
     const updatedBoard = [...board];
     let updatedCurrentObject = currentObject;
@@ -105,7 +102,7 @@ export default function Home() {
 
   function compare() {
     const WORD_DRAFTED = word.split('');
-    const USER_WORD = board[currentRow].map((letter) => letter.value); // Czasami tutaj wyrzuca błąd
+    const USER_WORD = board[currentRow].map((letter) => letter.value); 
     const currentRowState = board[currentRow];
 
     currentRowState.map((object, index) => {
@@ -123,14 +120,16 @@ export default function Home() {
       }
     });
   }
+
   function endGame() {
     setBoardState(
       Array.from({ length: ROW_COUNT }, () => Array.from({ length: NumberOfColumn }, () => ({ value: '', state: '' }))),
     );
-    // DEFAULT_STATE z jakiegoś powdu nie podmmienia tablicy na nową
-    setWord(dicionary[Math.floor(Math.random() * dicionary.length)]);
+    setWord(losFromDictionary);
     setCurrentObject(0);
     setCurrentRow(0);
+    setKey({ letter: '' });
+    isGameFinish.current = false;
   }
 
   function giveAllLetters() {
@@ -163,16 +162,12 @@ export default function Home() {
     const Custom = document.getElementById('confirm-win');
     Custom.classList.toggle('showObject');
     endGame();
-    isGameFinish.current = false;
-    document.addEventListener('keydown', handleKeyPress);
   };
 
   const closeConfirmLoseGameWindow = () => {
     const Custom = document.getElementById('confirm-lose');
     Custom.classList.toggle('showObject');
-    isGameFinish.current = false;
     endGame();
-    document.addEventListener('keydown', handleKeyPress);
   };
   // ===================== Confirm Section
 
@@ -214,9 +209,6 @@ export default function Home() {
     setCurrentObject(0);
   }
 
-  // =====================================================
-  // Sprawdzenie checkWord
-  // =====================================================
   const deleteLetter = () => {
     const updatedBoard = [...board];
     let objcetToDelete = currentObject - 1;
@@ -237,15 +229,16 @@ export default function Home() {
     }
   }, [key]);
 
-const Polish = () => {
-  setselectedLanguage('polish')
-  endGame()
-  
-}
-const English = () => {
-  setselectedLanguage('english')
-  endGame()
-}
+  const Polish = () => {
+    setselectedLanguage('polish');
+    setDicionary(ListOfXPolishLetterWords);
+    endGame();
+  };
+  const English = () => {
+    setselectedLanguage(() => { 'english'; });
+    setDicionary(ListOfXEnglishLetterWords);
+    endGame();
+  };
 
   return (
     <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
@@ -257,23 +250,47 @@ const English = () => {
             setCurrentObject={setCurrentObject}
             setBoardState={setBoardState}
             setWord={setWord}
-            gameWord={gameWord}
+            word={word}
             ROW_COUNT={ROW_COUNT}
             NumberOfColumn={NumberOfColumn}
           />
           <Instruction />
-          <SettingsButtonCog />
-          <button onClick={Polish}>Polska Gurom</button>
-          <button onClick={English}>haland</button>
+          {selectedLanguage === 'polish' ? <SettingsButtonPol /> : <SettingsButtonEng />}
+        </div>
+      </div>
+      <div className="flex flex-row">
+        <div className="mr-2">
+          <button type="button" onClick={Polish}>
+            <div>
+              <Image
+                src={Poland}
+                width={35}
+                height={25}
+                alt="Flag of Poland"
+              />
+            </div>
+          </button>
+        </div>
+        <div>
+          <button type="button" onClick={English}>
+            <div>
+              <Image
+                src={UK}
+                width={35}
+                height={25}
+                alt="Flag of England"
+              />
+            </div>
+          </button>
         </div>
       </div>
       <div className="relative">
         <Board board={board} />
         <div id="letter-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          <CustomAlert text="You must give all five letters" />
+          {selectedLanguage === 'polish' ? <CustomAlert text="Musisz podać wszystkie pięć liter" /> : <CustomAlert text="You must give all five letters" />}
         </div>
         <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          <CustomAlert text="Missing from the dictionary" />
+          {selectedLanguage === 'polish' ? <CustomAlert text="Brak w słowniku" /> : <CustomAlert text="Missing from the dictionary" />}
         </div>
         <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomConfirmWin text="You win!!!" />
@@ -288,8 +305,8 @@ const English = () => {
           </div>
         </div>
       </div>
-      {selectedLanguage === 'polish' ? <InstructionCardPol/> :<InstructionCardEng />}
-      <Keyboard setKey={setKey}  selectedLanguage={selectedLanguage}/>
+      {selectedLanguage === 'polish' ? <InstructionCardPol /> : <InstructionCardEng />}
+      <Keyboard setKey={setKey} selectedLanguage={selectedLanguage} />
     </div>
   );
 }

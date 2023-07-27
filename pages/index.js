@@ -105,16 +105,47 @@ export default function Home() {
     const USER_WORD = board[currentRow].map((letter) => letter.value); 
     const currentRowState = board[currentRow];
 
+    // const usedLetter = document.querySelectorAll(
+    //   board[currentRow].map((letter) => `#${letter.value}`).join(', '),
+    // );
+    // usedLetter.forEach((letter) => {
+    //   letter.style.backgroundColor = 'grey';
+
+    //   if(WORD_DRAFTED.includes(letter[index]))
+    // });
+    // const array = [];
+    // usedLetter.forEach((letter, index) => {
+    //   array.push(letter.innerHTML);
+    //   switch (true) {
+    //     case WORD_DRAFTED.includes(array[index]):
+    //       letter.style.backgroundColor = '#84cc16';
+    //       break;
+    //     case !WORD_DRAFTED.includes(array[index]):
+    //       letter.style.backgroundColor = '#9ca3af';
+    //       break;
+    //     default:
+    //   }
+    // });
+
     currentRowState.map((object, index) => {
+      const elementStyle = window.getComputedStyle(document.getElementById(object.value));
+      const currentBackgroundColor = elementStyle.backgroundColor;
       switch (true) {
         case WORD_DRAFTED[index] === USER_WORD[index]:
           object.state = 'green';
+          document.getElementById(object.value).style.backgroundColor = 'green';
           break;
         case WORD_DRAFTED.includes(USER_WORD[index]):
           object.state = 'yellow';
+          if (currentBackgroundColor === 'rgb(0, 128, 0)') {
+            document.getElementById(object.value).style.backgroundColor = 'green';
+          } else {
+            document.getElementById(object.value).style.backgroundColor = 'yellow';
+          }
           break;
         case !WORD_DRAFTED.includes(USER_WORD[index]):
           object.state = 'grey';
+          document.getElementById(object.value).style.backgroundColor = '#6b7280';
           break;
         default:
       }
@@ -128,6 +159,11 @@ export default function Home() {
     setWord(losFromDictionary);
     setCurrentObject(0);
     setCurrentRow(0);
+    const KeyboardAnimation = document.querySelectorAll('#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,#a, #s, #d, #f, #g, #h, #j, #k, #l,#z, #x, #c, #v, #b, #n, #m, #ą, #ć, #ę, #ł, #ń, #ó, #ś, #ź, #ż');
+
+    KeyboardAnimation.forEach((id) => {
+      id.style.backgroundColor = '#e1e0e0';
+    });
     setKey({ letter: '' });
     isGameFinish.current = false;
   }
@@ -181,6 +217,7 @@ export default function Home() {
     }
     // Sprawdzenie
     const typedWord = board[currentRow].map((letter) => letter.value).join('');
+
     if (!dicionary.includes(typedWord)) {
       showAlertMissingFromTheDicionary();
       setTimeout(() => {

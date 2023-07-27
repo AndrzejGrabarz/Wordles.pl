@@ -11,12 +11,16 @@ function RestartGame({
   gameWord,
 }) {
   const resetGame = () => {
+    const KeyboardAnimation = document.querySelectorAll('#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,#a, #s, #d, #f, #g, #h, #j, #k, #l,#z, #x, #c, #v, #b, #n, #m, #ą, #ć, #ę, #ł,#ń, #ó, #ś, #ź, #ż');
     setBoardState(
       Array.from({ length: ROW_COUNT }, () => Array.from({ length: NumberOfColumn }, () => ({ value: '', state: '' }))),
     );
     setCurrentObject(0);
     setCurrentRow(0);
     setWord(gameWord);
+    KeyboardAnimation.forEach((id) => {
+      id.style.backgroundColor = '#e1e0e0';
+    });
   };
 
   return (

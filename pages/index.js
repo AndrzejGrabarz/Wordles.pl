@@ -173,7 +173,9 @@ export default function Home() {
     return USER_WORD.includes('');
   }
 
+  
   const showAlertNotEnoughLetters = () => {
+    console.log(document.getElementById('letter-alert'));
     const Custom = document.getElementById('letter-alert');
     Custom.classList.toggle('showObject');
   };

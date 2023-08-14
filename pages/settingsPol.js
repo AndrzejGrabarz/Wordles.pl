@@ -6,6 +6,7 @@ import { ColNumContext } from '@/utils/SettingsContext';
 function Settings() {
   const [NumberOfColumn, setNumberOfColumn] = useContext(ColNumContext);
   const saveNumber = (buttonValue) => setNumberOfColumn(buttonValue);
+  const rowCount = [4, 5, 6, 7, 8, 9, 10, 11];
 
   return (
     <header className="flex justify-center bg-white">
@@ -24,21 +25,14 @@ function Settings() {
               <div className="flex-auto">
                 <p className="text-center text-lg md:text-xl lg:text-xl xl:text-2xl 2xl:text-[28px]  font-bold">Liczba liter</p>
                 <div className="flex items-center justify-center my-2 p-2">
-                  <button onClick={() => saveNumber(4)} type="submit" className="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold bg-[#C4B0FF] rounded-md hover:bg-violet-700 focus:bg-violet-700">4</button>
-                  <button onClick={() => saveNumber(5)} type="submit" className="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold bg-[#8696FE] rounded-md hover:bg-violet-700 focus:bg-violet-700">5</button>
-                  <button onClick={() => saveNumber(6)} type="submit" className="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold bg-[#C4B0FF] rounded-md hover:bg-violet-700 focus:bg-violet-700">6</button>
-                  <button onClick={() => saveNumber(7)} type="submit" className="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold bg-[#8696FE] rounded-md hover:bg-violet-700 focus:bg-violet-700">7</button>
-                  <button onClick={() => saveNumber(8)} type="submit" className="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold bg-[#C4B0FF] rounded-md hover:bg-violet-700 focus:bg-violet-700">8</button>
-                  <button onClick={() => saveNumber(9)} type="submit" className="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl  m-1 flex items-center justify-center  text-white font-semibold bg-[#8696FE] rounded-md hover:bg-violet-700 focus:bg-violet-700">9</button>
-                  <button onClick={() => saveNumber(10)} type="submit" className="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold bg-[#C4B0FF] rounded-md hover:bg-violet-700 focus:bg-violet-700">10</button>
-                  <button onClick={() => saveNumber(11)} type="submit" className="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold bg-[#8696FE] rounded-md hover:bg-violet-700 focus:bg-violet-700">11</button>
+                  {rowCount.map((item, index) => (
+                    <button onClick={() => saveNumber(item)} type="submit" className={`h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold ${!(item % 2) ? 'bg-[#C4B0FF]' : 'bg-[#8696FE]'} rounded-md hover:bg-violet-700 focus:bg-violet-700`}>{item}</button>))}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </nav>
-
     </header>
   );
 }

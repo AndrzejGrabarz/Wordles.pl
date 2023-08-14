@@ -11,7 +11,7 @@ function Keyboard({ setKey, selectedLanguage }) {
   }
 
   return (
-    <div className="flex flex-col my-10">
+    <div id="Keyboard" className="flex flex-col my-10">
       {chooseKeyboard.map((row) => <KeyboardRow key={row.id} rowLine={row} setKey={setKey} />)}
     </div>
   );

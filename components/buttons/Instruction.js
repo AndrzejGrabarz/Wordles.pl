@@ -2,9 +2,11 @@ import { LightBulbIcon } from '@heroicons/react/24/solid';
 
 function Instruction() {
   function show() {
-    const board = document.getElementById('Board');
+    const divBoard = document.getElementById('divBoard');
     const instruction = document.getElementById('InstructionCard');
-    board.classList.toggle('showObject');
+    const keyboard = document.getElementById('Keyboard');
+    divBoard.classList.toggle('showObject');
+    keyboard.classList.toggle('hiddenObject');
     instruction.classList.toggle('InstructionCard');
   }
   return (

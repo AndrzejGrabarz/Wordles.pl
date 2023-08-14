@@ -79,6 +79,10 @@ input {
     display:none;
 }
 
+.hiddenObject {
+    visibility: hidden;
+}
+
 
 
 

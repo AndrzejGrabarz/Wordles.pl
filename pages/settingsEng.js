@@ -8,8 +8,13 @@ function Settings() {
   const saveNumber = (buttonValue) => setNumberOfColumn(buttonValue);
 
   return (
-    <header className="bg-white">
-      <nav className=" flex  justify-center flex-col  min-[430px]:flex-row my-8">
+    <header className="flex justify-center bg-white">
+      <nav className=" flex flex-col  my-8">
+        <Link href="/" className="flex items-center min-[430px]:items-start justify-center">
+          <button id="btn" type="button" className="text-gray-400 border border-gray-400 hover:text-white hover:bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600  font-medium rounded-lg text-sm px-5 py-2.5 text-center  my-4 sm:px-5 sm:py-2 md:px-5 md:py-2.5 lg:px-7 lg:py-2.5 xl:px-7 xl:py-2.5 2xl:px-8 2xl:py-3.5">
+            <Cog8ToothIcon className="h-4 w-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-6 lg:h-6 xl:w-6 xl:h-6 2xl:w-7 2xl:h-7" />
+          </button>
+        </Link>
         <div className=" rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
           <h1 className="block font-semibold text-gray-900 text-center bg-[#e5ecff] py-4 text-xl sm:text-2xl">
             Settings
@@ -32,11 +37,6 @@ function Settings() {
             </div>
           </div>
         </div>
-        <Link href="/" className="flex items-center min-[430px]:items-start justify-center">
-          <button id="btn" type="button" className="text-gray-400 border border-gray-400 hover:text-white hover:bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600  font-medium rounded-lg text-sm px-5 py-2.5 text-center ml-4 my-4">
-            <Cog8ToothIcon className="h-6 w-6" />
-          </button>
-        </Link>
       </nav>
 
     </header>

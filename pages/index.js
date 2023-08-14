@@ -102,7 +102,7 @@ export default function Home() {
 
   function compare() {
     const WORD_DRAFTED = word.split('');
-    const USER_WORD = board[currentRow].map((letter) => letter.value); 
+    const USER_WORD = board[currentRow].map((letter) => letter.value);
     const currentRowState = board[currentRow];
 
     // const usedLetter = document.querySelectorAll(
@@ -173,7 +173,6 @@ export default function Home() {
     return USER_WORD.includes('');
   }
 
-  
   const showAlertNotEnoughLetters = () => {
     console.log(document.getElementById('letter-alert'));
     const Custom = document.getElementById('letter-alert');
@@ -284,23 +283,14 @@ export default function Home() {
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
         <div className="flex my-4">
           <Nightmode />
-          <RestartGame
-            setCurrentRow={setCurrentRow}
-            setCurrentObject={setCurrentObject}
-            setBoardState={setBoardState}
-            setWord={setWord}
-            word={word}
-            ROW_COUNT={ROW_COUNT}
-            NumberOfColumn={NumberOfColumn}
-          />
           <Instruction />
           {selectedLanguage === 'polish' ? <SettingsButtonPol /> : <SettingsButtonEng />}
         </div>
       </div>
       <div className="flex flex-row">
-        <div className="mr-2">
+        <div className="mr-2 mb-4">
           <button type="button" onClick={Polish}>
-            <div>
+            <div id="Flaga">
               <Image
                 src={Poland}
                 width={35}
@@ -310,9 +300,9 @@ export default function Home() {
             </div>
           </button>
         </div>
-        <div>
+        <div className="mb-4">
           <button type="button" onClick={English}>
-            <div>
+            <div id="Flaga">
               <Image
                 src={UK}
                 width={35}
@@ -323,8 +313,17 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div className="relative">
+      <div id="divBoard" className="relative">
         <Board board={board} />
+        <RestartGame
+          setCurrentRow={setCurrentRow}
+          setCurrentObject={setCurrentObject}
+          setBoardState={setBoardState}
+          setWord={setWord}
+          word={word}
+          ROW_COUNT={ROW_COUNT}
+          NumberOfColumn={NumberOfColumn}
+        />
         <div id="letter-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           {selectedLanguage === 'polish' ? <CustomAlert text="Musisz podać wszystkie pięć liter" /> : <CustomAlert text="You must give all five letters" />}
         </div>

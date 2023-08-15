@@ -1,18 +1,19 @@
 import {
   useEffect, useState, useContext, useRef,
 } from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Poland from '@/public/Poland.png';
 import UK from '@/public/UK.png';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/buttons/Nightmode';
-import SettingsButtonEng from '@/components/buttons/SettingButtonEng';
-import SettingsButtonPol from '@/components/buttons/SettingButtonPol';
+import SettingsButton from '@/components/buttons/SettingButton';
 import RestartGame from '@/components/buttons/RestartGame';
 import Instruction from '@/components/buttons/Instruction';
-import InstructionCardEng from '@/components/board/InstructionCardEng';
-import InstructionCardPol from '@/components/board/InstructionCardPol';
+import InstructionCard from '@/components/board/InstructionCard';
 import wordListPolish from '@/public/słownik_lista.json';
 import wordListEnglish from '@/public/english_dicionary.json';
 import CustomAlert from '@/components/alerts/CustomAlert';
@@ -41,7 +42,8 @@ export default function Home() {
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
-
+  const router = useRouter();
+  const { t } = useTranslation();
   const ListOfXPolishLetterWords = wordListPolish.strings.filter(
     (words) => words.length === NumberOfColumn,
   );
@@ -61,7 +63,7 @@ export default function Home() {
 
   useEffect(() => {
     function handleKeyPress(event) {
-      console.log('Wciśnięto klawisz:', event.key);
+      // console.log('Wciśnięto klawisz:', event.key);
       if (isGameFinish.current) {
         document.removeEventListener('keydown', handleKeyPress);
         return;
@@ -174,7 +176,6 @@ export default function Home() {
   }
 
   const showAlertNotEnoughLetters = () => {
-    console.log(document.getElementById('letter-alert'));
     const Custom = document.getElementById('letter-alert');
     Custom.classList.toggle('showObject');
   };
@@ -185,24 +186,13 @@ export default function Home() {
   };
 
   // ===================== Confirm Section
-  const showConfirmWinGameWindow = () => {
-    const Custom = document.getElementById('confirm-win');
+  const showConfirmGameWindow = (id) => {
+    const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
   };
 
-  const showConfirmLoseGameWindow = () => {
-    const Custom = document.getElementById('confirm-lose');
-    Custom.classList.toggle('showObject');
-  };
-
-  const closeConfirmWinGameWindow = () => {
-    const Custom = document.getElementById('confirm-win');
-    Custom.classList.toggle('showObject');
-    endGame();
-  };
-
-  const closeConfirmLoseGameWindow = () => {
-    const Custom = document.getElementById('confirm-lose');
+  const closeConfirmGameWindow = (id) => {
+    const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
     endGame();
   };
@@ -230,14 +220,14 @@ export default function Home() {
     if (isWordCorrect()) {
       compare();
       setTimeout(() => {
-        showConfirmWinGameWindow();
+        showConfirmGameWindow('confirm-win');
         isGameFinish.current = true;
       }, 2200);
     }
     if (!isWordCorrect() && currentRow === LAST_ROW) {
       compare();
       setTimeout(() => {
-        showConfirmLoseGameWindow();
+        showConfirmGameWindow('confirm-lose');
         isGameFinish.current = true;
       }, 2200);
     } else {
@@ -268,11 +258,17 @@ export default function Home() {
   }, [key]);
 
   const Polish = () => {
+    router.push(router.route, router.asPath, {
+      locale: 'pl',
+    });
     setselectedLanguage('polish');
     setDicionary(ListOfXPolishLetterWords);
     endGame();
   };
   const English = () => {
+    router.push(router.route, router.asPath, {
+      locale: 'en',
+    });
     setselectedLanguage(() => { 'english'; });
     setDicionary(ListOfXEnglishLetterWords);
     endGame();
@@ -284,7 +280,8 @@ export default function Home() {
         <div className="flex my-4">
           <Nightmode />
           <Instruction />
-          {selectedLanguage === 'polish' ? <SettingsButtonPol /> : <SettingsButtonEng />}
+          {/* {selectedLanguage === 'polish' ? <SettingsButtonPol /> : <SettingsButtonEng />} */}
+          <SettingsButton />
         </div>
       </div>
       <div className="flex flex-row">
@@ -333,18 +330,27 @@ export default function Home() {
         <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomConfirmWin text="You win!!!" />
           <div className="flex justify-center">
-            <button onClick={closeConfirmWinGameWindow} className="font-mono my-4  py-3 px-5 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
+            <button onClick={() => closeConfirmGameWindow('confirm-win')} className="font-mono my-4  py-3 px-5 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
           </div>
         </div>
         <div id="confirm-lose" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium  text-center">
           <CustomConfirmLose word={word} text="You lose :(" />
           <div className="flex justify-center">
-            <button onClick={closeConfirmLoseGameWindow} className="font-mono py-3 px-5 mb-4 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
+            <button onClick={() => closeConfirmGameWindow('confirm-lose')} className="font-mono py-3 px-5 mb-4 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
           </div>
         </div>
       </div>
-      {selectedLanguage === 'polish' ? <InstructionCardPol /> : <InstructionCardEng />}
+      <InstructionCard />
       <Keyboard setKey={setKey} selectedLanguage={selectedLanguage} />
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'home'])),
+      // Will be passed to the page component as props
+    },
+  };
 }

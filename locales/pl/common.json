@@ -1,0 +1,55 @@
+{
+    "instruction":{
+      "header": "Jak Grać",
+      "rule1": "Musisz odgadnąć ukryte słowo w 6 próbach, a kolor liter zmienia się, aby pokazać, jak blisko jesteś.",
+      "rule2": "Aby rozpocząć grę, wystarczy wpisać dowolne słowo, na przykład:",
+      "word": {
+        "letter1": "G",
+        "letter2": "O",
+        "letter3": "R",
+        "letter4": "Y",
+        "letter5": "L"
+      },
+      "frame":{
+        "incorect": {
+          "letter1":"G",
+          "letter2":"O",
+          "text":"w ogóle nie występują w słowie."
+        },
+        "almost": {
+          "letter1":"R",
+          "letter2":"Y",
+          "text":"jest w słowie, ale w złym miejscu."
+        },
+        "corect": {
+          "letter1":"L",
+          "text":"znajduje się w słowie i we właściwym miejscu."
+        }
+      },
+      "underframe":{
+        "text": "Kolejna próba polega na znalezieniu pasujących liter w słowie.",
+        "incorect": {
+          "letter1":"K",
+          "letter2":"O",
+          "letter3":"M",
+          "letter4":"A",
+          "letter5":"R",
+          "text":"Jesteś blisko!"
+        },
+        "corect": {
+          "letter1":"K",
+          "letter2":"O",
+          "letter3":"M",
+          "letter4":"I",
+          "letter5":"S",
+          "text":"Brawo wygrałeś! 🏆"
+        }
+      }
+    },
+    
+    "settings":{
+      "setup": "Ustawienia",
+      "letterCounter": "Liczba liter"
+    }
+    
+  }

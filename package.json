@@ -15,6 +15,7 @@
     "heroicons": "^2.0.18",
     "json-loader": "^0.5.7",
     "next": "^13.2.4",
+    "next-i18next": "^14.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

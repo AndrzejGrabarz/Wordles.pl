@@ -1,0 +1,54 @@
+{
+  "instruction":{
+    "header": "How to play",
+    "rule1": "You have to guess the hidden word in 6 tries and the color of the letters changes to show how close you are.",
+    "rule2": "To start the game, just enter any word, for example:",
+    "word": {
+      "letter1": "C",
+      "letter2": "O",
+      "letter3": "Z",
+      "letter4": "E",
+      "letter5": "Y"
+    },
+    "frame":{
+      "incorect": {
+        "letter1":"C",
+        "letter2":"Z",
+        "text":"are not in the target word at all."
+      },
+      "almost": {
+        "letter1":"O",
+        "letter2":"E",
+        "text":"is in the word but in the wrong spot."
+      },
+      "corect": {
+        "letter1":"Y",
+        "text":"is in the word and in the correct spot."
+      }
+    },
+    "underframe":{
+      "text": "Another try to find matching letters in the target word.",
+      "incorect": {
+        "letter1":"E",
+        "letter2":"Q",
+        "letter3":"U",
+        "letter4":"A",
+        "letter5":"L",
+        "text":"So close!"
+      },
+      "corect": {
+        "letter1":"E",
+        "letter2":"Q",
+        "letter3":"U",
+        "letter4":"I",
+        "letter5":"P",
+        "text":"Got it! 🏆"
+      }
+    }
+  },
+  "settings":{
+    "setup": "Settings",
+    "letterCounter": "Number of Letters"
+  }
+  
+}

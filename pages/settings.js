@@ -25,8 +25,8 @@ function Settings() {
           </h1>
           <div className="p-4">
             <div className="group relative flex items-center justify-center gap-x-6 rounded-lg p-4 text-sm leading-6">
-              <div className="flex-auto">
-                <p className="text-center text-lg md:text-xl lg:text-xl xl:text-2xl 2xl:text-[28px]  font-bold">{t('settings.letterCounter')}</p>
+              <div className="flex-auto">{t('settings.letterCounter')}
+                <p className="text-center text-lg md:text-xl lg:text-xl xl:text-2xl 2xl:text-[28px]  font-bold"></p>
                 <div className="flex items-center justify-center my-2 p-2">
                   {rowCount.map((item, index) => (
                     <button onClick={() => saveNumber(item)} type="submit" className={`h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-md md:h-9 md:w-9 md:text-lg lg:h-10 lg:w-10 lg:text-xl xl:h-11 xl:w-11 2xl:h-[46px] xl:text-2xl 2xl:w-[46px] 2xl:text-3xl m-1 flex items-center justify-center  text-white font-semibold ${!(item % 2) ? 'bg-[#C4B0FF]' : 'bg-[#8696FE]'} rounded-md hover:bg-violet-700 focus:bg-violet-700`}>{item}</button>))}

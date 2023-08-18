@@ -24,7 +24,7 @@ function RestartGame({
   };
 
   return (
-    <div className="flex justify-center pt-4">
+    <div className="flex justify-center py-4">
       <button
         id="btn"
         type="button"

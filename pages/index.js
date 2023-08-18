@@ -14,6 +14,7 @@ import SettingsButton from '@/components/buttons/SettingButton';
 import RestartGame from '@/components/buttons/RestartGame';
 import Instruction from '@/components/buttons/Instruction';
 import InstructionCard from '@/components/board/InstructionCard';
+import Stopwatch from '@/components/boardparts/stopwatch';
 import wordListPolish from '@/public/słownik_lista.json';
 import wordListEnglish from '@/public/english_dicionary.json';
 import CustomAlert from '@/components/alerts/CustomAlert';
@@ -42,8 +43,12 @@ export default function Home() {
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
+  const [timeScoreText, setTimeScoreText] = useState('');
   const router = useRouter();
   const { t } = useTranslation();
+  let stoper = 0;
+  const [intervalId, setIntervalId] = useState(null);
+
   const ListOfXPolishLetterWords = wordListPolish.strings.filter(
     (words) => words.length === NumberOfColumn,
   );
@@ -107,28 +112,6 @@ export default function Home() {
     const USER_WORD = board[currentRow].map((letter) => letter.value);
     const currentRowState = board[currentRow];
 
-    // const usedLetter = document.querySelectorAll(
-    //   board[currentRow].map((letter) => `#${letter.value}`).join(', '),
-    // );
-    // usedLetter.forEach((letter) => {
-    //   letter.style.backgroundColor = 'grey';
-
-    //   if(WORD_DRAFTED.includes(letter[index]))
-    // });
-    // const array = [];
-    // usedLetter.forEach((letter, index) => {
-    //   array.push(letter.innerHTML);
-    //   switch (true) {
-    //     case WORD_DRAFTED.includes(array[index]):
-    //       letter.style.backgroundColor = '#84cc16';
-    //       break;
-    //     case !WORD_DRAFTED.includes(array[index]):
-    //       letter.style.backgroundColor = '#9ca3af';
-    //       break;
-    //     default:
-    //   }
-    // });
-
     currentRowState.map((object, index) => {
       const elementStyle = window.getComputedStyle(document.getElementById(object.value));
       const currentBackgroundColor = elementStyle.backgroundColor;
@@ -161,6 +144,7 @@ export default function Home() {
     setWord(losFromDictionary);
     setCurrentObject(0);
     setCurrentRow(0);
+    document.getElementById('time').innerHTML = '00:00:00';
     const KeyboardAnimation = document.querySelectorAll('#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,#a, #s, #d, #f, #g, #h, #j, #k, #l,#z, #x, #c, #v, #b, #n, #m, #ą, #ć, #ę, #ł, #ń, #ó, #ś, #ź, #ż');
 
     KeyboardAnimation.forEach((id) => {
@@ -169,6 +153,43 @@ export default function Home() {
     setKey({ letter: '' });
     isGameFinish.current = false;
   }
+  // Timer Section
+
+  const updateTimer = () => {
+    stoper += 1;
+    const minutes = Math.floor(stoper / 6000);
+    const seconds = Math.floor((stoper % 6000) / 100);
+    const milliseconds = Math.floor(stoper % 100);
+    document.getElementById('time').innerHTML = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(2, '0')}`;
+  };
+
+  const startAndStop = () => {
+    if (intervalId === null) {
+      setIntervalId(setInterval(updateTimer, 10));
+    } else {
+      console.log(stoper);
+      clearInterval(intervalId);
+      setIntervalId(null);
+      setTimeScoreText(document.getElementById('time').innerHTML);
+    }
+  };
+
+  console.log(stoper);
+  const reset = () => {
+    clearInterval(intervalId);
+    setIntervalId(null);
+    stoper = 0;
+    document.getElementById('time').innerHTML = '00:00:00';
+  };
+
+  const pause = () => {
+    if (intervalId !== null) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+  };
+
+  // Timer Section
 
   function giveAllLetters() {
     const USER_WORD = board[currentRow].map((letter) => letter.value);
@@ -189,11 +210,15 @@ export default function Home() {
   const showConfirmGameWindow = (id) => {
     const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
+    // setTime(0);
+    // document.getElementById('time').innerHTML = '00:00:00';
   };
 
   const closeConfirmGameWindow = (id) => {
     const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
+    // setTime(0);
+    // document.getElementById('time').innerHTML = '00:00:00';
     endGame();
   };
   // ===================== Confirm Section
@@ -218,7 +243,11 @@ export default function Home() {
     }
 
     if (isWordCorrect()) {
+      if (intervalId !== null) {
+        startAndStop();
+      }
       compare();
+      // startAndStop();
       setTimeout(() => {
         showConfirmGameWindow('confirm-win');
         isGameFinish.current = true;
@@ -273,14 +302,13 @@ export default function Home() {
     setDicionary(ListOfXEnglishLetterWords);
     endGame();
   };
-
+  console.log(word);
   return (
     <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
         <div className="flex my-4">
           <Nightmode />
           <Instruction />
-          {/* {selectedLanguage === 'polish' ? <SettingsButtonPol /> : <SettingsButtonEng />} */}
           <SettingsButton />
         </div>
       </div>
@@ -312,15 +340,6 @@ export default function Home() {
       </div>
       <div id="divBoard" className="relative">
         <Board board={board} />
-        <RestartGame
-          setCurrentRow={setCurrentRow}
-          setCurrentObject={setCurrentObject}
-          setBoardState={setBoardState}
-          setWord={setWord}
-          word={word}
-          ROW_COUNT={ROW_COUNT}
-          NumberOfColumn={NumberOfColumn}
-        />
         <div id="letter-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           {selectedLanguage === 'polish' ? <CustomAlert text="Musisz podać wszystkie pięć liter" /> : <CustomAlert text="You must give all five letters" />}
         </div>
@@ -329,8 +348,20 @@ export default function Home() {
         </div>
         <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomConfirmWin text="You win!!!" />
-          <div className="flex justify-center">
-            <button onClick={() => closeConfirmGameWindow('confirm-win')} className="font-mono my-4  py-3 px-5 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
+          <div className="flex flex-col justify-center">
+            <div className="flex flex-col mt-4">
+              <div>
+                Twój czas:
+                {' '}
+                {timeScoreText}
+              </div>
+              <div>
+                Liczba prób:
+                {' '}
+                {currentRow}
+              </div>
+            </div>
+            <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-4 px-8 py-3 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
           </div>
         </div>
         <div id="confirm-lose" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium  text-center">
@@ -338,6 +369,22 @@ export default function Home() {
           <div className="flex justify-center">
             <button onClick={() => closeConfirmGameWindow('confirm-lose')} className="font-mono py-3 px-5 mb-4 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
           </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-3 ">
+        <Stopwatch start={startAndStop} pause={pause} reset={reset} />
+        <RestartGame
+          setCurrentRow={setCurrentRow}
+          setCurrentObject={setCurrentObject}
+          setBoardState={setBoardState}
+          setWord={setWord}
+          NumberOfColumn={NumberOfColumn}
+          ROW_COUNT={ROW_COUNT}
+          gameWord={gameWord}
+        />
+        <div className="bg-red flex flex-col items-center justify-center text-xl border">
+          Ilość prób
+          <div className="flex">{currentRow}</div>
         </div>
       </div>
       <InstructionCard />

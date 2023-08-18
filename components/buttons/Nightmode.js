@@ -9,10 +9,16 @@ function Nightmode() {
     const greyBackground1 = document.getElementById('grey-background1');
     const greyBackground2 = document.getElementById('grey-background2');
     const instruction = document.getElementById('InstructionCard');
+    const blue1 = document.getElementById('blueBtn1')
+    const blue2 = document.getElementById('blueBtn2')
+    const time = document.getElementById('time')
     main.classList.toggle('night');
     greyBackground1.classList.toggle('grey-background');
     greyBackground2.classList.toggle('grey-background');
     instruction.classList.toggle('white');
+    blue1.classList.toggle('blueButton');
+    blue2.classList.toggle('blueButton');
+    time.classList.toggle('bluetime');
     setnightMode(!nightMode);
   }
   return (

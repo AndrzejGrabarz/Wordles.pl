@@ -87,7 +87,9 @@ input {
     color:#3b82f6;
 }
 
-
+.attemptsText {
+    color: white;
+}
 
 
 .InstructionCard {

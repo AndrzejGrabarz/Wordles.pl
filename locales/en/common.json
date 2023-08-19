@@ -49,6 +49,16 @@
   "settings":{
     "setup": "Settings",
     "letterCounter": "Number of Letters"
-  }
+  },
   
+  "alerts": {
+    "win": "You win!",
+    "lose": "You lose :(",
+    "button": "Try again"
+  },
+
+  "stopwatch": {
+    "time": "Your time:",
+    "attempts": "Number of attempts"
+  }
 }

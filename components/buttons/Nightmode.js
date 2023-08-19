@@ -11,6 +11,9 @@ function Nightmode() {
     const instruction = document.getElementById('InstructionCard');
     const blue1 = document.getElementById('blueBtn1')
     const blue2 = document.getElementById('blueBtn2')
+    const blue3 = document.getElementById('blueBtn3')
+    const attempts1 = document.getElementById('attempts1')
+    const attempts2 = document.getElementById('attempts2')
     const time = document.getElementById('time')
     main.classList.toggle('night');
     greyBackground1.classList.toggle('grey-background');
@@ -18,7 +21,10 @@ function Nightmode() {
     instruction.classList.toggle('white');
     blue1.classList.toggle('blueButton');
     blue2.classList.toggle('blueButton');
+    blue3.classList.toggle('blueButton');
     time.classList.toggle('bluetime');
+    attempts1.classList.toggle('attemptsText')
+    attempts2.classList.toggle('attemptsText')
     setnightMode(!nightMode);
   }
   return (

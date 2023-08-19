@@ -18,6 +18,7 @@ function RestartGame({
     setCurrentObject(0);
     setCurrentRow(0);
     setWord(gameWord);
+    document.getElementById('time').innerHTML = '00:00:00';
     KeyboardAnimation.forEach((id) => {
       id.style.backgroundColor = '#e1e0e0';
     });

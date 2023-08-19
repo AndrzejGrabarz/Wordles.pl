@@ -50,6 +50,17 @@
     "settings":{
       "setup": "Ustawienia",
       "letterCounter": "Liczba liter"
+    },
+
+    "alerts": {
+      "win": "Wygrałeś!",
+      "lose": "Przegrałeś :(",
+      "button": "Spróbuj ponownie"
+    },
+    
+    "stopwatch": {
+      "time": "Twój czas:",
+      "attempts": "Liczba prób"
     }
     
   }

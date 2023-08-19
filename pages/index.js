@@ -312,7 +312,7 @@ export default function Home() {
           <SettingsButton />
         </div>
       </div>
-      <div className="flex flex-row">
+      <div id='flags' className="flex flex-row">
         <div className="mr-2 mb-4">
           <button type="button" onClick={Polish}>
             <div id="Flaga">
@@ -347,31 +347,31 @@ export default function Home() {
           {selectedLanguage === 'polish' ? <CustomAlert text="Brak w słowniku" /> : <CustomAlert text="Missing from the dictionary" />}
         </div>
         <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          <CustomConfirmWin text="You win!!!" />
+          <CustomConfirmWin text={t('alerts.win')} />
           <div className="flex flex-col justify-center">
             <div className="flex flex-col mt-4">
               <div>
-                Twój czas:
+                {t('stopwatch.time')}
                 {' '}
                 {timeScoreText}
               </div>
               <div>
-                Liczba prób:
+              {t('stopwatch.attempts')}
                 {' '}
                 {currentRow}
               </div>
             </div>
-            <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-4 px-8 py-3 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
+            <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-4 px-8 py-3 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>
           </div>
         </div>
         <div id="confirm-lose" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium  text-center">
-          <CustomConfirmLose word={word} text="You lose :(" />
+          <CustomConfirmLose word={word} text={t('alerts.lose')} />
           <div className="flex justify-center">
-            <button onClick={() => closeConfirmGameWindow('confirm-lose')} className="font-mono py-3 px-5 mb-4 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
+            <button onClick={() => closeConfirmGameWindow('confirm-lose')} className="font-mono py-3 px-5 mb-4 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-3 ">
+      <div id='divUnderBoard' className="grid grid-cols-3 ">
         <Stopwatch start={startAndStop} pause={pause} reset={reset} />
         <RestartGame
           setCurrentRow={setCurrentRow}
@@ -382,9 +382,9 @@ export default function Home() {
           ROW_COUNT={ROW_COUNT}
           gameWord={gameWord}
         />
-        <div className="bg-red flex flex-col items-center justify-center text-xl border">
-          Ilość prób
-          <div className="flex">{currentRow}</div>
+        <div className="flex flex-col items-center justify-center text-xl border">
+           <div id='attempts1'>{t('stopwatch.attempts')}</div>
+          <div  id='attempts2' className="flex">{currentRow}</div>
         </div>
       </div>
       <InstructionCard />

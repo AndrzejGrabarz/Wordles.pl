@@ -68,7 +68,7 @@ export default function Home() {
 
   useEffect(() => {
     function handleKeyPress(event) {
-      // console.log('Wciśnięto klawisz:', event.key);
+
       if (isGameFinish.current) {
         document.removeEventListener('keydown', handleKeyPress);
         return;
@@ -167,14 +167,11 @@ export default function Home() {
     if (intervalId === null) {
       setIntervalId(setInterval(updateTimer, 10));
     } else {
-      console.log(stoper);
       clearInterval(intervalId);
       setIntervalId(null);
       setTimeScoreText(document.getElementById('time').innerHTML);
     }
-  };
-
-  console.log(stoper);
+  }
   const reset = () => {
     clearInterval(intervalId);
     setIntervalId(null);
@@ -210,15 +207,11 @@ export default function Home() {
   const showConfirmGameWindow = (id) => {
     const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
-    // setTime(0);
-    // document.getElementById('time').innerHTML = '00:00:00';
   };
 
   const closeConfirmGameWindow = (id) => {
     const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
-    // setTime(0);
-    // document.getElementById('time').innerHTML = '00:00:00';
     endGame();
   };
   // ===================== Confirm Section
@@ -247,7 +240,6 @@ export default function Home() {
         startAndStop();
       }
       compare();
-      // startAndStop();
       setTimeout(() => {
         showConfirmGameWindow('confirm-win');
         isGameFinish.current = true;
@@ -302,7 +294,7 @@ export default function Home() {
     setDicionary(ListOfXEnglishLetterWords);
     endGame();
   };
-  console.log(word);
+
   return (
     <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
@@ -382,7 +374,7 @@ export default function Home() {
           ROW_COUNT={ROW_COUNT}
           gameWord={gameWord}
         />
-        <div className="flex flex-col items-center justify-center text-xl border">
+        <div className="flex flex-col items-center justify-center text-xl border rounded">
            <div id='attempts1'>{t('stopwatch.attempts')}</div>
           <div  id='attempts2' className="flex">{currentRow}</div>
         </div>

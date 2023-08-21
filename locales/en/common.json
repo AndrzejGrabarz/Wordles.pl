@@ -54,11 +54,12 @@
   "alerts": {
     "win": "You win!",
     "lose": "You lose :(",
-    "button": "Try again"
+    "button": "Try again",
+    "word": "Your word is:"
   },
 
   "stopwatch": {
     "time": "Your time:",
-    "attempts": "Number of attempts"
+    "attempts": "Number of attempts:"
   }
 }

@@ -58,8 +58,19 @@
     "word": "Your word is:"
   },
 
+  "dicionaryAlerts": {
+    "fiveletters": "You must give all five letters",
+    "lackof": "Missing from the dictionary"
+  },
+
   "stopwatch": {
     "time": "Your time:",
     "attempts": "Number of attempts:"
-  }
+  },
+
+  "keyboard": [
+  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+  ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+  ["Enter", "z", "x", "c", "v", "b", "n", "m", "Delete"]
+]
 }

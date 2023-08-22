@@ -1,4 +1,3 @@
-import React from 'react';
 import Key from './Key';
 
 function KeyboardRow({ rowLine, setKey }) {

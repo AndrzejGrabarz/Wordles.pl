@@ -39,16 +39,14 @@ export default function Home() {
   const [key, setKey] = useState({ letter: '' });
   const isSpecialKey = (letter) => SPECIAL_KEYS.includes(letter);
   const isGameFinish = useRef(false);
-  const [selectedLanguage, setselectedLanguage] = useState('polish');
+  const router = useRouter();
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
   const [timeScoreText, setTimeScoreText] = useState('');
-  const router = useRouter();
   const { t } = useTranslation();
   let stoper = 0;
   const [intervalId, setIntervalId] = useState(null);
-
   const ListOfXPolishLetterWords = wordListPolish.strings.filter(
     (words) => words.length === NumberOfColumn,
   );
@@ -68,7 +66,6 @@ export default function Home() {
 
   useEffect(() => {
     function handleKeyPress(event) {
-
       if (isGameFinish.current) {
         document.removeEventListener('keydown', handleKeyPress);
         return;
@@ -171,7 +168,7 @@ export default function Home() {
       setIntervalId(null);
       setTimeScoreText(document.getElementById('time').innerHTML);
     }
-  }
+  };
   const reset = () => {
     clearInterval(intervalId);
     setIntervalId(null);
@@ -246,6 +243,9 @@ export default function Home() {
       }, 2200);
     }
     if (!isWordCorrect() && currentRow === LAST_ROW) {
+      if (intervalId !== null) {
+        startAndStop();
+      }
       compare();
       setTimeout(() => {
         showConfirmGameWindow('confirm-lose');
@@ -282,7 +282,7 @@ export default function Home() {
     router.push(router.route, router.asPath, {
       locale: 'pl',
     });
-    setselectedLanguage('polish');
+    document.getElementById('plFlag').blur();
     setDicionary(ListOfXPolishLetterWords);
     endGame();
   };
@@ -290,7 +290,7 @@ export default function Home() {
     router.push(router.route, router.asPath, {
       locale: 'en',
     });
-    setselectedLanguage(() => { 'english'; });
+    document.getElementById('enFlag').blur();
     setDicionary(ListOfXEnglishLetterWords);
     endGame();
   };
@@ -304,9 +304,9 @@ export default function Home() {
           <SettingsButton />
         </div>
       </div>
-      <div id='flags' className="flex flex-row">
+      <div id="flags" className="flex flex-row">
         <div className="mr-2 mb-4">
-          <button type="button" onClick={Polish}>
+          <button id="plFlag" type="button" onClick={Polish}>
             <div id="Flaga">
               <Image
                 src={Poland}
@@ -318,7 +318,7 @@ export default function Home() {
           </button>
         </div>
         <div className="mb-4">
-          <button type="button" onClick={English}>
+          <button id="enFlag" type="button" onClick={English}>
             <div id="Flaga">
               <Image
                 src={UK}
@@ -333,10 +333,10 @@ export default function Home() {
       <div id="divBoard" className="relative">
         <Board board={board} />
         <div id="letter-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          {selectedLanguage === 'polish' ? <CustomAlert text="Musisz podać wszystkie pięć liter" /> : <CustomAlert text="You must give all five letters" />}
+          <CustomAlert text={t('dicionaryAlerts.fiveletters')} />
         </div>
         <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          {selectedLanguage === 'polish' ? <CustomAlert text="Brak w słowniku" /> : <CustomAlert text="Missing from the dictionary" />}
+          <CustomAlert text={t('dicionaryAlerts.lackof')} />
         </div>
         <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomConfirmWin text={t('alerts.win')} />
@@ -348,7 +348,7 @@ export default function Home() {
                 {timeScoreText}
               </div>
               <div>
-              {t('stopwatch.attempts')}
+                {t('stopwatch.attempts')}
                 {' '}
                 {currentRow}
               </div>
@@ -363,7 +363,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div id='divUnderBoard' className="grid grid-cols-3 ">
+      <div id="divUnderBoard" className="grid grid-cols-3 ">
         <Stopwatch start={startAndStop} pause={pause} reset={reset} />
         <RestartGame
           setCurrentRow={setCurrentRow}
@@ -375,12 +375,12 @@ export default function Home() {
           gameWord={gameWord}
         />
         <div className="flex flex-col items-center justify-center text-xl border rounded">
-           <div id='attempts1'>{t('stopwatch.attempts')}</div>
-          <div  id='attempts2' className="flex">{currentRow}</div>
+          <div id="attempts1">{t('stopwatch.attempts')}</div>
+          <div id="attempts2" className="flex">{currentRow}</div>
         </div>
       </div>
       <InstructionCard />
-      <Keyboard setKey={setKey} selectedLanguage={selectedLanguage} />
+      <Keyboard setKey={setKey} />
     </div>
   );
 }

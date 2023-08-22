@@ -6,9 +6,9 @@ function Stopwatch({ start, pause, reset}) {
         00:00:00
       </div>
       <div className="flex text-base font-medium ">
-        <button id="blueBtn1" className=" px-4 py-1 w-full border-y-2 border-l-2 border-r border-[#3b82f6] hover:text-white hover:bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-l" onClick={start}>Start</button>
-        <button id="blueBtn2" className=" px-4 py-1 w-full border border-y-2  border-[#3b82f6] hover:text-white hover:bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600" onClick={pause}>Pause</button>
-        <button id="blueBtn3" className=" px-4 py-1 w-full border-l border-y-2 border-r-2 border-[#3b82f6] hover:text-white hover:bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-r" onClick={reset}>Reset</button>
+        <button id="timerStartButtom" className=" px-4 py-1 w-full border-y-2 border-l-2 border-r border-[#3b82f6] hover:text-white hover:bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-l" onClick={start}>Start</button>
+        <button id="timerStopButtom" className=" px-4 py-1 w-full border border-y-2  border-[#3b82f6] hover:text-white hover:bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600" onClick={pause}>Pause</button>
+        <button id="timerResetButtom" className=" px-4 py-1 w-full border-l border-y-2 border-r-2 border-[#3b82f6] hover:text-white hover:bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-r" onClick={reset}>Reset</button>
       </div>
     </div>
   );

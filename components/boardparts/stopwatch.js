@@ -1,5 +1,4 @@
-function Stopwatch({ start, pause, reset}) {
-  
+function Stopwatch({ start, pause, reset }) {
   return (
     <div className="flex flex-col justify-center items-center text-xl rounded text-black mx-2">
       <div id="time" className="flex flex-row shrink-0 py-1">

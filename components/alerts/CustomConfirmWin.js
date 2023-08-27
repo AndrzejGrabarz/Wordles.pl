@@ -1,10 +1,23 @@
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { useTranslation } from 'next-i18next';
+import queryString from 'query-string';
 
 function CustomConfirmWin({ text, timeScoreText, currentRow }) {
   function closeByXMark() {
     const XMark = document.getElementById('confirm-win');
     XMark.classList.toggle('showObject');
+  }
+  const { t } = useTranslation();
+
+  function Share() {
+    const currentURL = new URL(document.location);
+    const { searchParams } = currentURL;
+    searchParams.set('time', timeScoreText);
+    searchParams.set('score', currentRow);
+    const newUrl = currentURL.toString();
+    const inputInfo = document.getElementById('link');
+    inputInfo.value = newUrl;
   }
 
   return (
@@ -17,6 +30,24 @@ function CustomConfirmWin({ text, timeScoreText, currentRow }) {
           </button>
         </div>
       </div>
+      <div className="flex flex-row justify-center items-center ">
+        <div className="flex flex-col my-2">
+          <div>
+            {t('stopwatch.time')}
+            {' '}
+            {timeScoreText}
+          </div>
+          <div className="">
+            {t('stopwatch.attempts')}
+            {' '}
+            {currentRow}
+          </div>
+        </div>
+        <div className="ml-12">
+          <button type="button" onClick={Share}>Share</button>
+        </div>
+      </div>
+      <div className="bg-red-100"><input type="text" id="link" /></div>
     </div>
   );
 }

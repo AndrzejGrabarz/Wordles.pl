@@ -5,6 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import queryString from 'query-string';
 import Poland from '@/public/Poland.png';
 import UK from '@/public/UK.png';
 import Board from '@/components/board/Board';
@@ -39,14 +40,16 @@ export default function Home() {
   const [key, setKey] = useState({ letter: '' });
   const isSpecialKey = (letter) => SPECIAL_KEYS.includes(letter);
   const isGameFinish = useRef(false);
+  const oddUrl = useRef(false);
   const router = useRouter();
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
-  const [timeScoreText, setTimeScoreText] = useState('');
+  const [timeScoreText, setTimeScoreText] = useState('00:00:00');
   const { t } = useTranslation();
   let stoper = 0;
   const [intervalId, setIntervalId] = useState(null);
+ 
   const ListOfXPolishLetterWords = wordListPolish.strings.filter(
     (words) => words.length === NumberOfColumn,
   );
@@ -56,13 +59,41 @@ export default function Home() {
   );
 
   const gameWord = ListOfXPolishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)];
+  const gameWordENG = ListOfXEnglishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)];
 
-  const losFromDictionary = dicionary[Math.floor(Math.random() * dicionary.length)];
+  // const losFromDictionary = dicionary[Math.floor(Math.random() * dicionary.length)];
+  // URL Section
+  const basicURL = 'http://localhost:3000';
+  // URL End Section
+
+  const showConfirmGameWindow = (id) => {
+    const Custom = document.getElementById(id);
+    Custom.classList.toggle('showObject');
+  };
 
   useEffect(() => {
+    // const URL = document.location;
+    // const parsed = queryString.parse(URL.search);
+    // if (URL.href === 'http://localhost:3000/') {
+    //   setDicionary(ListOfXPolishLetterWords);
+    //   setWord(gameWord);
+    // } else if (URL.href === 'http://localhost:3000/en') {
+    //   setDicionary(ListOfXEnglishLetterWords);
+    //   setWord(losFromDictionary);
+    // } else if (URL.href !== 'http://localhost:3000/' || URL.href === 'http://localhost:3000/en') {
+    //   if (oddUrl.current === false) {
+    //     showConfirmGameWindow('confirm-win');
+    //     setTimeScoreText(parsed.time);
+    //     setCurrentRow(parsed.score);
+    //     oddUrl.current = true;
+    //   }
+    // }
     setDicionary(ListOfXPolishLetterWords);
     setWord(gameWord);
   }, []);
+
+  console.log(word)
+    console.log(dicionary)
 
   useEffect(() => {
     function handleKeyPress(event) {
@@ -84,6 +115,7 @@ export default function Home() {
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, [key]);
+
 
   const updateBoard = (letter) => {
     const updatedBoard = [...board];
@@ -138,9 +170,11 @@ export default function Home() {
     setBoardState(
       Array.from({ length: ROW_COUNT }, () => Array.from({ length: NumberOfColumn }, () => ({ value: '', state: '' }))),
     );
+    const losFromDictionary = dicionary[Math.floor(Math.random() * dicionary.length)];
     setWord(losFromDictionary);
     setCurrentObject(0);
     setCurrentRow(0);
+    setTimeScoreText('00:00:00');
     document.getElementById('time').innerHTML = '00:00:00';
     const KeyboardAnimation = document.querySelectorAll('#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,#a, #s, #d, #f, #g, #h, #j, #k, #l,#z, #x, #c, #v, #b, #n, #m, #ą, #ć, #ę, #ł, #ń, #ó, #ś, #ź, #ż');
 
@@ -151,7 +185,6 @@ export default function Home() {
     isGameFinish.current = false;
   }
   // Timer Section
-
   const updateTimer = () => {
     stoper += 1;
     const minutes = Math.floor(stoper / 6000);
@@ -201,10 +234,6 @@ export default function Home() {
   };
 
   // ===================== Confirm Section
-  const showConfirmGameWindow = (id) => {
-    const Custom = document.getElementById(id);
-    Custom.classList.toggle('showObject');
-  };
 
   const closeConfirmGameWindow = (id) => {
     const Custom = document.getElementById(id);
@@ -293,6 +322,7 @@ export default function Home() {
     document.getElementById('enFlag').blur();
     setDicionary(ListOfXEnglishLetterWords);
     endGame();
+    // endGame();
   };
 
   return (
@@ -338,21 +368,9 @@ export default function Home() {
         <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomAlert text={t('dicionaryAlerts.lackof')} />
         </div>
-        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          <CustomConfirmWin text={t('alerts.win')} />
+        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5  rounded-md font-medium text-center showObject">
+          <CustomConfirmWin text={t('alerts.win')} timeScoreText={timeScoreText} currentRow={currentRow} />
           <div className="flex flex-col justify-center">
-            <div className="flex flex-col mt-4">
-              <div>
-                {t('stopwatch.time')}
-                {' '}
-                {timeScoreText}
-              </div>
-              <div>
-                {t('stopwatch.attempts')}
-                {' '}
-                {currentRow}
-              </div>
-            </div>
             <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-4 px-8 py-3 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>
           </div>
         </div>

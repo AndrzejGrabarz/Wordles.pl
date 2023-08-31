@@ -9,6 +9,7 @@ function RestartGame({
   NumberOfColumn,
   ROW_COUNT,
   gameWord,
+  dicionary
 }) {
   const resetGame = () => {
     const KeyboardAnimation = document.querySelectorAll('#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,#a, #s, #d, #f, #g, #h, #j, #k, #l,#z, #x, #c, #v, #b, #n, #m, #ą, #ć, #ę, #ł,#ń, #ó, #ś, #ź, #ż');
@@ -17,7 +18,9 @@ function RestartGame({
     );
     setCurrentObject(0);
     setCurrentRow(0);
-    setWord(gameWord);
+    setWord(dicionary[Math.floor(Math.random() * dicionary.length)]);
+    const inputInfo = document.getElementById('link');
+    inputInfo.value = '';
     document.getElementById('time').innerHTML = '00:00:00';
     KeyboardAnimation.forEach((id) => {
       id.style.backgroundColor = '#e1e0e0';

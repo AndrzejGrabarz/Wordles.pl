@@ -3,7 +3,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
 import queryString from 'query-string';
 
-function CustomConfirmWin({ text, timeScoreText, currentRow }) {
+function CustomConfirmWin({ text, timeScoreText, currentRow, language }) {
   function closeByXMark() {
     const XMark = document.getElementById('confirm-win');
     XMark.classList.toggle('showObject');
@@ -15,6 +15,7 @@ function CustomConfirmWin({ text, timeScoreText, currentRow }) {
     const { searchParams } = currentURL;
     searchParams.set('time', timeScoreText);
     searchParams.set('score', currentRow);
+    searchParams.set('lang', language);
     const newUrl = currentURL.toString();
     const inputInfo = document.getElementById('link');
     inputInfo.value = newUrl;

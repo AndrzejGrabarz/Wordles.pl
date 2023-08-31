@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
+    "crypto-js": "^4.1.1",
     "eslint-config-next": "13.2.4",
     "fs": "^0.0.1-security",
     "heroicons": "^2.0.18",

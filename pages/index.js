@@ -332,7 +332,7 @@ export default function Home() {
     endGame();
     // endGame();
   };
-
+console.log(word)
   return (
     <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
@@ -377,7 +377,7 @@ export default function Home() {
           <CustomAlert text={t('dicionaryAlerts.lackof')} />
         </div>
         <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5  rounded-md font-medium text-center showObject">
-          <CustomConfirmWin text={t('alerts.win')} timeScoreText={timeScoreText} currentRow={currentRow} language={language.current} />
+          <CustomConfirmWin text={t('alerts.win')} timeScoreText={timeScoreText} currentRow={currentRow} language={language.current} word={word} />
           <div className="flex flex-col justify-center">
             <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-4 px-8 py-3 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>
           </div>

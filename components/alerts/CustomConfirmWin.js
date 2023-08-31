@@ -1,15 +1,17 @@
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
-import queryString from 'query-string';
+import AES from 'crypto-js/aes';
 
-function CustomConfirmWin({ text, timeScoreText, currentRow, language }) {
+function CustomConfirmWin({
+  text, timeScoreText, currentRow, language, word,
+}) {
   function closeByXMark() {
     const XMark = document.getElementById('confirm-win');
     XMark.classList.toggle('showObject');
   }
+  const CryptoJS = require('crypto-js');
   const { t } = useTranslation();
-
   function Share() {
     const currentURL = new URL(document.location);
     const { searchParams } = currentURL;
@@ -19,6 +21,28 @@ function CustomConfirmWin({ text, timeScoreText, currentRow, language }) {
     const newUrl = currentURL.toString();
     const inputInfo = document.getElementById('link');
     inputInfo.value = newUrl;
+  }
+
+  function ChallangeFriend() {
+    const currentURL = new URL(document.location);
+    const { searchParams } = currentURL;
+    const message = word;
+    const secretKey = 'secret_key';
+    // Szyfrowanie
+    const encryptedMessage = CryptoJS.AES.encrypt(message, secretKey).toString();
+    // Odszyfrowywanie
+    const decryptedBytes = CryptoJS.AES.decrypt(encryptedMessage, secretKey);
+    const decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    searchParams.set('time', timeScoreText);
+    searchParams.set('score', currentRow);
+    searchParams.set('lang', language);
+    searchParams.set('word', encryptedMessage);
+    const newUrl = currentURL.toString();
+    const inputInfo = document.getElementById('link');
+    inputInfo.value = newUrl;
+
+    console.log('Zaszyfrowana wiadomość:', encryptedMessage);
+    console.log('Odszyfrowana wiadomość:', decryptedMessage);
   }
 
   return (
@@ -46,6 +70,7 @@ function CustomConfirmWin({ text, timeScoreText, currentRow, language }) {
         </div>
         <div className="ml-12">
           <button type="button" onClick={Share}>Share</button>
+          <button type="button" onClick={ChallangeFriend}>Chalenge Friend</button>
         </div>
       </div>
       <div className="bg-red-100"><input type="text" id="link" /></div>

@@ -9,17 +9,31 @@ function Nightmode() {
     const greyBackground1 = document.getElementById('grey-background1');
     const greyBackground2 = document.getElementById('grey-background2');
     const instruction = document.getElementById('InstructionCard');
+    const timerStartButtom = document.getElementById('timerStartButtom')
+    const timerStopButtom = document.getElementById('timerStopButtom')
+    const timerResetButtom = document.getElementById('timerResetButtom')
+    const attempts1 = document.getElementById('attempts1')
+    const attempts2 = document.getElementById('attempts2')
+    const time = document.getElementById('time')
+    const Nightbtn = document.getElementById('Nightbtn')
+    Nightbtn.blur()
     main.classList.toggle('night');
     greyBackground1.classList.toggle('grey-background');
     greyBackground2.classList.toggle('grey-background');
     instruction.classList.toggle('white');
+    timerStartButtom.classList.toggle('blueButton');
+    timerStopButtom.classList.toggle('blueButton');
+    timerResetButtom.classList.toggle('blueButton');
+    time.classList.toggle('bluetime');
+    attempts1.classList.toggle('attemptsText')
+    attempts2.classList.toggle('attemptsText')
     setnightMode(!nightMode);
   }
   return (
     <button
       type="button"
       onClick={nightmode}
-      id="btn"
+      id="Nightbtn"
       className={
         nightMode
           ? 'text-purple-700 border-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-1 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1.5 sm:px-5 sm:py-2 md:px-5 md:py-2.5 lg:px-7 lg:py-2 xl:px-6 xl:py-1.5 2xl:px-6 2xl:py-1.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900  '

@@ -1,18 +1,21 @@
 import {
   useEffect, useState, useContext, useRef,
 } from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
+import queryString from 'query-string';
 import Poland from '@/public/Poland.png';
 import UK from '@/public/UK.png';
 import Board from '@/components/board/Board';
 import Keyboard from '@/components/keyboard/Keyboard';
 import Nightmode from '@/components/buttons/Nightmode';
-import SettingsButtonEng from '@/components/buttons/SettingButtonEng';
-import SettingsButtonPol from '@/components/buttons/SettingButtonPol';
+import SettingsButton from '@/components/buttons/SettingButton';
 import RestartGame from '@/components/buttons/RestartGame';
 import Instruction from '@/components/buttons/Instruction';
-import InstructionCardEng from '@/components/board/InstructionCardEng';
-import InstructionCardPol from '@/components/board/InstructionCardPol';
+import InstructionCard from '@/components/board/InstructionCard';
+import Stopwatch from '@/components/boardparts/stopwatch';
 import wordListPolish from '@/public/słownik_lista.json';
 import wordListEnglish from '@/public/english_dicionary.json';
 import CustomAlert from '@/components/alerts/CustomAlert';
@@ -37,10 +40,16 @@ export default function Home() {
   const [key, setKey] = useState({ letter: '' });
   const isSpecialKey = (letter) => SPECIAL_KEYS.includes(letter);
   const isGameFinish = useRef(false);
-  const [selectedLanguage, setselectedLanguage] = useState('polish');
+  const language = useRef(false);
+  const oddUrl = useRef(false);
+  const router = useRouter();
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
+  const [timeScoreText, setTimeScoreText] = useState('00:00:00');
+  const { t } = useTranslation();
+  let stoper = 0;
+  const [intervalId, setIntervalId] = useState(null);
 
   const ListOfXPolishLetterWords = wordListPolish.strings.filter(
     (words) => words.length === NumberOfColumn,
@@ -51,17 +60,40 @@ export default function Home() {
   );
 
   const gameWord = ListOfXPolishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)];
+  const gameWordENG = ListOfXEnglishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)];
 
   const losFromDictionary = dicionary[Math.floor(Math.random() * dicionary.length)];
+  // URL Section
+  const basicURL = 'http://localhost:3000';
+  // URL End Section
+
+  const showConfirmGameWindow = (id) => {
+    const Custom = document.getElementById(id);
+    Custom.classList.toggle('showObject');
+  };
 
   useEffect(() => {
-    setDicionary(ListOfXPolishLetterWords);
-    setWord(gameWord);
+    const URL = document.location;
+    const parsed = queryString.parse(URL.search);
+    if (URL.href === 'http://localhost:3000/') {
+      setDicionary(ListOfXPolishLetterWords);
+      setWord(gameWord);
+    } else if (URL.href === 'http://localhost:3000/en') {
+      setDicionary(ListOfXEnglishLetterWords);
+      setWord(gameWordENG);
+    } else if (URL.href !== 'http://localhost:3000/' || URL.href === 'http://localhost:3000/en') {
+      if (oddUrl.current === false) {
+        showConfirmGameWindow('confirm-win');
+        setTimeScoreText(parsed.time);
+        setCurrentRow(parsed.score);
+        language.current = parsed.language;
+        oddUrl.current = true;
+      }
+    }
   }, []);
 
   useEffect(() => {
     function handleKeyPress(event) {
-      console.log('Wciśnięto klawisz:', event.key);
       if (isGameFinish.current) {
         document.removeEventListener('keydown', handleKeyPress);
         return;
@@ -105,28 +137,6 @@ export default function Home() {
     const USER_WORD = board[currentRow].map((letter) => letter.value);
     const currentRowState = board[currentRow];
 
-    // const usedLetter = document.querySelectorAll(
-    //   board[currentRow].map((letter) => `#${letter.value}`).join(', '),
-    // );
-    // usedLetter.forEach((letter) => {
-    //   letter.style.backgroundColor = 'grey';
-
-    //   if(WORD_DRAFTED.includes(letter[index]))
-    // });
-    // const array = [];
-    // usedLetter.forEach((letter, index) => {
-    //   array.push(letter.innerHTML);
-    //   switch (true) {
-    //     case WORD_DRAFTED.includes(array[index]):
-    //       letter.style.backgroundColor = '#84cc16';
-    //       break;
-    //     case !WORD_DRAFTED.includes(array[index]):
-    //       letter.style.backgroundColor = '#9ca3af';
-    //       break;
-    //     default:
-    //   }
-    // });
-
     currentRowState.map((object, index) => {
       const elementStyle = window.getComputedStyle(document.getElementById(object.value));
       const currentBackgroundColor = elementStyle.backgroundColor;
@@ -156,9 +166,18 @@ export default function Home() {
     setBoardState(
       Array.from({ length: ROW_COUNT }, () => Array.from({ length: NumberOfColumn }, () => ({ value: '', state: '' }))),
     );
-    setWord(losFromDictionary);
+    if (language.current === false) {
+      setDicionary(ListOfXPolishLetterWords);
+      setWord(ListOfXPolishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)]);
+    } else {
+      setDicionary(ListOfXEnglishLetterWords);
+      setWord(ListOfXEnglishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)]);
+    }
+    oddUrl.current = false;
     setCurrentObject(0);
     setCurrentRow(0);
+    setTimeScoreText('00:00:00');
+    document.getElementById('time').innerHTML = '00:00:00';
     const KeyboardAnimation = document.querySelectorAll('#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,#a, #s, #d, #f, #g, #h, #j, #k, #l,#z, #x, #c, #v, #b, #n, #m, #ą, #ć, #ę, #ł, #ń, #ó, #ś, #ź, #ż');
 
     KeyboardAnimation.forEach((id) => {
@@ -167,6 +186,39 @@ export default function Home() {
     setKey({ letter: '' });
     isGameFinish.current = false;
   }
+  // Timer Section
+  const updateTimer = () => {
+    stoper += 1;
+    const minutes = Math.floor(stoper / 6000);
+    const seconds = Math.floor((stoper % 6000) / 100);
+    const milliseconds = Math.floor(stoper % 100);
+    document.getElementById('time').innerHTML = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(2, '0')}`;
+  };
+
+  const startAndStop = () => {
+    if (intervalId === null) {
+      setIntervalId(setInterval(updateTimer, 10));
+    } else {
+      clearInterval(intervalId);
+      setIntervalId(null);
+      setTimeScoreText(document.getElementById('time').innerHTML);
+    }
+  };
+  const reset = () => {
+    clearInterval(intervalId);
+    setIntervalId(null);
+    stoper = 0;
+    document.getElementById('time').innerHTML = '00:00:00';
+  };
+
+  const pause = () => {
+    if (intervalId !== null) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+  };
+
+  // Timer Section
 
   function giveAllLetters() {
     const USER_WORD = board[currentRow].map((letter) => letter.value);
@@ -174,7 +226,6 @@ export default function Home() {
   }
 
   const showAlertNotEnoughLetters = () => {
-    console.log(document.getElementById('letter-alert'));
     const Custom = document.getElementById('letter-alert');
     Custom.classList.toggle('showObject');
   };
@@ -185,24 +236,9 @@ export default function Home() {
   };
 
   // ===================== Confirm Section
-  const showConfirmWinGameWindow = () => {
-    const Custom = document.getElementById('confirm-win');
-    Custom.classList.toggle('showObject');
-  };
 
-  const showConfirmLoseGameWindow = () => {
-    const Custom = document.getElementById('confirm-lose');
-    Custom.classList.toggle('showObject');
-  };
-
-  const closeConfirmWinGameWindow = () => {
-    const Custom = document.getElementById('confirm-win');
-    Custom.classList.toggle('showObject');
-    endGame();
-  };
-
-  const closeConfirmLoseGameWindow = () => {
-    const Custom = document.getElementById('confirm-lose');
+  const closeConfirmGameWindow = (id) => {
+    const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
     endGame();
   };
@@ -228,16 +264,22 @@ export default function Home() {
     }
 
     if (isWordCorrect()) {
+      if (intervalId !== null) {
+        startAndStop();
+      }
       compare();
       setTimeout(() => {
-        showConfirmWinGameWindow();
+        showConfirmGameWindow('confirm-win');
         isGameFinish.current = true;
       }, 2200);
     }
     if (!isWordCorrect() && currentRow === LAST_ROW) {
+      if (intervalId !== null) {
+        startAndStop();
+      }
       compare();
       setTimeout(() => {
-        showConfirmLoseGameWindow();
+        showConfirmGameWindow('confirm-lose');
         isGameFinish.current = true;
       }, 2200);
     } else {
@@ -268,28 +310,41 @@ export default function Home() {
   }, [key]);
 
   const Polish = () => {
-    setselectedLanguage('polish');
+    router.push(router.route, router.asPath, {
+      locale: 'pl',
+    });
+    document.getElementById('plFlag').blur();
+    language.current = false;
     setDicionary(ListOfXPolishLetterWords);
+    setWord(gameWord);
+    // setWord(losFromDictionary);
     endGame();
   };
   const English = () => {
-    setselectedLanguage(() => { 'english'; });
+    router.push(router.route, router.asPath, {
+      locale: 'en',
+    });
+    language.current = true;
+    document.getElementById('enFlag').blur();
     setDicionary(ListOfXEnglishLetterWords);
+    setWord(gameWordENG);
+    // setWord(losFromDictionary);
     endGame();
+    // endGame();
   };
-
+console.log(word)
   return (
     <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
         <div className="flex my-4">
           <Nightmode />
           <Instruction />
-          {selectedLanguage === 'polish' ? <SettingsButtonPol /> : <SettingsButtonEng />}
+          <SettingsButton />
         </div>
       </div>
-      <div className="flex flex-row">
+      <div id="flags" className="flex flex-row">
         <div className="mr-2 mb-4">
-          <button type="button" onClick={Polish}>
+          <button id="plFlag" type="button" onClick={Polish}>
             <div id="Flaga">
               <Image
                 src={Poland}
@@ -301,7 +356,7 @@ export default function Home() {
           </button>
         </div>
         <div className="mb-4">
-          <button type="button" onClick={English}>
+          <button id="enFlag" type="button" onClick={English}>
             <div id="Flaga">
               <Image
                 src={UK}
@@ -315,36 +370,53 @@ export default function Home() {
       </div>
       <div id="divBoard" className="relative">
         <Board board={board} />
+        <div id="letter-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
+          <CustomAlert text={t('dicionaryAlerts.fiveletters')} />
+        </div>
+        <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
+          <CustomAlert text={t('dicionaryAlerts.lackof')} />
+        </div>
+        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5  rounded-md font-medium text-center showObject">
+          <CustomConfirmWin text={t('alerts.win')} timeScoreText={timeScoreText} currentRow={currentRow} language={language.current} word={word} />
+          <div className="flex flex-col justify-center">
+            <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-4 px-8 py-3 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>
+          </div>
+        </div>
+        <div id="confirm-lose" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium  text-center">
+          <CustomConfirmLose word={word} text={t('alerts.lose')} />
+          <div className="flex justify-center">
+            <button onClick={() => closeConfirmGameWindow('confirm-lose')} className="font-mono py-3 px-5 mb-4 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>
+          </div>
+        </div>
+      </div>
+      <div id="divUnderBoard" className="grid grid-cols-3 ">
+        <Stopwatch start={startAndStop} pause={pause} reset={reset} />
         <RestartGame
           setCurrentRow={setCurrentRow}
           setCurrentObject={setCurrentObject}
           setBoardState={setBoardState}
           setWord={setWord}
-          word={word}
-          ROW_COUNT={ROW_COUNT}
           NumberOfColumn={NumberOfColumn}
+          ROW_COUNT={ROW_COUNT}
+          gameWord={gameWord}
+          dicionary={dicionary}
         />
-        <div id="letter-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          {selectedLanguage === 'polish' ? <CustomAlert text="Musisz podać wszystkie pięć liter" /> : <CustomAlert text="You must give all five letters" />}
-        </div>
-        <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          {selectedLanguage === 'polish' ? <CustomAlert text="Brak w słowniku" /> : <CustomAlert text="Missing from the dictionary" />}
-        </div>
-        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
-          <CustomConfirmWin text="You win!!!" />
-          <div className="flex justify-center">
-            <button onClick={closeConfirmWinGameWindow} className="font-mono my-4  py-3 px-5 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
-          </div>
-        </div>
-        <div id="confirm-lose" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium  text-center">
-          <CustomConfirmLose word={word} text="You lose :(" />
-          <div className="flex justify-center">
-            <button onClick={closeConfirmLoseGameWindow} className="font-mono py-3 px-5 mb-4 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">Try again</button>
-          </div>
+        <div className="flex flex-col items-center justify-center text-xl border rounded">
+          <div id="attempts1">{t('stopwatch.attempts')}</div>
+          <div id="attempts2" className="flex">{currentRow}</div>
         </div>
       </div>
-      {selectedLanguage === 'polish' ? <InstructionCardPol /> : <InstructionCardEng />}
-      <Keyboard setKey={setKey} selectedLanguage={selectedLanguage} />
+      <InstructionCard />
+      <Keyboard setKey={setKey} />
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'home'])),
+      // Will be passed to the page component as props
+    },
+  };
 }

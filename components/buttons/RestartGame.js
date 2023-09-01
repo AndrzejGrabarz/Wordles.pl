@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowPathIcon } from '@heroicons/react/24/solid';
 
 function RestartGame({
@@ -8,8 +7,7 @@ function RestartGame({
   setWord,
   NumberOfColumn,
   ROW_COUNT,
-  gameWord,
-  dicionary
+  dicionary,
 }) {
   const resetGame = () => {
     const KeyboardAnimation = document.querySelectorAll('#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,#a, #s, #d, #f, #g, #h, #j, #k, #l,#z, #x, #c, #v, #b, #n, #m, #ą, #ć, #ę, #ł,#ń, #ó, #ś, #ź, #ż');
@@ -28,7 +26,7 @@ function RestartGame({
   };
 
   return (
-    <div className="flex justify-center py-4">
+    <div className="flex justify-center py-4 ml-[20px]  mr-[20px]">
       <button
         id="btn"
         type="button"

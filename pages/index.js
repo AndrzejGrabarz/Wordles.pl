@@ -68,7 +68,7 @@ export default function Home() {
     const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
   };
-
+  console.log(word)
   useEffect(() => {
     const URL = document.location;
     const parsed = queryString.parse(URL.search);

@@ -72,20 +72,20 @@ export default function Home() {
   useEffect(() => {
     const URL = document.location;
     const parsed = queryString.parse(URL.search);
-    if (URL.href === 'https://www.wordles.pl/') {
+    if (URL.href === 'http://localhost:3000/') {
       setDicionary(ListOfXPolishLetterWords);
       setWord(gameWord);
-    } else if (URL.href === 'https://www.wordles.pl/en') {
+    } else if (URL.href === 'http://localhost:3000/en') {
       setDicionary(ListOfXEnglishLetterWords);
       setWord(gameWordEng);
       language.current = true;
-    } else if (URL.href.includes('word') && URL.href.includes('https://www.wordles.pl/') && URL.href.includes('false')) {
+    } else if (URL.href.includes('word') && URL.href.includes('http://localhost:3000/') && URL.href.includes('false')) {
       const secretKey = 'secret_key';
       const decryptedBytes = CryptoJS.AES.decrypt(parsed.word, secretKey);
       const decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
       setDicionary(ListOfXPolishLetterWords);
       setWord(decryptedMessage);
-    } else if (URL.href.includes('word') && URL.href.includes('https://www.wordles.pl/en')) {
+    } else if (URL.href.includes('word') && URL.href.includes('http://localhost:3000/en')) {
       const secretKey = 'secret_key';
       const decryptedBytes = CryptoJS.AES.decrypt(parsed.word, secretKey);
       const decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);

@@ -39,9 +39,9 @@ function CustomConfirmWin({
 
   function ChallangeFriend() {
     if (language === false) {
-      currentURL = new URL('https://www.wordles.pl/');
+      currentURL = new URL('http://localhost:3000/');
     } else if (language === true) {
-      currentURL = new URL('https://www.wordles.pl/en');
+      currentURL = new URL('http://localhost:3000/en');
     }
     const { searchParams } = currentURL;
     const message = word;

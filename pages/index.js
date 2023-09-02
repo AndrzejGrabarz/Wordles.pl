@@ -38,6 +38,8 @@ export default function Home() {
   const [word, setWord] = useState('');
   const [dicionary, setDicionary] = useState([]);
   const [key, setKey] = useState({ letter: '' });
+  const [timeScoreText, setTimeScoreText] = useState('00:00:00');
+  const [intervalId, setIntervalId] = useState(null);
   const isSpecialKey = (letter) => SPECIAL_KEYS.includes(letter);
   const isGameFinish = useRef(false);
   const language = useRef(false);
@@ -46,10 +48,10 @@ export default function Home() {
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
   }
-  const [timeScoreText, setTimeScoreText] = useState('00:00:00');
+  const CryptoJS = require('crypto-js');
+
   const { t } = useTranslation();
   let stoper = 0;
-  const [intervalId, setIntervalId] = useState(null);
 
   const ListOfXPolishLetterWords = wordListPolish.strings.filter(
     (words) => words.length === NumberOfColumn,
@@ -60,12 +62,7 @@ export default function Home() {
   );
 
   const gameWord = ListOfXPolishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)];
-  const gameWordENG = ListOfXEnglishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)];
-
-  const losFromDictionary = dicionary[Math.floor(Math.random() * dicionary.length)];
-  // URL Section
-  const basicURL = 'http://localhost:3000';
-  // URL End Section
+  const gameWordEng = ListOfXEnglishLetterWords[Math.floor(Math.random() * ListOfXPolishLetterWords.length)];
 
   const showConfirmGameWindow = (id) => {
     const Custom = document.getElementById(id);
@@ -80,8 +77,20 @@ export default function Home() {
       setWord(gameWord);
     } else if (URL.href === 'http://localhost:3000/en') {
       setDicionary(ListOfXEnglishLetterWords);
-      setWord(gameWordENG);
-    } else if (URL.href !== 'http://localhost:3000/' || URL.href === 'http://localhost:3000/en') {
+      setWord(gameWordEng);
+    } else if (URL.href.includes('word') && URL.href.includes('http://localhost:3000/')) {
+      const secretKey = 'secret_key';
+      const decryptedBytes = CryptoJS.AES.decrypt(parsed.word, secretKey);
+      const decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      setDicionary(ListOfXPolishLetterWords);
+      setWord(decryptedMessage);
+    } else if (URL.href.includes('word') && URL.href.includes('http://localhost:3000/en')) {
+      const secretKey = 'secret_key';
+      const decryptedBytes = CryptoJS.AES.decrypt(parsed.word, secretKey);
+      const decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      setWord(decryptedMessage);
+      setDicionary(ListOfXEnglishLetterWords);
+    } else if (URL.href !== 'http://localhost:3000/' && URL.href !== 'http://localhost:3000/en') {
       if (oddUrl.current === false) {
         showConfirmGameWindow('confirm-win');
         setTimeScoreText(parsed.time);
@@ -317,7 +326,6 @@ export default function Home() {
     language.current = false;
     setDicionary(ListOfXPolishLetterWords);
     setWord(gameWord);
-    // setWord(losFromDictionary);
     endGame();
   };
   const English = () => {
@@ -327,12 +335,9 @@ export default function Home() {
     language.current = true;
     document.getElementById('enFlag').blur();
     setDicionary(ListOfXEnglishLetterWords);
-    setWord(gameWordENG);
-    // setWord(losFromDictionary);
+    setWord(gameWordEng);
     endGame();
-    // endGame();
   };
-console.log(word)
   return (
     <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
@@ -376,7 +381,7 @@ console.log(word)
         <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomAlert text={t('dicionaryAlerts.lackof')} />
         </div>
-        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5  rounded-md font-medium text-center showObject">
+        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5   rounded-md font-medium text-center  ">
           <CustomConfirmWin text={t('alerts.win')} timeScoreText={timeScoreText} currentRow={currentRow} language={language.current} word={word} />
           <div className="flex flex-col justify-center">
             <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-4 px-8 py-3 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>
@@ -389,7 +394,7 @@ console.log(word)
           </div>
         </div>
       </div>
-      <div id="divUnderBoard" className="grid grid-cols-3 ">
+      <div id="divUnderBoard" className="grid grid-cols-[1fr_auto_1fr]">
         <Stopwatch start={startAndStop} pause={pause} reset={reset} />
         <RestartGame
           setCurrentRow={setCurrentRow}
@@ -398,10 +403,9 @@ console.log(word)
           setWord={setWord}
           NumberOfColumn={NumberOfColumn}
           ROW_COUNT={ROW_COUNT}
-          gameWord={gameWord}
           dicionary={dicionary}
         />
-        <div className="flex flex-col items-center justify-center text-xl border rounded">
+        <div className="flex flex-col items-center justify-center sm:text-sm xl:text-xl border rounded">
           <div id="attempts1">{t('stopwatch.attempts')}</div>
           <div id="attempts2" className="flex">{currentRow}</div>
         </div>

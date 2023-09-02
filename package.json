@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.0.18",
     "crypto-js": "^4.1.1",
     "eslint-config-next": "13.2.4",
+    "flowbite": "^1.8.1",
     "fs": "^0.0.1-security",
     "heroicons": "^2.0.18",
     "json-loader": "^0.5.7",

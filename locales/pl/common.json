@@ -49,14 +49,17 @@
     
     "settings":{
       "setup": "Ustawienia",
-      "letterCounter": "Liczba liter:"
+      "letterCounter": "Liczba liter"
     },
 
     "alerts": {
       "win": "Wygrałeś!",
       "lose": "Przegrałeś :(",
       "button": "Spróbuj ponownie",
-      "word": "Twoje słowo to:"
+      "word": "Twoje słowo to:",
+      "share": "Udostepnij",
+      "challange": "Wyzwij znajomego",
+      "coppied": "Skopiowano"
     },
 
     "dicionaryAlerts": {

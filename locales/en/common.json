@@ -55,7 +55,10 @@
     "win": "You win!",
     "lose": "You lose :(",
     "button": "Try again",
-    "word": "Your word is:"
+    "word": "Your word is:",
+    "share": "Share",
+    "challange": "Challange Friend",
+    "coppied": "Coppied"
   },
 
   "dicionaryAlerts": {

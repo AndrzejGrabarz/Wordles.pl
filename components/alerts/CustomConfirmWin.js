@@ -1,7 +1,5 @@
-import React from 'react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, ClipboardIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
-import AES from 'crypto-js/aes';
 
 function CustomConfirmWin({
   text, timeScoreText, currentRow, language, word,
@@ -21,6 +19,17 @@ function CustomConfirmWin({
     const newUrl = currentURL.toString();
     const inputInfo = document.getElementById('link');
     inputInfo.value = newUrl;
+    const copyText = document.getElementById('link');
+    copyText.select();
+    navigator.clipboard.writeText(copyText.value);
+    const tooltip = document.getElementById('tooltipShare');
+    tooltip.style.animation = 'none';
+
+    // Pobierz obliczalny styl, aby wymusić reset animacji
+    tooltip.offsetWidth; // To jest tzw. reflow, który spowoduje zresetowanie animacji
+
+    // Ponownie ustaw klasę animacji po zresetowaniu
+    tooltip.style.animation = 'fadeIn 2s forwards';
   }
 
   function ChallangeFriend() {
@@ -30,9 +39,6 @@ function CustomConfirmWin({
     const secretKey = 'secret_key';
     // Szyfrowanie
     const encryptedMessage = CryptoJS.AES.encrypt(message, secretKey).toString();
-    // Odszyfrowywanie
-    const decryptedBytes = CryptoJS.AES.decrypt(encryptedMessage, secretKey);
-    const decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
     searchParams.set('time', timeScoreText);
     searchParams.set('score', currentRow);
     searchParams.set('lang', language);
@@ -40,9 +46,17 @@ function CustomConfirmWin({
     const newUrl = currentURL.toString();
     const inputInfo = document.getElementById('link');
     inputInfo.value = newUrl;
+    const copyText = document.getElementById('link');
+    copyText.select();
+    navigator.clipboard.writeText(copyText.value);
+    const tooltip = document.getElementById('tooltipChalleng');
+    tooltip.style.animation = 'none';
 
-    console.log('Zaszyfrowana wiadomość:', encryptedMessage);
-    console.log('Odszyfrowana wiadomość:', decryptedMessage);
+    // Pobierz obliczalny styl, aby wymusić reset animacji
+    tooltip.offsetWidth; // To jest tzw. reflow, który spowoduje zresetowanie animacji
+
+    // Ponownie ustaw klasę animacji po zresetowaniu
+    tooltip.style.animation = 'fadeIn 2s forwards';
   }
 
   return (
@@ -55,8 +69,8 @@ function CustomConfirmWin({
           </button>
         </div>
       </div>
-      <div className="flex flex-row justify-center items-center ">
-        <div className="flex flex-col my-2">
+      <div className="flex flex-col ">
+        <div className="flex flex-col mt-4 my-2 sm:text-sm xl:text-lg">
           <div>
             {t('stopwatch.time')}
             {' '}
@@ -68,12 +82,33 @@ function CustomConfirmWin({
             {currentRow}
           </div>
         </div>
-        <div className="ml-12">
-          <button type="button" onClick={Share}>Share</button>
-          <button type="button" onClick={ChallangeFriend}>Chalenge Friend</button>
+        <div className="flex flex-col justify-center items-center w-full px-8 relative ">
+          <div className="flex flex-col w-full mt-2 mb-2">
+            <div className="flex flex-col justify-center items-center">
+              <button className="flex justify-center items-center font-mono bg-[#fb923c] rounded py-2.5 my-2 w-full sm:text-xs md:text-sm xl:text-md italic" type="button" onClick={Share}>
+                {t('alerts.share')}
+                <ClipboardIcon className=" ml-2 h-4 w-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 " />
+              </button>
+              <div id="tooltipShare" className=" absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-8 -top-[1px] pointer-events-none   transition-opacity text-xs tooltip">
+                {t('alerts.coppied')}
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col w-full mt-4 mb-2">
+            <div className="flex flex-col justify-center items-center">
+              <button className="flex justify-center items-center font-mono bg-[#fb923c] rounded py-2.5  w-full sm:text-xs md:text-sm xl:text-md italic" type="button" onClick={ChallangeFriend}>
+                {t('alerts.challange')}
+                <ClipboardIcon className="ml-2 h-4 w-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 " />
+              </button>
+              <div id="tooltipChalleng" className="absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-8 top-[75px] pointer-events-none tooltip text-xs  ">
+                {t('alerts.coppied')}
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div className="bg-red-100"><input type="text" id="link" /></div>
+      <div className="bg-red-100 hidden"><input type="text" id="link" /></div>
     </div>
   );
 }

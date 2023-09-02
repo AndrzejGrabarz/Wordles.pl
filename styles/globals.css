@@ -99,3 +99,16 @@ input {
 .grey-background {
     background-color:#313448;
 }
+
+.tooltip {
+    opacity: 0;
+}
+
+.fadeIn {
+    animation: fadeIn 2s forwards
+}
+
+@keyframes fadeIn {
+    100% { opacity: 0; }
+    50% { opacity: 1; }
+}

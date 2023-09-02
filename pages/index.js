@@ -68,39 +68,51 @@ export default function Home() {
     const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
   };
-  console.log(word)
+
   useEffect(() => {
     const URL = document.location;
     const parsed = queryString.parse(URL.search);
-    if (URL.href === 'https://www.wordles.pl/') {
+    if (URL.href === 'http://localhost:3000/') {
       setDicionary(ListOfXPolishLetterWords);
       setWord(gameWord);
-    } else if (URL.href === 'https://www.wordles.pl/en') {
+    } else if (URL.href === 'http://localhost:3000/en') {
       setDicionary(ListOfXEnglishLetterWords);
       setWord(gameWordEng);
-    } else if (URL.href.includes('word') && URL.href.includes('https://www.wordles.pl/')) {
+      language.current = true;
+    } else if (URL.href.includes('word') && URL.href.includes('http://localhost:3000/') && URL.href.includes('false')) {
       const secretKey = 'secret_key';
       const decryptedBytes = CryptoJS.AES.decrypt(parsed.word, secretKey);
       const decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
       setDicionary(ListOfXPolishLetterWords);
       setWord(decryptedMessage);
-    } else if (URL.href.includes('word') && URL.href.includes('https://www.wordles.pl/en')) {
+    } else if (URL.href.includes('word') && URL.href.includes('http://localhost:3000/en')) {
       const secretKey = 'secret_key';
       const decryptedBytes = CryptoJS.AES.decrypt(parsed.word, secretKey);
       const decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      language.current = true;
       setWord(decryptedMessage);
       setDicionary(ListOfXEnglishLetterWords);
-    } else if (URL.href !== 'https://www.wordles.pl/' && URL.href !== 'https://www.wordles.pl/en') {
+    } else if (URL.href.includes('false')) {
       if (oddUrl.current === false) {
         showConfirmGameWindow('confirm-win');
         setTimeScoreText(parsed.time);
         setCurrentRow(parsed.score);
-        language.current = parsed.language;
+        language.current = false;
+        setDicionary(ListOfXPolishLetterWords);
+        oddUrl.current = true;
+      }
+    } else if (URL.href.includes('true')) {
+      if (oddUrl.current === false) {
+        showConfirmGameWindow('confirm-win');
+        setTimeScoreText(parsed.time);
+        setCurrentRow(parsed.score);
+        language.current = true;
+        setDicionary(ListOfXEnglishLetterWords);
         oddUrl.current = true;
       }
     }
   }, []);
-
+  console.log(word)
   useEffect(() => {
     function handleKeyPress(event) {
       if (isGameFinish.current) {
@@ -381,7 +393,7 @@ export default function Home() {
         <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomAlert text={t('dicionaryAlerts.lackof')} />
         </div>
-        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5  showObject rounded-md font-medium text-center  ">
+        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5   rounded-md font-medium text-center  ">
           <CustomConfirmWin text={t('alerts.win')} timeScoreText={timeScoreText} currentRow={currentRow} language={language.current} word={word} />
           <div className="flex flex-col justify-center">
             <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-4 px-8 py-3 bg-green-400 rounded-md text-sm sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>
@@ -405,7 +417,7 @@ export default function Home() {
           ROW_COUNT={ROW_COUNT}
           dicionary={dicionary}
         />
-        <div className="flex flex-col items-center justify-center sm:text-sm xl:text-xl border rounded">
+        <div className="flex flex-col items-center justify-center  sm:text-lg md:text-lg lg:text-xl xl:text-xl border rounded">
           <div id="attempts1">{t('stopwatch.attempts')}</div>
           <div id="attempts2" className="flex">{currentRow}</div>
         </div>

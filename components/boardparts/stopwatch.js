@@ -1,7 +1,7 @@
 function Stopwatch({ start, pause, reset }) {
   return (
     <div className="flex flex-col justify-center items-center text-xl rounded text-black">
-      <div id="time" className="flex flex-row shrink-0 py-1 sm:text-md xl:text-lg">
+      <div id="time" className="flex flex-row shrink-0 py-1 sm:text-lg md:text-lg lg:text-xl xl:text-xl">
         00:00:00
       </div>
       <div className="flex text-base font-medium  sm:text-sm xl:text-lg w-full">

@@ -10,8 +10,13 @@ function CustomConfirmWin({
   }
   const CryptoJS = require('crypto-js');
   const { t } = useTranslation();
+  let currentURL = '';
   function Share() {
-    const currentURL = new URL(document.location);
+    if (language === false) {
+      currentURL = new URL('http://localhost:3000/');
+    } else if (language === true) {
+      currentURL = new URL('http://localhost:3000/en');
+    }
     const { searchParams } = currentURL;
     searchParams.set('time', timeScoreText);
     searchParams.set('score', currentRow);
@@ -33,7 +38,11 @@ function CustomConfirmWin({
   }
 
   function ChallangeFriend() {
-    const currentURL = new URL(document.location);
+    if (language === false) {
+      currentURL = new URL('http://localhost:3000/');
+    } else if (language === true) {
+      currentURL = new URL('http://localhost:3000/en');
+    }
     const { searchParams } = currentURL;
     const message = word;
     const secretKey = 'secret_key';
@@ -70,7 +79,7 @@ function CustomConfirmWin({
         </div>
       </div>
       <div className="flex flex-col ">
-        <div className="flex flex-col mt-4 my-2 sm:text-sm xl:text-lg">
+        <div className="flex flex-col mt-4 my-3 sm:text-sm  xl:text-lg">
           <div>
             {t('stopwatch.time')}
             {' '}
@@ -89,7 +98,7 @@ function CustomConfirmWin({
                 {t('alerts.share')}
                 <ClipboardIcon className=" ml-2 h-4 w-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 " />
               </button>
-              <div id="tooltipShare" className=" absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-8 -top-[1px] pointer-events-none   transition-opacity text-xs tooltip">
+              <div id="tooltipShare" className=" absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-8 -top-[7px] pointer-events-none   transition-opacity text-xs tooltip">
                 {t('alerts.coppied')}
               </div>
             </div>
@@ -100,7 +109,7 @@ function CustomConfirmWin({
                 {t('alerts.challange')}
                 <ClipboardIcon className="ml-2 h-4 w-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 " />
               </button>
-              <div id="tooltipChalleng" className="absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-8 top-[75px] pointer-events-none tooltip text-xs  ">
+              <div id="tooltipChalleng" className="absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-8 top-[65px] pointer-events-none tooltip text-xs  ">
                 {t('alerts.coppied')}
               </div>
             </div>

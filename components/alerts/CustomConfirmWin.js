@@ -79,7 +79,7 @@ function CustomConfirmWin({
         </div>
       </div>
       <div className="flex flex-col ">
-        <div className="flex flex-col mt-4 my-3 sm:text-sm  xl:text-lg">
+        <div className="flex flex-col mt-4 my-3 text-xs sm:text-sm  xl:text-lg">
           <div>
             {t('stopwatch.time')}
             {' '}
@@ -91,25 +91,25 @@ function CustomConfirmWin({
             {currentRow}
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center w-full px-8 relative ">
+        <div className="flex flex-col justify-center items-center w-full  sm:px-8 relative ">
           <div className="flex flex-col w-full mt-2 mb-2">
             <div className="flex flex-col justify-center items-center">
-              <button className="flex justify-center items-center font-mono bg-[#fb923c] rounded py-2.5 my-2 w-full sm:text-xs md:text-sm xl:text-md italic" type="button" onClick={Share}>
+              <button className="flex justify-center items-center font-mono bg-[#fb923c] rounded py-2.5 my-2 w-full text-xs sm:text-xs md:text-sm xl:text-md italic" type="button" onClick={Share}>
                 {t('alerts.share')}
                 <ClipboardIcon className=" ml-2 h-4 w-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 " />
               </button>
-              <div id="tooltipShare" className=" absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-8 -top-[7px] pointer-events-none   transition-opacity text-xs tooltip">
+              <div id="tooltipShare" className=" absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-0.5 -top-[2px] sm:right-8 sm:-top-[7px] pointer-events-none   transition-opacity text-[8px] sm:text-xs tooltip">
                 {t('alerts.coppied')}
               </div>
             </div>
           </div>
           <div className="flex flex-col w-full mt-4 mb-2">
             <div className="flex flex-col justify-center items-center">
-              <button className="flex justify-center items-center font-mono bg-[#fb923c] rounded py-2.5  w-full sm:text-xs md:text-sm xl:text-md italic" type="button" onClick={ChallangeFriend}>
+              <button className="flex justify-center items-center font-mono bg-[#fb923c] rounded py-2.5  w-full text-xs sm:text-xs md:text-sm xl:text-md italic" type="button" onClick={ChallangeFriend}>
                 {t('alerts.challange')}
                 <ClipboardIcon className="ml-2 h-4 w-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 " />
               </button>
-              <div id="tooltipChalleng" className="absolute bg-[#fb923c] rounded-full p-0.5 px-2 right-8 top-[65px] pointer-events-none tooltip text-xs  ">
+              <div id="tooltipChalleng" className="absolute bg-[#fb923c] rounded-full text-[8px] p-0.5 px-2 right-0.5 top-[62px] sm:right-8 sm:top-[65px] pointer-events-none tooltip text-xs  ">
                 {t('alerts.coppied')}
               </div>
             </div>

@@ -13,9 +13,9 @@ function CustomConfirmWin({
   let currentURL = '';
   function Share() {
     if (language === false) {
-      currentURL = new URL('http://localhost:3000/');
+      currentURL = new URL('https://www.wordles.pl/');
     } else if (language === true) {
-      currentURL = new URL('http://localhost:3000/en');
+      currentURL = new URL('https://www.wordles.pl/en');
     }
     const { searchParams } = currentURL;
     searchParams.set('time', timeScoreText);

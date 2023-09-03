@@ -68,7 +68,6 @@ export default function Home() {
     const Custom = document.getElementById(id);
     Custom.classList.toggle('showObject');
   };
-  console.log(word);
   useEffect(() => {
     const URL = document.location;
     const parsed = queryString.parse(URL.search);
@@ -392,7 +391,7 @@ export default function Home() {
         <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomAlert text={t('dicionaryAlerts.lackof')} />
         </div>
-        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 rounded-md font-medium text-center  showObject">
+        <div id="confirm-win" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 rounded-md font-medium text-center ">
           <CustomConfirmWin text={t('alerts.win')} timeScoreText={timeScoreText} currentRow={currentRow} language={language.current} word={word} />
           <div className="flex flex-col justify-center">
             <button onClick={() => closeConfirmGameWindow('confirm-win')} className="mx-auto font-mono my-2 sm:my-4 px-4 py-3 bg-green-400 rounded-md text-xs sm:text-md md:text-lg lg:text-lg xl:text-xl 2xl:text-xl" type="button">{t('alerts.button')}</button>

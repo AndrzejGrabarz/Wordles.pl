@@ -80,7 +80,7 @@ function CustomConfirmWin({
       </div>
       <div className="flex flex-col ">
         <div className="flex flex-col mt-4 my-3 text-xs sm:text-sm  xl:text-lg">
-          <div>
+          <div className="pb-2">
             {t('stopwatch.time')}
             {' '}
             {timeScoreText}
@@ -109,7 +109,7 @@ function CustomConfirmWin({
                 {t('alerts.challange')}
                 <ClipboardIcon className="ml-2 h-4 w-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 " />
               </button>
-              <div id="tooltipChalleng" className="absolute bg-[#fb923c] rounded-full text-[8px] p-0.5 px-2 right-0.5 top-[62px] sm:right-8 sm:top-[65px] pointer-events-none tooltip text-xs  ">
+              <div id="tooltipChalleng" className="absolute bg-[#fb923c] rounded-full text-[8px] sm:text-xs p-0.5 px-2 right-0.5 top-[62px] sm:right-8 sm:top-[65px] pointer-events-none tooltip text-xs  ">
                 {t('alerts.coppied')}
               </div>
             </div>

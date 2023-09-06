@@ -41,9 +41,12 @@ export default function Home() {
   const [timeScoreText, setTimeScoreText] = useState('00:00:00');
   const [intervalId, setIntervalId] = useState(null);
   const isSpecialKey = (letter) => SPECIAL_KEYS.includes(letter);
+  // useRef
   const isGameFinish = useRef(false);
   const language = useRef(false);
   const oddUrl = useRef(false);
+
+  // useRef
   const router = useRouter();
   function isAllowedLetter(letter) {
     return ALLOWED_LETTERS.includes(letter);
@@ -349,7 +352,7 @@ export default function Home() {
     endGame();
   };
   return (
-    <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
+    <div id="main" ref={nightmode} className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
         <div className="flex my-4">
           <Nightmode />

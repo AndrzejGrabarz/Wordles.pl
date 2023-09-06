@@ -46,6 +46,13 @@ export default function Home() {
   const language = useRef(false);
   const oddUrl = useRef(false);
 
+  // Instrucion Card
+  const divBoardRef = useRef();
+  const instructionRef = useRef();
+  const keyboardRef = useRef();
+  const setUnderBoardRef = useRef();
+  const flagsRef = useRef();
+
   // useRef
   const router = useRouter();
   function isAllowedLetter(letter) {
@@ -356,7 +363,13 @@ export default function Home() {
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
         <div className="flex my-4">
           <Nightmode />
-          <Instruction />
+          <Instruction
+            divBoardRef={divBoardRef}
+            instructionRef={instructionRef}
+            keyboardRef={keyboardRef}
+            setUnderBoardRef={setUnderBoardRef}
+            flagsRef={flagsRef}
+          />
           <SettingsButton />
         </div>
       </div>

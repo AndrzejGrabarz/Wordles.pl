@@ -1,9 +1,9 @@
 import { useTranslation } from 'next-i18next';
 
-function InstructionCard() {
+function InstructionCard({ instructionRef }) {
   const { t } = useTranslation('common');
   return (
-    <div id="InstructionCard" className="InstructionCard flex flex-col  items-center max-w-xl h-[620px] mb-2">
+    <div id="InstructionCard" ref={instructionRef} className="InstructionCard flex flex-col  items-center max-w-xl h-[620px] mb-2">
 
       <div id="grey-background1" className="bg-[#e5ecff] w-full text-center p-2 rounded-md">
         <h1 className="font-semibold text-xl sm:text-2xl">{t('instruction.header')}</h1>

@@ -9,18 +9,23 @@ function Nightmode() {
     const greyBackground1 = document.getElementById('grey-background1');
     const greyBackground2 = document.getElementById('grey-background2');
     const instruction = document.getElementById('InstructionCard');
+
     const timerStartButtom = document.getElementById('timerStartButtom')
     const timerStopButtom = document.getElementById('timerStopButtom')
     const timerResetButtom = document.getElementById('timerResetButtom')
     const attempts1 = document.getElementById('attempts1')
     const attempts2 = document.getElementById('attempts2')
     const time = document.getElementById('time')
+
     const Nightbtn = document.getElementById('Nightbtn')
     Nightbtn.blur()
+
+    
     main.classList.toggle('night');
     greyBackground1.classList.toggle('grey-background');
     greyBackground2.classList.toggle('grey-background');
     instruction.classList.toggle('white');
+
     timerStartButtom.classList.toggle('blueButton');
     timerStopButtom.classList.toggle('blueButton');
     timerResetButtom.classList.toggle('blueButton');

@@ -1,11 +1,11 @@
 import { useTranslation } from 'next-i18next';
 
-function InstructionCard({ instructionRef }) {
+function InstructionCard({ instructionRef,greyBackground1Ref,
+  greyBackground2Ref }) {
   const { t } = useTranslation('common');
   return (
-    <div id="InstructionCard" ref={instructionRef} className="InstructionCard flex flex-col  items-center max-w-xl h-[620px] mb-2">
-
-      <div id="grey-background1" className="bg-[#e5ecff] w-full text-center p-2 rounded-md">
+    <div id="InstructionCard" ref={instructionRef} className="InstructionCard flex flex-col items-center max-w-xl h-[620px] mb-2">
+      <div id="grey-background1" ref={greyBackground1Ref} className="bg-[#e5ecff] w-full text-center p-2 rounded-md">
         <h1 className="font-semibold text-xl sm:text-2xl">{t('instruction.header')}</h1>
       </div>
 
@@ -22,7 +22,7 @@ function InstructionCard({ instructionRef }) {
           <span className="h-[30px] w-[30px] sm:h-[50px] sm:w-[50px]  m-1 flex items-center justify-center text-xl  sm:text-3xl text-white font-semibold bg-green-600 rounded-md">{t('instruction.word.letter5')}</span>
         </div>
 
-        <div id="grey-background2" className="flex flex-col justify-center bg-[#edf0f5] black border-1   h-32 sm:h:36 rounded-md my-1 py-1 px-3">
+        <div id="grey-background2" ref={greyBackground2Ref} className="flex flex-col justify-center bg-[#edf0f5] black border-1   h-32 sm:h:36 rounded-md my-1 py-1 px-3">
 
           <div className="flex flex-row items-center p-1">
             <span className="h-[20px] w-[20px] text-md sm:h-[25px] sm:w-[25px] sm:text:lg  flex flex-row items-center justify-center  text-white bg-gray-600 rounded-md font-semibold">{t('instruction.frame.incorect.letter1')}</span>

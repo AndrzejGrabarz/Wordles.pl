@@ -46,6 +46,26 @@ export default function Home() {
   const language = useRef(false);
   const oddUrl = useRef(false);
 
+  // Instrucion Card
+  const divBoardRef = useRef();
+  const instructionRef = useRef();
+  const keyboardRef = useRef();
+  const setUnderBoardRef = useRef();
+  const flagsRef = useRef();
+
+  //Night Mode
+  const mainRef = useRef();
+  const greyBackground1Ref = useRef();
+  const greyBackground2Ref = useRef();
+  // const instructionRef = useRef();
+  const timerStartButtomRef = useRef();
+  const timerStopButtomRef = useRef()
+  const timerResetButtomRef = useRef()
+  const attempts1Ref = useRef();
+  const attempts2Ref = useRef();
+  const timeRef = useRef();
+
+
   // useRef
   const router = useRouter();
   function isAllowedLetter(letter) {
@@ -352,15 +372,33 @@ export default function Home() {
     endGame();
   };
   return (
-    <div id="main" className="flex items-center justify-center flex-col min-h-screen p-2">
+    <div id="main" ref={mainRef} className="flex items-center justify-center flex-col min-h-screen p-2">
       <div className="flex items-center justify-center w-2/5   my-5 rounded-md">
         <div className="flex my-4">
-          <Nightmode />
-          <Instruction />
+          <Nightmode 
+            mainRef={mainRef}
+            greyBackground1Ref={greyBackground1Ref}
+            greyBackground2Ref={greyBackground2Ref}
+            instructionRef={instructionRef}
+            timerStartButtomRef={timerStartButtomRef}
+            timerStopButtomRef={timerStopButtomRef}
+            timerResetButtomRef={timerResetButtomRef}
+            attempts1Ref={attempts1Ref}
+            attempts2Ref={attempts2Ref}
+            timeRef={timeRef}
+
+          />
+          <Instruction
+            divBoardRef={divBoardRef}
+            instructionRef={instructionRef}
+            keyboardRef={keyboardRef}
+            setUnderBoardRef={setUnderBoardRef}
+            flagsRef={flagsRef}
+          />
           <SettingsButton />
         </div>
       </div>
-      <div id="flags" className="flex flex-row">
+      <div id="flags" ref={flagsRef} className="flex flex-row">
         <div className="mr-2 mb-4">
           <button id="plFlag" type="button" onClick={Polish}>
             <div id="Flaga">
@@ -386,9 +424,9 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div id="divBoard" className="relative">
+      <div id="divBoard" ref={divBoardRef} className="relative">
         <Board board={board} />
-        <div id="letter-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
+        <div id="letter-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-2/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
           <CustomAlert text={t('dicionaryAlerts.fiveletters')} />
         </div>
         <div id="dicionary-alert" className="bg-white drop-shadow-md absolute left-0 top-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 showObject rounded-md font-medium text-center">
@@ -416,15 +454,19 @@ export default function Home() {
         ROW_COUNT={ROW_COUNT}
         dicionary={dicionary}
       />
-      <div id="divUnderBoard" className=" grid grid-cols-[1fr_1fr] gap-4">
-        <Stopwatch start={startAndStop} pause={pause} reset={reset} />
+      <div id="divUnderBoard" ref={setUnderBoardRef} className=" grid grid-cols-[1fr_1fr] gap-4">
+        <Stopwatch start={startAndStop} pause={pause} reset={reset}  timerStartButtomRef={timerStartButtomRef}
+            timerStopButtomRef={timerStopButtomRef}
+            timerResetButtomRef={timerResetButtomRef}
+            timeRef={timeRef} />
         <div className="flex flex-col items-center justify-center text-sm  sm:text-lg md:text-lg lg:text-xl xl:text-xl border rounded">
-          <div id="attempts1">{t('stopwatch.attempts')}</div>
-          <div id="attempts2" className="flex">{currentRow}</div>
+          <div id="attempts1" ref={attempts1Ref }>{t('stopwatch.attempts')}</div>
+          <div id="attempts2" ref={attempts2Ref} className="flex">{currentRow}</div>
         </div>
       </div>
-      <InstructionCard />
-      <Keyboard setKey={setKey} />
+      <InstructionCard instructionRef={instructionRef} greyBackground1Ref={greyBackground1Ref}
+            greyBackground2Ref={greyBackground2Ref}/>
+      <Keyboard setKey={setKey} keyboardRef={keyboardRef} />
     </div>
   );
 }

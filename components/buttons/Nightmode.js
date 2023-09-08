@@ -1,32 +1,54 @@
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
-function Nightmode() {
+function Nightmode( {
+    mainRef, 
+    greyBackground1Ref, 
+    greyBackground2Ref, 
+    timerStartButtomRef, 
+    timerStopButtomRef, 
+    timerResetButtomRef,
+    attempts1Ref,
+    attempts2Ref,
+    timeRef,
+    instructionRef
+}
+   ) {
   const [nightMode, setnightMode] = useState(true);
 
   function nightmode() {
-    const main = document.getElementById('main');
-    const greyBackground1 = document.getElementById('grey-background1');
-    const greyBackground2 = document.getElementById('grey-background2');
-    const instruction = document.getElementById('InstructionCard');
-    const timerStartButtom = document.getElementById('timerStartButtom')
-    const timerStopButtom = document.getElementById('timerStopButtom')
-    const timerResetButtom = document.getElementById('timerResetButtom')
-    const attempts1 = document.getElementById('attempts1')
-    const attempts2 = document.getElementById('attempts2')
-    const time = document.getElementById('time')
+    if(mainRef.current) {
+      mainRef.current.classList.toggle('night')
+    }
+    if(greyBackground1Ref.current) {
+      greyBackground1Ref.current.classList.toggle('grey-background')
+    }
+    if(greyBackground2Ref.current) {
+      greyBackground2Ref.current.classList.toggle('grey-background')
+    }
+    if(timerStartButtomRef.current) {
+      timerStartButtomRef.current.classList.toggle('blueButton')
+    }
+    if(timerStopButtomRef.current) {
+      timerStopButtomRef.current.classList.toggle('blueButton')
+    }
+    if(timerResetButtomRef.current) {
+      timerResetButtomRef.current.classList.toggle('blueButton')
+    }
+    if(attempts1Ref.current) {
+      attempts1Ref.current.classList.toggle('attemptsText')
+    }
+    if(attempts2Ref.current) {
+      attempts2Ref.current.classList.toggle('attemptsText')
+    }
+    if(timeRef.current) {
+      timeRef.current.classList.toggle('bluetime')
+    }
+    if(instructionRef.current) {
+      instructionRef.current.classList.toggle('white')
+    }
     const Nightbtn = document.getElementById('Nightbtn')
     Nightbtn.blur()
-    main.classList.toggle('night');
-    greyBackground1.classList.toggle('grey-background');
-    greyBackground2.classList.toggle('grey-background');
-    instruction.classList.toggle('white');
-    timerStartButtom.classList.toggle('blueButton');
-    timerStopButtom.classList.toggle('blueButton');
-    timerResetButtom.classList.toggle('blueButton');
-    time.classList.toggle('bluetime');
-    attempts1.classList.toggle('attemptsText')
-    attempts2.classList.toggle('attemptsText')
     setnightMode(!nightMode);
   }
   return (

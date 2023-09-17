@@ -9,5 +9,6 @@ Twórcy gry i ich wkład:
 Prace przebiegały z użyciem [tablicy Kanban](https://trello.com/b/QBVcYd4I/worldespl) na Trello, z użyciem najlepszych praktych do pracy w zespole odpowiedzialnym za tworzenie oprogramowania.
 
 ---
-
+Funkcjonalności
+---
 Mentoring i koordynacja projektu - [Hvitis](https://hvitis.dev/)

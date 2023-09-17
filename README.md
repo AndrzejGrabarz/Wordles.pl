@@ -11,4 +11,3 @@ Prace przebiegały z użyciem [tablicy Kanban](https://trello.com/b/QBVcYd4I/wor
 ---
 
 Mentoring i koordynacja projektu - [Hvitis](https://hvitis.dev/)
-

@@ -1,0 +1,114 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+input {
+    all:unset;
+    text-align:center;
+}
+
+
+#Enter,#Delete,
+#a,#s,#d,#f,#g,#h,#j,#k,#l,
+#ą,#ć,#ę,#ł,#ń,#ó,#ś,#ź,#ż {
+    flex-grow:1;
+}
+
+
+#q, #w, #e, #r, #t, #y, #u, #i, #o, #p,
+#a, #s, #d, #f, #g, #h, #j, #k, #l,
+ #z, #x, #c, #v, #b, #n, #m,
+#ą, #ć, #ę, #ł, #ń, #ó, #ś, #ź, #ż {
+    text-transform: uppercase;
+}
+
+
+.state-colour-green {
+    animation: rotateAndColor_green 2s forwards;
+}
+
+.state-colour-yellow {
+    animation: rotateAndColor_yellow 2s forwards;
+}
+
+.state-colour-grey {
+    animation: rotateAndColor_grey 2s forwards;
+}
+
+@keyframes rotateAndColor_green {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: green;
+    }
+}
+
+@keyframes rotateAndColor_yellow {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: yellow;
+    }
+}
+
+@keyframes rotateAndColor_grey {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(360deg);
+        background-color: grey;
+    }
+}
+
+.night {
+    background-color:black;
+}
+
+.white {
+    color:white;
+}
+
+.showObject {
+    display:none;
+}
+
+.hiddenObject {
+    visibility: hidden;
+}
+
+.blueButton, .bluetime {
+    color:#3b82f6;
+}
+
+.attemptsText {
+    color: white;
+}
+
+
+.InstructionCard {
+    display:none;
+}
+
+.grey-background {
+    background-color:#313448;
+}
+
+.tooltip {
+    opacity: 0;
+}
+
+.fadeIn {
+    animation: fadeIn 2s forwards
+}
+
+@keyframes fadeIn {
+    100% { opacity: 0; }
+    50% { opacity: 1; }
+}

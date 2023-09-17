@@ -7,6 +7,7 @@ Twórcy gry i ich wkład:
 - [Andrzej Grabarz](https://www.linkedin.com/in/andrzej-grabarz-84552825a/) - stworzenie kodu aplikacji od podstaw na podstawie kryteriów akceptacji. Zaprogramowanie gry w JavaScript w technologii NextJS (ReactJS). Biegłe posługiwanie się SDLC - Pull Requesty, testowanie z kryteriami akceptacji, branchowanie dla poszczególnych tasków na tablicy kanbanowej.
 
 Prace przebiegały z użyciem [tablicy Kanban](https://trello.com/b/QBVcYd4I/worldespl) na Trello, z użyciem najlepszych praktych do pracy w zespole odpowiedzialnym za tworzenie oprogramowania.
+
 Funkcjonalności:
 -Dwie wersje językowe
 -Ciemny motyw
@@ -14,5 +15,6 @@ Funkcjonalności:
 -Śledzenie ilość prób i czasu
 -Mozliwość dzielnia się wynikiem ze znajmowymi
 -Mozliwość rzucenia wyzwania znajomemu
+
 ---
 Mentoring i koordynacja projektu - [Hvitis](https://hvitis.dev/)

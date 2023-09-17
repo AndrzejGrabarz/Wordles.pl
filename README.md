@@ -9,12 +9,12 @@ Twórcy gry i ich wkład:
 Prace przebiegały z użyciem [tablicy Kanban](https://trello.com/b/QBVcYd4I/worldespl) na Trello, z użyciem najlepszych praktych do pracy w zespole odpowiedzialnym za tworzenie oprogramowania.
 
 Funkcjonalności:
--Dwie wersje językowe
--Ciemny motyw
--Mozliwość wyboru ilości liter w zgadywanym słowie
--Śledzenie ilość prób i czasu
--Mozliwość dzielnia się wynikiem ze znajmowymi
--Mozliwość rzucenia wyzwania znajomemu
+- Dwie wersje językowe(Polska oraz Angielska)
+- Ciemny motyw
+- Mozliwość wyboru ilości liter w zgadywanym słowie
+- Śledzenie ilość prób oraz czasu rozgrywki
+- Mozliwość dzielnia się wynikiem ze znajmowymi
+- Mozliwość rzucenia wyzwania znajomemu
 
 ---
 Mentoring i koordynacja projektu - [Hvitis](https://hvitis.dev/)

@@ -10,7 +10,6 @@ Prace przebiegały z użyciem [tablicy Kanban](https://trello.com/b/QBVcYd4I/wor
 
 Funkcjonalności:
 - Dwie wersje językowe(Polska oraz Angielska)
-- Ciemny motyw
 - Mozliwość wyboru ilości liter w zgadywanym słowie
 - Śledzenie ilość prób oraz czasu rozgrywki
 - Mozliwość dzielnia się wynikiem ze znajmowymi
